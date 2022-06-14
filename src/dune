@@ -1,0 +1,23 @@
+(library
+  (name ccllib)
+  (modules
+    types loc input
+    lexer_utils lexer
+    parser_utils parser repl
+    eval
+    )
+  (modes byte))
+
+(ocamllex lexer)
+
+(executable
+  (name main)
+  (modules main)
+  (libraries ccllib)
+  (modes byte) )
+
+;; By default, dune treats warnings as errors.
+;; This makes dune print warnings but not treat them as errors.
+(env
+  (dev
+    (flags (:standard -warn-error -A))))
