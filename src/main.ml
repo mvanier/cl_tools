@@ -48,6 +48,6 @@ let _ =
     begin
       Printf.printf "%s\n" (string_of_expr e);
       Printf.printf "--> %s\n" (string_of_expr2 de);
-      Printf.printf "--> %s\n" (string_of_expr2 (evaluate de))
+      Printf.printf "--> %s\n" (string_of_expr2 (eval_expr2 de))
     end
 

@@ -42,10 +42,10 @@ let get_env id = Hashtbl.find env id
 
 (* Evaluate an `expr2` by reducing to a normal form. *)
 
-let rec evaluate = function
+let rec eval_expr2 = function
   | Atom2 a -> evaluate_atom a
   | Pair (x, y) ->
-    reduce (Pair (evaluate x, evaluate y))
+    reduce (Pair (eval_expr2 x, eval_expr2 y))
 
 and evaluate_atom = function
   | Prim p -> Atom2 (Prim p)
@@ -65,4 +65,11 @@ and reduce = function
   | Pair (Pair (Pair (Atom2 (Prim C), x), y), z) ->
     reduce (Pair (Pair (x, z), y))
   | Pair (x, y) -> Pair (reduce x, reduce y)
+
+
+(* Evaluate a top-level form. *)
+
+let eval_form = function
+  | Def (i, e) -> (add_to_env i e; None)
+  | Expr e -> Some (eval_expr2 (desugar e))
 
