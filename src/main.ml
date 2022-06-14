@@ -1,6 +1,6 @@
 (* Combinator calculator. *)
 
-open Ccllib
+open Clclib
 open Types
 open Eval
 

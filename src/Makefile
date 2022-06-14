@@ -1,9 +1,9 @@
 .RECIPEPREFIX = >
 
 BUILD   = ./_build/default
-NAME    = ccl
+NAME    = clc
 INSTALL = .
-LIB		= ccllib.cma
+LIB		= clclib.cma
 EXT		= exe
 
 default: lang
