@@ -1,2 +1,3 @@
 # clc
-A combinatory logic calculator
+
+A combinatory logic calculator.
