@@ -9,9 +9,7 @@ open Eval
 (* The REPL, in the form expected by Repl.make_repl. *)
 let eval_fn form =
   try
-    match eval_form form with
-      | None -> ()
-      | Some e -> Printf.printf "%s\n%!" (string_of_expr2 e)
+    eval_form_print form
   with Failure msg -> Printf.eprintf "%s\n%!" msg
 
 let print_error loc msg =

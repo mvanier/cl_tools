@@ -83,6 +83,11 @@ let eval_form = function
   | Expr e     -> Some (eval_expr2 (desugar e))
   | Pragma p   -> (eval_pragma p; None)
 
+let eval_form_print def =
+  match eval_form def with
+    | None -> ()
+    | Some e -> Printf.printf "%s\n%!" (string_of_expr2 e)
+
 (* ----------------------------------------------------------------------
  * File loading.
  * ---------------------------------------------------------------------- *)
@@ -97,11 +102,13 @@ let eval_from_input input =
       | Ok es ->
           begin
             (* Evaluate the contents of the file. *)
-            List.iter (fun e -> ignore (eval_form e)) es;
+            List.iter eval_form_print es;
             Ok ()
           end
 
 let load_file filename =
+  (* Turn off tracing. *)
+  let _ = trace := false in
   (* Read in and parse the file. *)
   let channel =
     try open_in filename
