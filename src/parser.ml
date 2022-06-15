@@ -41,6 +41,12 @@ let parse_close_paren =
 let parse_keyword_def =
   parse_token "keyword def" (TOK_DEF dummy_loc)
 
+let parse_cmd_name input =
+  match peek_token input with
+    | TOK_CMD (l, s) -> (skip_token input; Ok (l, s))
+    | TOK_EOF        -> (skip_token input; Incomplete)
+    | t              -> err t "command name"
+
 let parse_prim input =
   match peek_token input with
     | TOK_PRIM (l, i) -> (skip_token input; Ok (l, i))
@@ -58,12 +64,6 @@ let parse_var input =
     | TOK_VAR (l, i) -> (skip_token input; Ok (l, i))
     | TOK_EOF        -> (skip_token input; Incomplete)
     | t              -> err t "identifier"
-
-let parse_cmd input =
-  match peek_token input with
-    | TOK_CMD (l, s) -> (skip_token input; Ok (l, s))
-    | TOK_EOF           -> (skip_token input; Incomplete)
-    | t                 -> err t "command"
 
 (* NOTE: The eta-expansions are to make `let rec` happy. *)
 let rec parse_list input =
@@ -111,12 +111,18 @@ let parse_def input =
         return (Def (c, e))))
   input
 
+let parse_cmd input =
+  (wrap_err "top-level command"
+     (let* name = parse_cmd_name in
+      failwith "TODO"))
+  input
+
 let parse_form input =
   (wrap_err "top-level form"
      (choice
        [parse_def;
         (let* (_, s) = parse_cmd in return (Cmd s));
-        let* e = parse_expr in return (Expr e)]))
+        (let* e = parse_expr in return (Expr e))]))
   input
 
 let parse = parse_form

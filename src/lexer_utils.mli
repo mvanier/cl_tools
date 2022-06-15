@@ -8,7 +8,8 @@ type token =
   | TOK_COMB   of Loc.loc * string
   | TOK_VAR    of Loc.loc * string
   | TOK_DEF    of Loc.loc
-  | TOK_CMD of Loc.loc * string
+  | TOK_CMD    of Loc.loc * string
+  | TOK_INT    of Loc.loc * int  (* only used by commands *)
 
 type lex_error =
   | LEX_UNTERMINATED_STRING
