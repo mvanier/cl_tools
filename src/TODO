@@ -9,9 +9,9 @@ expression".
 Evaluation is triggered by commands (new name for pragmas):
 
 :n        ; reduce to normal form, if any
-:r        ; one reduction step (outermost redex)
-:rs S     ; reduce outermost S
-:rn S 3   ; reduce third S, going depth-first
+:s        ; one reduction step (outermost redex)
+:sc S     ; reduce outermost S
+:scn S 3  ; reduce third S, going depth-first
 :u        ; undo last reduction
 
 With this, the language will truly be a combinator calculator.

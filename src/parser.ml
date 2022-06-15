@@ -47,6 +47,12 @@ let parse_cmd_name input =
     | TOK_EOF        -> (skip_token input; Incomplete)
     | t              -> err t "command name"
 
+let parse_int input =
+  match peek_token input with
+    | TOK_INT (l, i) -> (skip_token input; Ok (l, i))
+    | TOK_EOF        -> (skip_token input; Incomplete)
+    | t              -> err t "non-negative integer"
+
 let parse_prim input =
   match peek_token input with
     | TOK_PRIM (l, i) -> (skip_token input; Ok (l, i))
@@ -77,9 +83,9 @@ let rec parse_list input =
 and parse_atom input =
   (wrap_err "atom"
      (choice
-       [(let* (_, i) = parse_prim in return (Prim (prim_of_id i)));
-        (let* (_, i) = parse_comb in return (Comb i));
-        (let* (_, i) = parse_var  in return (Var i))]))
+       [(let* (l, i) = parse_prim in return (l, Prim (prim_of_id i)));
+        (let* (l, i) = parse_comb in return (l, Comb i));
+        (let* (l, i) = parse_var  in return (l, Var i))]))
   input
 
 and prim_of_id = function
@@ -95,7 +101,7 @@ and parse_expr input =
   (wrap_err "expression"
      (choice
        [parse_list;
-        let* a = parse_atom in return (Atom a)]))
+        let* (_, a) = parse_atom in return (Atom a)]))
   input
 
 and parse_exprs input =
@@ -112,16 +118,29 @@ let parse_def input =
   input
 
 let parse_cmd input =
+  let make_cmd loc name atom index =
+    match (name, atom, index) with
+      | ("u",   Var "", 0) -> return Undo
+      | ("n",   Var "", 0) -> return Norm
+      | ("s",   Var "", 0) -> return Step
+      | ("sc",  Var _,  _) -> fail loc "invalid command"
+      | ("scn", Var _,  _) -> fail loc "invalid command"
+      | ("sc",  a,      0) -> return (StepC a)
+      | ("scn", a,      n) -> return (StepCN (a, n))
+      | _ -> fail loc "invalid command"
+  in
   (wrap_err "top-level command"
-     (let* name = parse_cmd_name in
-      failwith "TODO"))
+     (let* (l, name)  = parse_cmd_name in
+      let* (_, atom)  = parse_atom <|> (return (l, Var "")) in
+      let* (_, index) = parse_int  <|> (return (l, 0)) in
+        (make_cmd l name atom index)))
   input
 
 let parse_form input =
   (wrap_err "top-level form"
      (choice
        [parse_def;
-        (let* (_, s) = parse_cmd in return (Cmd s));
+        (let* c = parse_cmd in return (Cmd c));
         (let* e = parse_expr in return (Expr e))]))
   input
 

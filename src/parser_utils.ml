@@ -46,6 +46,8 @@ let (>>) m1 m2 =
 
 let return x = fun _ -> Ok x
 
+let fail l msg = fun _ -> Error (l, msg)
+
 (*
  * Parser combinators.
  *)

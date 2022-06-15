@@ -40,6 +40,9 @@ val ( >> ) : 'a parser -> 'b parser -> 'b parser
 (** Monadic return operator for parsers. *)
 val return : 'a -> 'a parser
 
+(** Monadic fail operator for parsers. *)
+val fail : loc -> string -> 'a parser
+
 (** Alternation operator for parsers. *)
 val ( <|> ) : 'a parser -> 'a parser -> 'a parser
 

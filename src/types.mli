@@ -10,16 +10,16 @@ type cmd =
   (* evaluate outermost redex only *)
   | Step
   (* evaluate outermost redex starting with a particular combinator *)
-  | StepC of id
+  | StepC of atom
   (* evaluate Nth outermost redex starting with a particular combinator *)
-  | StepCN of id * int
+  | StepCN of atom * int
   (* Undo last reduction. *)
   | Undo
 
 (** Primitive combinators. *)
-type prim = S | K | I | B | C | W
+and prim = S | K | I | B | C | W
 
-type atom =
+and atom =
   | Prim of prim
   | Comb of id
   | Var of id

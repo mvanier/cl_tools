@@ -7,13 +7,13 @@ type id = string
 type cmd =
   | Norm
   | Step
-  | StepC  of id
-  | StepCN of id * int
+  | StepC  of atom
+  | StepCN of atom * int
   | Undo
 
-type prim = S | K | I | B | C | W
+and prim = S | K | I | B | C | W
 
-type atom =
+and atom =
   | Prim of prim
   | Comb of id
   | Var of id
@@ -38,14 +38,16 @@ type env = (id, expr2) Hashtbl.t
  * Utility functions on types.
  * ---------------------------------------------------------------------- *)
 
-let string_of_cmd = function
+let rec string_of_cmd = function
   | Norm          -> "Norm"
   | Step          -> "Step"
-  | StepC  s      -> Printf.sprintf "StepC[%s]" s
-  | StepCN (s, i) -> Printf.sprintf "StepCN[%s, %d]" s i
+  | StepC  s      ->
+    Printf.sprintf "StepC[%s]" (string_of_atom_explicit s)
+  | StepCN (s, i) ->
+    Printf.sprintf "StepCN[%s, %d]" (string_of_atom_explicit s) i
   | Undo          -> "Undo"
 
-let string_of_prim = function
+and string_of_prim = function
   | S -> "S"
   | K -> "K"
   | I -> "I"
@@ -53,12 +55,12 @@ let string_of_prim = function
   | C -> "C"
   | W -> "W"
 
-let string_of_atom = function
+and string_of_atom = function
   | Prim p -> string_of_prim p
   | Comb i -> i
   | Var i  -> i
 
-let string_of_atom_explicit = function
+and string_of_atom_explicit = function
   | Prim p -> "PRIM[" ^ string_of_prim p ^ "]"
   | Comb i -> "COMB[" ^ i ^ "]"
   | Var i  -> "VAR[" ^ i ^ "]"
