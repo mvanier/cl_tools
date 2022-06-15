@@ -8,6 +8,8 @@ type token =
   | TOK_PRIM   of Loc.loc * string
   | TOK_COMB   of Loc.loc * string
   | TOK_VAR    of Loc.loc * string
+  | TOK_DEF    of Loc.loc
+  | TOK_PRAGMA of Loc.loc * string
 
 type lex_error =
   | LEX_UNTERMINATED_STRING
@@ -29,6 +31,8 @@ let string_of_token = function
   | TOK_PRIM   (_, id) -> "TOK_PRIM " ^ id
   | TOK_COMB   (_, id) -> "TOK_COMB " ^ id
   | TOK_VAR    (_, id) -> "TOK_VAR " ^ id
+  | TOK_DEF     _      -> "TOK_DEF"
+  | TOK_PRAGMA (_, s)  -> "TOK_PRAGMA[" ^ s ^ "]"
 
 let string_of_token_loc tok =
   let sol = string_of_loc_short in
@@ -37,11 +41,14 @@ let string_of_token_loc tok =
       | TOK_LPAREN  l      -> "TOK_LPAREN   (" ^ sol l ^ ")"
       | TOK_RPAREN  l      -> "TOK_RPAREN   (" ^ sol l ^ ")"
       | TOK_PRIM   (l, id) ->
-        Printf.sprintf "TOK_PRIM %s   (%s)" id (sol l)
+        Printf.sprintf "TOK_PRIM[%s]  (%s)" id (sol l)
       | TOK_COMB   (l, id) ->
-        Printf.sprintf "TOK_COMB %s   (%s)" id (sol l)
+        Printf.sprintf "TOK_COMB[%s]  (%s)" id (sol l)
       | TOK_VAR    (l, id) ->
         Printf.sprintf "TOK_VAR %s   (%s)" id (sol l)
+      | TOK_DEF     l      -> "TOK_DEF   (" ^ sol l ^ ")"
+      | TOK_PRAGMA (l, id) ->
+        Printf.sprintf "TOK_PRAGMA[%s]  (%s)" id (sol l)
 
 let make_loc filename lexbuf =
   get_loc filename (lexeme_start_p lexbuf) (lexeme lexbuf)
@@ -61,7 +68,9 @@ let loc_of_token = function
   | TOK_RPAREN       l
   | TOK_PRIM        (l, _)
   | TOK_COMB        (l, _)
-  | TOK_VAR         (l, _) -> l
+  | TOK_VAR         (l, _)
+  | TOK_DEF          l
+  | TOK_PRAGMA      (l, _) -> l
 
 let token_eq token1 token2 =
   match (token1, token2) with
@@ -71,6 +80,8 @@ let token_eq token1 token2 =
     | (TOK_PRIM   (l1, i1), TOK_PRIM   (l2, i2)) -> loc_eq l1 l2 && i1 = i2
     | (TOK_COMB   (l1, i1), TOK_COMB   (l2, i2)) -> loc_eq l1 l2 && i1 = i2
     | (TOK_VAR    (l1, i1), TOK_VAR    (l2, i2)) -> loc_eq l1 l2 && i1 = i2
+    | (TOK_DEF     l1,      TOK_DEF     l2)      -> loc_eq l1 l2
+    | (TOK_PRAGMA (l1, s1), TOK_PRAGMA (l2, s2)) -> loc_eq l1 l2 && s1 = s2
     | _ -> false
 
 let token_eq_constructor token1 token2 =
@@ -81,6 +92,8 @@ let token_eq_constructor token1 token2 =
     | (TOK_PRIM         _, TOK_PRIM        _)
     | (TOK_COMB         _, TOK_COMB        _)
     | (TOK_VAR          _, TOK_VAR         _)
+    | (TOK_DEF          _, TOK_DEF         _)
+    | (TOK_PRAGMA       _, TOK_PRAGMA      _)
     | _ -> false
 
 let lex_escape loc = function

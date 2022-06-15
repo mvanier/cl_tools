@@ -7,6 +7,8 @@ type token =
   | TOK_PRIM   of Loc.loc * string
   | TOK_COMB   of Loc.loc * string
   | TOK_VAR    of Loc.loc * string
+  | TOK_DEF    of Loc.loc
+  | TOK_PRAGMA of Loc.loc * string
 
 type lex_error =
   | LEX_UNTERMINATED_STRING

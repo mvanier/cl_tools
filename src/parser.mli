@@ -1,20 +1,20 @@
 (** Parser. *)
 open Parser_utils
 
-(** Parse a single expression from an input buffer. *)
-val parse : input -> Types.expr result
+(** Parse a single toplevel form from an input buffer. *)
+val parse : input -> Types.form result
 
-(** Try to parse a single expression.
+(** Try to parse a single toplevel form.
     Return None if there are none. *)
-val parse_opt : input -> Types.expr option result
+val parse_opt : input -> Types.form option result
 
-(** Parse multiple expressions, separated by whitespace,
+(** Parse multiple toplevel forms, separated by whitespace,
     from an input buffer. *)
-val parse_many : input -> Types.expr list result
+val parse_many : input -> Types.form list result
 
-(** Parse expressions from a file. 
+(** Parse toplevel forms from a file. 
     The first argument is the filename. *)
-val parse_file : string -> Types.expr list result
+val parse_file : string -> Types.form list result
 
 (** Utility to test a parser. *)
 val parse_test : 'a parser -> string -> 'a result

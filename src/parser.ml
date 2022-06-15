@@ -94,7 +94,17 @@ and parse_exprs input =
     (many parse_expr))
   input
 
-let parse = parse_expr
+let parse_def input =
+  failwith "TODO"
+
+let parse_form input =
+  (wrap_err "top-level form"
+     (choice
+       [parse_def;
+        let* e = parse_expr in return (Expr e)]))
+  input
+
+let parse = parse_form
 
 let parse_eof input =
   match peek_token input with

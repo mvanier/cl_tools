@@ -9,11 +9,11 @@ exception Lexer_exit
  *    primary_prompt: normal prompt
  *    secondary_prompt: continuation prompt
  *    eval_fn: 
- *      a function taking in an expression and returning nothing
+ *      a function taking in a toplevel form and returning nothing
  *    error_fn: called on errors
  *
  *  return value: none
  *)
 val make_repl :
-  string -> string -> (Types.expr -> unit) -> (unit -> unit) -> unit
+  string -> string -> (Types.form -> unit) -> (unit -> unit) -> unit
 

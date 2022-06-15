@@ -1,53 +1,72 @@
-(* Combinator calculator. *)
-
 open Clclib
+
 open Types
+open Lexer_utils
+open Parser_utils
 open Eval
 
-let prim p = Atom (Prim p)
+(* The REPL, in the form expected by Repl.make_repl. *)
+let eval_fn def =
+  try
+    eval_def def
+  with Failure msg -> Printf.eprintf "%s\n%!" msg
 
-let s = prim S
-let k = prim K
-let i = prim I
-let b = prim B
-let c = prim C
-let w = prim W
+let progname = "clc"
 
-let var i = Atom (Var i)
+let handle_fatal_parse_errors result =
+  match result with
+    | Incomplete ->
+      begin
+        Printf.eprintf
+          "Incomplete form at end of input; exiting.\n%!";
+        exit 1
+      end
+    | Error (l, msg) ->
+      begin
+        print_error l msg;
+        exit 1
+      end
+    | Ok x -> x
 
-let x = var "x"
-let y = var "y"
-let z = var "z"
-let v1 = var "v1"
-let v2 = var "v2"
-let _v3 = var "v3"
+let handle_fatal_exceptions thunk =
+  try
+    thunk ()
+  with
+    Lexer_error (l, err) ->
+      begin
+        print_error l (string_of_lex_error err);
+        exit 1
+      end
 
-let comb i = Atom (Comb i)
+let prompt1 = "   "
+let prompt2 = "...  "
+
+let make_repl vm eval_fn =
+  let error_fn () = () in
+    begin
+      try
+        ignore
+          (Repl.make_repl prompt1 prompt2 eval_fn error_fn vm)
+      with
+        End_of_file ->
+          begin
+            (* an ugly hack to make exiting look clean *)
+            Printf.printf "  \n";
+            exit 0
+          end
+    end
 
 (* Add some derived definitions. *)
 let _ = add_to_env "M" (List [w; i])
 let _ = add_to_env "A" (List [k; i])
 let _ = add_to_env "T" (List [c; i])
 
-(* Tests. *)
-(* Definitions of I: *)
-let _e1 = List [s; k; k; x]
-let _e2 = List [w; k; x]
-(* Definition of C from S, K, and B: *)
-let _e3 = List [s; List [b; b; s]; List [k; k]; x; y; z]
-(* C1 = B C s.t. C1 x y z w = x y w z: *)
-let _e4 = List [b; c; x; y; z; v1]
-(* C2 = B C1 s.t. C2 x y z w a = x y z a w: *)
-let _e5 = List [b; List [b; c]; x; y; z; v1; v2]
-let e6 = List [comb "M"; x]
-
-
-let _ = 
-  let e = e6 in
-  let de = desugar e in
-    begin
-      Printf.printf "%s\n" (string_of_expr e);
-      Printf.printf "--> %s\n" (string_of_expr2 de);
-      Printf.printf "--> %s\n" (string_of_expr2 (eval_expr2 de))
-    end
-
+(* Entry point. *)
+let _ =
+  match Sys.argv with
+    | [| _ |] -> make_repl vm eval_fn
+    | _ ->
+      begin
+        Printf.eprintf "usage: %s\n%!" progname;
+        exit 1
+      end
