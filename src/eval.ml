@@ -52,24 +52,28 @@ let evaluate_atom = function
   | Var i  -> Atom2 (Var i)
   | Comb i -> get_env i
 
-let rec eval_expr2 e =
+let rec reduce e =
   debug e;
   match e with
     | Atom2 a -> evaluate_atom a
-    | Pair (Atom2 (Prim I), x) -> eval_expr2 x
-    | Pair (Pair (Atom2 (Prim K), x), _) -> eval_expr2 x
+    | Pair (Atom2 (Prim I), x) -> reduce x
+    | Pair (Pair (Atom2 (Prim K), x), _) -> reduce x
     | Pair (Pair (Atom2 (Prim W), x), y) ->
-      eval_expr2 (Pair (Pair (x, y), y))
+      reduce (Pair (Pair (x, y), y))
     | Pair (Pair (Pair (Atom2 (Prim S), x), y), z) ->
-      eval_expr2 (Pair (Pair (x, z), Pair (y, z)))
+      reduce (Pair (Pair (x, z), Pair (y, z)))
     | Pair (Pair (Pair (Atom2 (Prim B), x), y), z) ->
-      eval_expr2 (Pair (x, Pair (y, z)))
+      reduce (Pair (x, Pair (y, z)))
     | Pair (Pair (Pair (Atom2 (Prim C), x), y), z) ->
-      eval_expr2 (Pair (Pair (x, z), y))
+      reduce (Pair (Pair (x, z), y))
     | Pair (x, y) -> 
-      let rx = eval_expr2 x in
-      let ry = eval_expr2 y in
+      let rx = reduce x in
+      let ry = reduce y in
         Pair (rx, ry)
+
+let rec eval_expr2 e =
+  let re = reduce e in
+    if e = re then e else eval_expr2 re
 
 let eval_pragma = function
   | "trace_off" -> trace := false
