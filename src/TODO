@@ -13,6 +13,7 @@ Evaluation is triggered by commands (new name for pragmas):
 :sc S     ; reduce outermost S
 :scn S 3  ; reduce third S, going depth-first
 :u        ; undo last reduction
+:mr <int> ; set cutoff for max # of reductions
 
 With this, the language will truly be a combinator calculator.
 

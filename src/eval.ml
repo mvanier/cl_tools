@@ -11,7 +11,7 @@ let current : expr2 option ref = ref None
 
 let undos : expr2 Stack.t = Stack.create ()
 
-let max_reductions = ref 50
+let max_reductions = ref 25 
 
 (* ----------------------------------------------------------------------
  * Desugaring.
@@ -74,17 +74,17 @@ let reduce e =
 (* Reduce the topmost reducible expression
  * Return None if the expression can't be reduced,
  * Some <new_expr> if it can. *)
-let rec step e =
+let rec step verbose e =
   match reduce e with
     | None ->
       begin
         match e with
           | Pair (x, y) ->
             begin
-              match step x with
+              match step verbose x with
                 | None -> 
                   begin
-                    match step y with
+                    match step verbose y with
                       | None -> None
                       | Some re -> Some (Pair (x, re))
                   end
@@ -96,7 +96,8 @@ let rec step e =
       begin
         (* Push the previous expression onto the stack. *)
         Stack.push e undos;
-        Printf.printf "-> %s\n%!" (string_of_expr2 re);
+        if verbose then
+          Printf.printf "-> %s\n%!" (string_of_expr2 re);
         (* Make the reduced expression the current expression. *)
         current := Some re;
         Some re
@@ -108,7 +109,7 @@ let norm e =
     if i >= !max_reductions then
       failwith "ERROR: infinite reduction loop detected"
     else
-      match step e with
+      match step true e with
         | None -> if i = 0 then None else Some e
         | Some re -> iter (i + 1) re
   in
@@ -155,7 +156,7 @@ let eval_cmd = function
         | None -> Printf.printf "no current expression\n%!"
         | Some e ->
           begin
-            match step e with
+            match step false e with
               | None -> Printf.printf "%s\n%!" (string_of_expr2 e)
               | Some re ->
                 begin
