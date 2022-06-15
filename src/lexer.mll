@@ -35,8 +35,8 @@ rule lex filename = parse
   | ')'                { TOK_RPAREN (make_loc filename lexbuf) }
   | "def"              { TOK_DEF (make_loc filename lexbuf) }
 
-  (* pragmas *)
-  | '#' (prag as lxm)  { TOK_PRAGMA (make_loc filename lexbuf, lxm) }
+  (* commands *)
+  | ':' (prag as lxm)  { TOK_CMD (make_loc filename lexbuf, lxm) }
 
   (* primitive combinators *)
   | 'S'                { TOK_PRIM (make_loc filename lexbuf, "S") }

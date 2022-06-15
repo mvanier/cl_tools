@@ -75,17 +75,17 @@ let rec eval_expr2 e =
   let re = reduce e in
     if e = re then e else eval_expr2 re
 
-let eval_pragma = function
+let eval_cmd = function
   | "trace_off" -> trace := false
   | "trace_on"  -> trace := true
-  | s -> failwith ("unknown pragma: " ^ s)
+  | s -> failwith ("unknown command: " ^ s)
 
 (* Evaluate a top-level form. *)
 
 let eval_form = function
   | Def (i, e) -> (add_to_env i e; None)
   | Expr e     -> Some (eval_expr2 (desugar e))
-  | Pragma p   -> (eval_pragma p; None)
+  | Cmd p      -> (eval_cmd p; None)
 
 let eval_form_print def =
   match eval_form def with

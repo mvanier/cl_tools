@@ -59,11 +59,11 @@ let parse_var input =
     | TOK_EOF        -> (skip_token input; Incomplete)
     | t              -> err t "identifier"
 
-let parse_pragma input =
+let parse_cmd input =
   match peek_token input with
-    | TOK_PRAGMA (l, s) -> (skip_token input; Ok (l, s))
+    | TOK_CMD (l, s) -> (skip_token input; Ok (l, s))
     | TOK_EOF           -> (skip_token input; Incomplete)
-    | t                 -> err t "pragma"
+    | t                 -> err t "command"
 
 (* NOTE: The eta-expansions are to make `let rec` happy. *)
 let rec parse_list input =
@@ -115,7 +115,7 @@ let parse_form input =
   (wrap_err "top-level form"
      (choice
        [parse_def;
-        (let* (_, s) = parse_pragma in return (Pragma s));
+        (let* (_, s) = parse_cmd in return (Cmd s));
         let* e = parse_expr in return (Expr e)]))
   input
 

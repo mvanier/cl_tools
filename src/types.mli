@@ -3,7 +3,7 @@
 (** Identifiers. *)
 type id = string
 
-type pragma = Trace of bool
+type cmd = Trace of bool
 
 (** Primitive combinators. *)
 type prim = S | K | I | B | C | W
@@ -24,7 +24,7 @@ type expr2 =
 type form =
   | Def of id * expr
   | Expr of expr
-  | Pragma of string
+  | Cmd of string
 
 type env = (id, expr2) Hashtbl.t
 

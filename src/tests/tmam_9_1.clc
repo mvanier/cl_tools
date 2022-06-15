@@ -8,7 +8,7 @@
 ;; Given the combinators B and M, for an arbitrary combinator x,
 ;; find F, the fixpoint of x, such that x F = F.
 
-#trace_on
+:trace_on
 (M (B x M)) ;; = F
 ;; --> ((B x M) (B x M))
 ;; --> (B x M (B x M))
