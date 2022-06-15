@@ -13,4 +13,9 @@ This should be another pragma e.g. #step_on #step_off
 
 **********
 
+A cutoff of some number of reductions before a reduction is considered to be
+an infinite loop.
+
+**********
+
 
