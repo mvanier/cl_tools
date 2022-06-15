@@ -118,22 +118,29 @@ let parse_def input =
   input
 
 let parse_cmd input =
-  let make_cmd loc name atom index =
-    match (name, atom, index) with
-      | ("u",   Var "", 0) -> return Undo
-      | ("n",   Var "", 0) -> return Norm
-      | ("s",   Var "", 0) -> return Step
-      | ("sc",  Var _,  _) -> fail loc "invalid command"
-      | ("scn", Var _,  _) -> fail loc "invalid command"
-      | ("sc",  a,      0) -> return (StepC a)
-      | ("scn", a,      n) -> return (StepCN (a, n))
-      | _ -> fail loc "invalid command"
-  in
   (wrap_err "top-level command"
-     (let* (l, name)  = parse_cmd_name in
-      let* (_, atom)  = parse_atom <|> (return (l, Var "")) in
-      let* (_, index) = parse_int  <|> (return (l, 0)) in
-        (make_cmd l name atom index)))
+     (let* (l, name) = parse_cmd_name in
+      match name with
+        | "n" -> return Norm
+        | "s" -> return Step
+        | "u" -> return Undo
+        | "sc" ->
+          begin
+            let* (_, a) = parse_atom in
+              match a with
+                | Var _ -> fail l "invalid command"
+                | _ -> return (StepC a)
+          end
+        | "scn" ->
+          begin
+            let* (_, a) = parse_atom in
+              match a with
+                | Var _ -> fail l "invalid command"
+                | _ ->
+                  let* (_, n) = parse_int in
+                    return (StepCN (a, n))
+          end
+        | _ -> fail l "invalid command"))
   input
 
 let parse_form input =
