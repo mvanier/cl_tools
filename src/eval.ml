@@ -7,9 +7,11 @@ open Types
 
 let env : env = Hashtbl.create 10
 
-let current : expr2 ref = ref (Atom2 (Var ""))
+let current : expr2 option ref = ref None
 
 let undos : expr2 Stack.t = Stack.create ()
+
+let max_reductions = ref 50
 
 (* ----------------------------------------------------------------------
  * Desugaring.
@@ -47,57 +49,110 @@ let get_env id = Hashtbl.find env id
 (* Evaluate an `expr2` by reducing to a normal form. *)
 
 let evaluate_atom = function
-  | Prim p -> Atom2 (Prim p)
-  | Var i  -> Atom2 (Var i)
-  | Comb i -> get_env i
+  | Prim _ -> None
+  | Var _  -> None
+  | Comb i -> Some (get_env i)
 
-let rec reduce e =
+(* Reduce the outermost expression.
+ * Return None if the expression can't be reduced,
+ * Some <new_expr> if it can. *)
+let reduce e =
   match e with
     | Atom2 a -> evaluate_atom a
-    | Pair (Atom2 (Prim I), x) -> reduce x
-    | Pair (Pair (Atom2 (Prim K), x), _) -> reduce x
+    | Pair (Atom2 (Prim I), x) -> Some x
+    | Pair (Pair (Atom2 (Prim K), x), _) -> Some x
     | Pair (Pair (Atom2 (Prim W), x), y) ->
-      reduce (Pair (Pair (x, y), y))
+      Some (Pair (Pair (x, y), y))
     | Pair (Pair (Pair (Atom2 (Prim S), x), y), z) ->
-      reduce (Pair (Pair (x, z), Pair (y, z)))
+      Some (Pair (Pair (x, z), Pair (y, z)))
     | Pair (Pair (Pair (Atom2 (Prim B), x), y), z) ->
-      reduce (Pair (x, Pair (y, z)))
+      Some (Pair (x, Pair (y, z)))
     | Pair (Pair (Pair (Atom2 (Prim C), x), y), z) ->
-      reduce (Pair (Pair (x, z), y))
-    | Pair (x, y) -> 
-      let rx = reduce x in
-      let ry = reduce y in
-        Pair (rx, ry)
+      Some (Pair (Pair (x, z), y))
+    | _ -> None
 
-let rec eval_expr2 e =
-  let re = reduce e in
-    if e = re then e else eval_expr2 re
+(* Reduce the topmost reducible expression
+ * Return None if the expression can't be reduced,
+ * Some <new_expr> if it can. *)
+let rec step e =
+  match reduce e with
+    | None ->
+      begin
+        match e with
+          | Pair (x, y) ->
+            begin
+              match step x with
+                | None -> 
+                  begin
+                    match step y with
+                      | None -> None
+                      | Some re -> Some (Pair (x, re))
+                  end
+                | Some re -> Some (Pair (re, y))
+            end
+          | _ -> None
+      end
+    | Some re -> Some re
+
+(* Reduce to a normal form, if any. *)
+let norm e =
+  let rec iter i e =
+    if i >= !max_reductions then
+      failwith "ERROR: infinite reduction loop detected"
+    else
+      match step e with
+        | None -> if i = 0 then None else Some e
+        | Some re -> iter (i + 1) re
+  in
+    iter 0 e
 
 let undo () =
   match Stack.pop_opt undos with
     | None -> Printf.printf "nothing to undo\n%!"
     | Some e ->
         begin
-          current := e;
+          current := Some e;
           Printf.printf "%s\n%!" (string_of_expr2 e)
         end
 
 let eval_cmd = function
   | Undo -> undo ()
   | Quit -> exit 0
+  | Curr ->
+    begin
+      match !current with
+        | None -> Printf.printf "no current expression\n%!"
+        | Some e -> Printf.printf "%s\n%!" (string_of_expr2 e)
+    end
+  | Norm ->
+    begin
+      match !current with
+        | None -> Printf.printf "no current expression\n%!"
+        | Some e ->
+          begin
+            match norm e with
+              | None -> Printf.printf "%s\n%!" (string_of_expr2 e)
+              | Some re ->
+                begin
+                  Printf.printf "%s\n%!" (string_of_expr2 re)
+                end
+          end
+    end
   | _ -> failwith "TODO"
 
 (* Evaluate a top-level form. *)
 
 let eval_form = function
-  | Def (i, e) -> (add_to_env i e; None)
-  | Expr e     -> Some (eval_expr2 (desugar e))
-  | Cmd p      -> (eval_cmd p; None)
+  | Def (i, e) -> add_to_env i e
 
-let eval_form_print def =
-  match eval_form def with
-    | None -> ()
-    | Some e -> Printf.printf "%s\n%!" (string_of_expr2 e)
+  | Expr e -> 
+    let de = desugar e in
+      begin
+        Stack.clear undos;
+        current := Some de;
+      end
+
+  | Cmd p -> eval_cmd p
 
 (* ----------------------------------------------------------------------
  * File loading.
@@ -113,7 +168,7 @@ let eval_from_input input =
       | Ok es ->
           begin
             (* Evaluate the contents of the file. *)
-            List.iter eval_form_print es;
+            List.iter eval_form es;
             Ok ()
           end
 

@@ -9,7 +9,7 @@ open Eval
 (* The REPL, in the form expected by Repl.make_repl. *)
 let eval_fn form =
   try
-    eval_form_print form
+    eval_form form
   with Failure msg -> Printf.eprintf "%s\n%!" msg
 
 let print_error loc msg =

@@ -5,6 +5,7 @@
 type id = string
 
 type cmd =
+  | Curr
   | Norm
   | Step
   | StepC  of atom
@@ -40,6 +41,7 @@ type env = (id, expr2) Hashtbl.t
  * ---------------------------------------------------------------------- *)
 
 let rec string_of_cmd = function
+  | Curr          -> "Curr"
   | Norm          -> "Norm"
   | Step          -> "Step"
   | StepC  s      ->

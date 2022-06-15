@@ -5,6 +5,8 @@ type id = string
 
 (** Commands. *)
 type cmd =
+  (* Print the current expression. *)
+  | Curr
   (* evaluate to a normal form *)
   | Norm
   (* evaluate outermost redex only *)
