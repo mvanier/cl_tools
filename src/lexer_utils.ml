@@ -93,7 +93,7 @@ let token_eq_constructor token1 token2 =
     | (TOK_COMB         _, TOK_COMB        _)
     | (TOK_VAR          _, TOK_VAR         _)
     | (TOK_DEF          _, TOK_DEF         _)
-    | (TOK_PRAGMA       _, TOK_PRAGMA      _)
+    | (TOK_PRAGMA       _, TOK_PRAGMA      _) -> true
     | _ -> false
 
 let lex_escape loc = function
