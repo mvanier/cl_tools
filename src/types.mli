@@ -3,7 +3,18 @@
 (** Identifiers. *)
 type id = string
 
-type cmd = Trace of bool
+(** Commands. *)
+type cmd =
+  (* evaluate to a normal form *)
+  | Norm
+  (* evaluate outermost redex only *)
+  | Step
+  (* evaluate outermost redex starting with a particular combinator *)
+  | StepC of id
+  (* evaluate Nth outermost redex starting with a particular combinator *)
+  | StepCN of id * int
+  (* Undo last reduction. *)
+  | Undo
 
 (** Primitive combinators. *)
 type prim = S | K | I | B | C | W
@@ -19,12 +30,12 @@ type expr =
 
 type expr2 =
   | Atom2 of atom
-  | Pair of expr2 * expr2
+  | Pair  of expr2 * expr2
 
 type form =
-  | Def of id * expr
+  | Def  of id * expr
   | Expr of expr
-  | Cmd of string
+  | Cmd  of cmd
 
 type env = (id, expr2) Hashtbl.t
 

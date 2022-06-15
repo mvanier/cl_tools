@@ -5,7 +5,6 @@ open Types
  * Global state.
  * ---------------------------------------------------------------------- *)
 
-let trace = ref true
 let env : env = Hashtbl.create 10
 
 (* ----------------------------------------------------------------------
@@ -43,17 +42,12 @@ let get_env id = Hashtbl.find env id
 
 (* Evaluate an `expr2` by reducing to a normal form. *)
 
-let debug e =
-  if !trace then
-    Printf.printf "-> %s\n%!" (string_of_expr2 e)
-
 let evaluate_atom = function
   | Prim p -> Atom2 (Prim p)
   | Var i  -> Atom2 (Var i)
   | Comb i -> get_env i
 
 let rec reduce e =
-  debug e;
   match e with
     | Atom2 a -> evaluate_atom a
     | Pair (Atom2 (Prim I), x) -> reduce x
@@ -76,9 +70,7 @@ let rec eval_expr2 e =
     if e = re then e else eval_expr2 re
 
 let eval_cmd = function
-  | "trace_off" -> trace := false
-  | "trace_on"  -> trace := true
-  | s -> failwith ("unknown command: " ^ s)
+  | _ -> failwith "TODO"
 
 (* Evaluate a top-level form. *)
 
@@ -111,8 +103,6 @@ let eval_from_input input =
           end
 
 let load_file filename =
-  (* Turn off tracing. *)
-  let _ = trace := false in
   (* Read in and parse the file. *)
   let channel =
     try open_in filename

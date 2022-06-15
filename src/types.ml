@@ -5,7 +5,11 @@
 type id = string
 
 type cmd =
-  | Trace of bool
+  | Norm
+  | Step
+  | StepC  of id
+  | StepCN of id * int
+  | Undo
 
 type prim = S | K | I | B | C | W
 
@@ -26,13 +30,20 @@ type expr2 =
 type form =
   | Def  of id * expr
   | Expr of expr
-  | Cmd of string
+  | Cmd  of cmd
 
 type env = (id, expr2) Hashtbl.t
 
 (* ----------------------------------------------------------------------
  * Utility functions on types.
  * ---------------------------------------------------------------------- *)
+
+let string_of_cmd = function
+  | Norm          -> "Norm"
+  | Step          -> "Step"
+  | StepC  s      -> Printf.sprintf "StepC[%s]" s
+  | StepCN (s, i) -> Printf.sprintf "StepCN[%s, %d]" s i
+  | Undo          -> "Undo"
 
 let string_of_prim = function
   | S -> "S"
@@ -74,5 +85,5 @@ let rec string_of_expr2 = function
 let string_of_form = function
   | Def (i, e) -> "DEF[" ^ i ^ "][" ^ string_of_expr_explicit e ^ "]"
   | Expr e -> "EXPR[" ^ string_of_expr_explicit e ^ "]"
-  | Cmd s -> "CMD[" ^ s ^ "]"
+  | Cmd c -> "CMD[" ^ string_of_cmd c ^ "]"
 
