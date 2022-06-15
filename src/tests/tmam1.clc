@@ -1,0 +1,5 @@
+;; Problem 1 in TMAM.
+
+#trace_on
+(M (B x M))
+
