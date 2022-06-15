@@ -3,19 +3,11 @@ TODO
 
 **********
 
-Convert to manual evaluation.
-Inputting an expression doesn't evaluate it; it is stored as the "current
-expression".
-Evaluation is triggered by commands (new name for pragmas):
+Commands to implement:
 
-:n        ; reduce to normal form, if any
-:s        ; one reduction step (outermost redex)
+:mr <int> ; set cutoff for max # of reductions
 :sc S     ; reduce outermost S
 :scn S 3  ; reduce third S, going depth-first
-:u        ; undo last reduction
-:mr <int> ; set cutoff for max # of reductions
-
-With this, the language will truly be a combinator calculator.
 
 **********
 
