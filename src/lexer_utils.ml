@@ -86,14 +86,14 @@ let token_eq token1 token2 =
 
 let token_eq_constructor token1 token2 =
   match (token1, token2) with
-    | (TOK_EOF,            TOK_EOF          )
-    | (TOK_LPAREN       _, TOK_LPAREN      _)
-    | (TOK_RPAREN       _, TOK_RPAREN      _)
-    | (TOK_PRIM         _, TOK_PRIM        _)
-    | (TOK_COMB         _, TOK_COMB        _)
-    | (TOK_VAR          _, TOK_VAR         _)
-    | (TOK_DEF          _, TOK_DEF         _)
-    | (TOK_PRAGMA       _, TOK_PRAGMA      _) -> true
+    | (TOK_EOF,      TOK_EOF     )
+    | (TOK_LPAREN _, TOK_LPAREN _)
+    | (TOK_RPAREN _, TOK_RPAREN _)
+    | (TOK_PRIM   _, TOK_PRIM   _)
+    | (TOK_COMB   _, TOK_COMB   _)
+    | (TOK_VAR    _, TOK_VAR    _)
+    | (TOK_DEF    _, TOK_DEF    _)
+    | (TOK_PRAGMA _, TOK_PRAGMA _) -> true
     | _ -> false
 
 let lex_escape loc = function
