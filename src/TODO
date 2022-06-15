@@ -3,6 +3,11 @@ TODO
 
 **********
 
+Comments starting with ;; print the line.
+This will make it possible to have "literate scripts".
+
+**********
+
 Convert to manual evaluation.
 Inputting an expression doesn't evaluate it; it is stored as the "current
 expression".

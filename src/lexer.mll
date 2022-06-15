@@ -23,6 +23,14 @@ let cmd = cmd_chars+
 rule lex filename = parse
   | eof { TOK_EOF }
 
+  (* Literate single-line comments.
+   * These are printed to the terminal. *)
+  | ";;| " ([^'\n']* as lxm) '\n' { 
+      new_line lexbuf; 
+      Printf.printf "%s\n%!" lxm;
+      lex filename lexbuf
+    }
+
   (* single-line comments *)
   | ";"[^'\n']*'\n'    { new_line lexbuf; lex filename lexbuf     }
 
