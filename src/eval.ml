@@ -42,30 +42,37 @@ let get_env id = Hashtbl.find env id
 
 (* Evaluate an `expr2` by reducing to a normal form. *)
 
+let debug e =
+  if !trace then
+    Printf.printf "-> %s\n%!" (string_of_expr2 e)
+
 let rec eval_expr2 = function
   | Atom2 a -> evaluate_atom a
-  | Pair (x, y) ->
-    reduce (Pair (eval_expr2 x, eval_expr2 y))
+  | Pair _ as e -> reduce e
 
 and evaluate_atom = function
   | Prim p -> Atom2 (Prim p)
   | Var i  -> Atom2 (Var i)
   | Comb i -> get_env i
 
-and reduce = function
-  | Atom2 a -> Atom2 a
-  | Pair (Atom2 (Prim I), x) -> reduce x
-  | Pair (Pair (Atom2 (Prim K), x), _) -> reduce x
-  | Pair (Pair (Atom2 (Prim W), x), y) ->
-    reduce (Pair (Pair (x, y), y))
-  | Pair (Pair (Pair (Atom2 (Prim S), x), y), z) ->
-    reduce (Pair (Pair (x, z), Pair (y, z)))
-  | Pair (Pair (Pair (Atom2 (Prim B), x), y), z) ->
-    reduce (Pair (x, Pair (y, z)))
-  | Pair (Pair (Pair (Atom2 (Prim C), x), y), z) ->
-    reduce (Pair (Pair (x, z), y))
-  | Pair (x, y) -> Pair (reduce x, reduce y)
-
+and reduce e =
+  debug e;
+  match e with
+    | Atom2 a -> Atom2 a
+    | Pair (Atom2 (Prim I), x) -> reduce x
+    | Pair (Pair (Atom2 (Prim K), x), _) -> reduce x
+    | Pair (Pair (Atom2 (Prim W), x), y) ->
+      reduce (Pair (Pair (x, y), y))
+    | Pair (Pair (Pair (Atom2 (Prim S), x), y), z) ->
+      reduce (Pair (Pair (x, z), Pair (y, z)))
+    | Pair (Pair (Pair (Atom2 (Prim B), x), y), z) ->
+      reduce (Pair (x, Pair (y, z)))
+    | Pair (Pair (Pair (Atom2 (Prim C), x), y), z) ->
+      reduce (Pair (Pair (x, z), y))
+    | Pair (x, y) -> 
+      let rx = reduce x in
+      let ry = reduce y in
+        Pair (rx, ry)
 
 (* Evaluate a top-level form. *)
 
