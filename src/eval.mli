@@ -8,4 +8,4 @@ val add_to_env : Types.id -> Types.expr -> unit
 
 val desugar : Types.expr -> Types.expr2
 
-val trace : bool ref
+val load_file : string -> unit Parser_utils.result

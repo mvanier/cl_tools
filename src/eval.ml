@@ -1,3 +1,4 @@
+open Parser_utils
 open Types
 
 (* ----------------------------------------------------------------------
@@ -82,3 +83,49 @@ let eval_form = function
   | Expr e     -> Some (eval_expr2 (desugar e))
   | Pragma p   -> (eval_pragma p; None)
 
+(* ----------------------------------------------------------------------
+ * File loading.
+ * ---------------------------------------------------------------------- *)
+
+(* Parse and run the contents of an input buffer. *)
+let eval_from_input input =
+  (* Parse the file to top-level forms. *)
+  let res = Parser.parse_many input in
+    match res with
+      | Error (l, msg) -> Error (l, msg)
+      | Incomplete -> Incomplete
+      | Ok es ->
+          begin
+            (* Evaluate the contents of the file. *)
+            List.iter (fun e -> ignore (eval_form e)) es;
+            Ok ()
+          end
+
+let load_file filename =
+  (* Read in and parse the file. *)
+  let channel =
+    try open_in filename
+    with Sys_error _ ->
+      begin
+        Printf.eprintf "file not found: %s\n%!" filename;
+        exit 1
+      end
+  in
+  let lexbuf = Lexing.from_channel channel in
+  let input  = make_input filename lexbuf in
+    match eval_from_input input with
+      | Error (l, msg) ->
+        begin
+          close_in channel;
+          Error (l, msg)
+        end
+      | Incomplete ->
+        begin
+          close_in channel;
+          Incomplete
+        end
+      | Ok () ->
+        begin
+          close_in channel;
+          Ok ()
+        end

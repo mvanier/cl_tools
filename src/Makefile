@@ -36,3 +36,5 @@ clean:
 > dune clean
 > rm -f ${NAME}
 
+realclean: clean
+> rm -f lexer_test parser_test
