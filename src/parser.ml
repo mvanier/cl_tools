@@ -95,7 +95,11 @@ and parse_exprs input =
   input
 
 let parse_def input =
-  failwith "TODO"
+  (wrap_err "top-level definition"
+     (let* (_, c) = parse_comb in
+      let* e = parse_expr in
+        return (Def (c, e))))
+  input
 
 let parse_form input =
   (wrap_err "top-level form"
