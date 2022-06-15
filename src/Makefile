@@ -2,7 +2,7 @@
 
 BUILD   = ./_build/default
 NAME    = clc
-INSTALL = .
+INSTALL = ${HOME}/_/bin
 LIB		= clclib.cma
 EXT		= exe
 
