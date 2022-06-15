@@ -92,7 +92,15 @@ let rec step e =
             end
           | _ -> None
       end
-    | Some re -> Some re
+    | Some re -> 
+      begin
+        (* Push the previous expression onto the stack. *)
+        Stack.push e undos;
+        Printf.printf "-> %s\n%!" (string_of_expr2 re);
+        (* Make the reduced expression the current expression. *)
+        current := Some re;
+        Some re
+      end
 
 (* Reduce to a normal form, if any. *)
 let norm e =
@@ -104,7 +112,10 @@ let norm e =
         | None -> if i = 0 then None else Some e
         | Some re -> iter (i + 1) re
   in
-    iter 0 e
+    begin
+      Printf.printf "== %s\n%!" (string_of_expr2 e);
+      iter 0 e
+    end
 
 let undo () =
   match Stack.pop_opt undos with
@@ -131,6 +142,20 @@ let eval_cmd = function
         | Some e ->
           begin
             match norm e with
+              | None -> Printf.printf "%s\n%!" (string_of_expr2 e)
+              | Some re ->
+                begin
+                  Printf.printf "%s\n%!" (string_of_expr2 re)
+                end
+          end
+    end
+  | Step ->
+    begin
+      match !current with
+        | None -> Printf.printf "no current expression\n%!"
+        | Some e ->
+          begin
+            match step e with
               | None -> Printf.printf "%s\n%!" (string_of_expr2 e)
               | Some re ->
                 begin
