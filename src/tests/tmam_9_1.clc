@@ -1,10 +1,12 @@
 ;; TMAM: Chapter 9, Problem 1.
 
-;; Note that a precise statement of the problem in the form of a
-;; combinatory logic problem is as follows:
-;; >>> Given the combinators B and M, for an arbitrary combinator x,
-;; >>> find the fixpoint of x F such that x F = F.
-;; We prove the reverse: that F = x F.
+;; Definitions:
+;; B x y z = x (y z)
+;; M x = x x
+
+;; Problem:
+;; Given the combinators B and M, for an arbitrary combinator x,
+;; find F, the fixpoint of x, such that x F = F.
 
 #trace_on
 (M (B x M)) ;; = F
@@ -14,3 +16,6 @@
 ;; --> (x F)
 ;; QED
 
+;; NOTE: The expression F = (M (B x M)) diverges, so it is problematic to say
+;; that x F = F.  This is a strange definition of "equality".
+;; It's kind of like saying that 1 + infinity = infinity.
