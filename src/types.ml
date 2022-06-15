@@ -26,6 +26,7 @@ type expr2 =
 type form =
   | Def  of id * expr
   | Expr of expr
+  | Pragma of string
 
 type env = (id, expr2) Hashtbl.t
 
@@ -73,4 +74,5 @@ let rec string_of_expr2 = function
 let string_of_form = function
   | Def (i, e) -> "DEF[" ^ i ^ "][" ^ string_of_expr_explicit e ^ "]"
   | Expr e -> "EXPR[" ^ string_of_expr_explicit e ^ "]"
+  | Pragma s -> "PRAGMA[" ^ s ^ "]"
 

@@ -46,37 +46,39 @@ let debug e =
   if !trace then
     Printf.printf "-> %s\n%!" (string_of_expr2 e)
 
-let rec eval_expr2 = function
-  | Atom2 a -> evaluate_atom a
-  | Pair _ as e -> reduce e
-
-and evaluate_atom = function
+let evaluate_atom = function
   | Prim p -> Atom2 (Prim p)
   | Var i  -> Atom2 (Var i)
   | Comb i -> get_env i
 
-and reduce e =
+let rec eval_expr2 e =
   debug e;
   match e with
-    | Atom2 a -> Atom2 a
-    | Pair (Atom2 (Prim I), x) -> reduce x
-    | Pair (Pair (Atom2 (Prim K), x), _) -> reduce x
+    | Atom2 a -> evaluate_atom a
+    | Pair (Atom2 (Prim I), x) -> eval_expr2 x
+    | Pair (Pair (Atom2 (Prim K), x), _) -> eval_expr2 x
     | Pair (Pair (Atom2 (Prim W), x), y) ->
-      reduce (Pair (Pair (x, y), y))
+      eval_expr2 (Pair (Pair (x, y), y))
     | Pair (Pair (Pair (Atom2 (Prim S), x), y), z) ->
-      reduce (Pair (Pair (x, z), Pair (y, z)))
+      eval_expr2 (Pair (Pair (x, z), Pair (y, z)))
     | Pair (Pair (Pair (Atom2 (Prim B), x), y), z) ->
-      reduce (Pair (x, Pair (y, z)))
+      eval_expr2 (Pair (x, Pair (y, z)))
     | Pair (Pair (Pair (Atom2 (Prim C), x), y), z) ->
-      reduce (Pair (Pair (x, z), y))
+      eval_expr2 (Pair (Pair (x, z), y))
     | Pair (x, y) -> 
-      let rx = reduce x in
-      let ry = reduce y in
+      let rx = eval_expr2 x in
+      let ry = eval_expr2 y in
         Pair (rx, ry)
+
+let eval_pragma = function
+  | "trace_off" -> trace := false
+  | "trace_on"  -> trace := true
+  | s -> failwith ("unknown pragma: " ^ s)
 
 (* Evaluate a top-level form. *)
 
 let eval_form = function
   | Def (i, e) -> (add_to_env i e; None)
-  | Expr e -> Some (eval_expr2 (desugar e))
+  | Expr e     -> Some (eval_expr2 (desugar e))
+  | Pragma p   -> (eval_pragma p; None)
 

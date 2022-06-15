@@ -24,6 +24,7 @@ type expr2 =
 type form =
   | Def of id * expr
   | Expr of expr
+  | Pragma of string
 
 type env = (id, expr2) Hashtbl.t
 

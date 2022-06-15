@@ -109,6 +109,7 @@ let parse_form input =
   (wrap_err "top-level form"
      (choice
        [parse_def;
+        (* parse_pragma; *)
         let* e = parse_expr in return (Expr e)]))
   input
 
