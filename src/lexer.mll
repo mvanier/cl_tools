@@ -25,6 +25,12 @@ rule lex filename = parse
 
   (* Literate single-line comments.
    * These are printed to the terminal. *)
+  | ";;|\n" { 
+      new_line lexbuf; 
+      Printf.printf "\n%!";
+      lex filename lexbuf
+    }
+
   | ";;| " ([^'\n']* as lxm) '\n' { 
       new_line lexbuf; 
       Printf.printf "%s\n%!" lxm;

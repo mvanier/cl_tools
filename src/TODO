@@ -3,6 +3,11 @@ TODO
 
 **********
 
+Option to echo input lines, for use in scripts.
+Command: `:echo`.
+
+**********
+
 Convert to manual evaluation.
 Inputting an expression doesn't evaluate it; it is stored as the "current
 expression".
