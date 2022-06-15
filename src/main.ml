@@ -1,5 +1,8 @@
 open Clclib
 
+open Loc
+open Lexer_utils
+open Parser_utils
 open Types
 open Eval
 
@@ -10,6 +13,34 @@ let eval_fn form =
       | None -> ()
       | Some e -> Printf.printf "%s\n%!" (string_of_expr2 e)
   with Failure msg -> Printf.eprintf "%s\n%!" msg
+
+let print_error loc msg =
+  Printf.eprintf "Error: %s (%s)\n%!" msg (string_of_loc_short loc)
+
+let handle_fatal_parse_errors result =
+  match result with
+    | Incomplete ->
+      begin
+        Printf.eprintf
+          "Incomplete form at end of input; exiting.\n%!";
+        exit 1
+      end
+    | Error (l, msg) ->
+      begin
+        print_error l msg;
+        exit 1
+      end
+    | Ok x -> x
+
+let handle_fatal_exceptions thunk =
+  try
+    thunk ()
+  with
+    | Lexer_error (l, err) ->
+      begin
+        print_error l (string_of_lex_error err);
+        exit 1
+      end
 
 let progname = "clc"
 
@@ -43,8 +74,15 @@ let _ = add_to_env "T" (List [prim C; prim I])
 let _ =
   match Sys.argv with
     | [| _ |] -> make_repl eval_fn
+    | [| _; filename |] ->
+      ignore
+        (handle_fatal_exceptions
+          (fun () ->
+             handle_fatal_parse_errors
+               (load_file filename)))
     | _ ->
       begin
         Printf.eprintf "usage: %s\n%!" progname;
         exit 1
       end
+
