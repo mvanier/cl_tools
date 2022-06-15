@@ -1,5 +1,16 @@
 ;; Problem 1 in TMAM.
 
+;; Note that a precise statement of the problem in the form of a
+;; combinatory logic problem is as follows:
+;; >>> Given the combinators B and M, for an arbitrary combinator x,
+;; >>> find the fixpoint of x F such that x F = F.
+;; We prove the reverse: that F = x F.
+
 #trace_on
-(M (B x M))
+(M (B x M)) ;; = F
+;; --> ((B x M) (B x M))
+;; --> (B x M (B x M))
+;; --> (x (M (B x M)))
+;; --> (x F)
+;; QED
 
