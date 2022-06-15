@@ -74,34 +74,39 @@ let reduce e =
 (* Reduce the topmost reducible expression
  * Return None if the expression can't be reduced,
  * Some <new_expr> if it can. *)
-let rec step verbose e =
-  match reduce e with
-    | None ->
-      begin
-        match e with
-          | Pair (x, y) ->
-            begin
-              match step verbose x with
-                | None -> 
-                  begin
-                    match step verbose y with
-                      | None -> None
-                      | Some re -> Some (Pair (x, re))
-                  end
-                | Some re -> Some (Pair (re, y))
-            end
-          | _ -> None
-      end
-    | Some re -> 
-      begin
-        (* Push the previous expression onto the stack. *)
-        Stack.push e undos;
-        if verbose then
-          Printf.printf "-> %s\n%!" (string_of_expr2 re);
-        (* Make the reduced expression the current expression. *)
-        current := Some re;
-        Some re
-      end
+let step verbose e =
+  let rec iter e =
+    match reduce e with
+      | None ->
+        begin
+          match e with
+            | Pair (x, y) ->
+              begin
+                match iter x with
+                  | None -> 
+                    begin
+                      match iter y with
+                        | None -> None
+                        | Some re -> Some (Pair (x, re))
+                    end
+                  | Some re -> Some (Pair (re, y))
+              end
+            | _ -> None
+        end
+      | Some re -> Some re
+  in
+    match iter e with
+      | None -> None
+      | Some re ->
+        begin
+          (* Push the previous expression onto the stack. *)
+          Stack.push e undos;
+          if verbose then
+            Printf.printf "-> %s\n%!" (string_of_expr2 re);
+          (* Make the reduced expression the current expression. *)
+          current := Some re;
+          Some re
+        end
 
 (* Reduce to a normal form, if any. *)
 let norm e =
