@@ -8,7 +8,7 @@ type 'a stream
 type 'a input = 'a stream ref
 
 (** Create a new input buffer given a function
-    which can generates the next value. *)
+    which can generate the next value. *)
 val make_input : (unit -> 'a) -> 'a input
 
 (** Get the next unprocessed value. *)
