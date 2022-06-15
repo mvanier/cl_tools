@@ -7,6 +7,10 @@ open Types
 
 let env : env = Hashtbl.create 10
 
+let current : expr2 ref = ref (Atom2 (Var ""))
+
+let undos : expr2 Stack.t = Stack.create ()
+
 (* ----------------------------------------------------------------------
  * Desugaring.
  * ---------------------------------------------------------------------- *)
@@ -69,7 +73,18 @@ let rec eval_expr2 e =
   let re = reduce e in
     if e = re then e else eval_expr2 re
 
+let undo () =
+  match Stack.pop_opt undos with
+    | None -> Printf.printf "nothing to undo\n%!"
+    | Some e ->
+        begin
+          current := e;
+          Printf.printf "%s\n%!" (string_of_expr2 e)
+        end
+
 let eval_cmd = function
+  | Undo -> undo ()
+  | Quit -> exit 0
   | _ -> failwith "TODO"
 
 (* Evaluate a top-level form. *)

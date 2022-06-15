@@ -124,6 +124,7 @@ let parse_cmd input =
         | "n" -> return Norm
         | "s" -> return Step
         | "u" -> return Undo
+        | "q" -> return Quit
         | "sc" ->
           begin
             let* (_, a) = parse_atom in

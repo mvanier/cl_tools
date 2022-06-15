@@ -15,6 +15,8 @@ type cmd =
   | StepCN of atom * int
   (* Undo last reduction. *)
   | Undo
+  (* Quit the calculator. *)
+  | Quit
 
 (** Primitive combinators. *)
 and prim = S | K | I | B | C | W

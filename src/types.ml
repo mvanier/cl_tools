@@ -10,6 +10,7 @@ type cmd =
   | StepC  of atom
   | StepCN of atom * int
   | Undo
+  | Quit
 
 and prim = S | K | I | B | C | W
 
@@ -46,6 +47,7 @@ let rec string_of_cmd = function
   | StepCN (s, i) ->
     Printf.sprintf "StepCN[%s, %d]" (string_of_atom_explicit s) i
   | Undo          -> "Undo"
+  | Quit          -> "Quit"
 
 and string_of_prim = function
   | S -> "S"
