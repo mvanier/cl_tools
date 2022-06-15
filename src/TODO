@@ -1,5 +1,16 @@
 TODO
 ====
 
+**********
+
 Convert expr2s back to exprs before printing.
 Leave as expr2s while tracing.
+
+**********
+
+"Stepping mode", where you have to hit <return> to get the next reduction.
+This should be another pragma e.g. #step_on #step_off
+
+**********
+
+
