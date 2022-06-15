@@ -46,11 +46,22 @@ let string_of_atom = function
   | Comb i -> i
   | Var i  -> i
 
+let string_of_atom_explicit = function
+  | Prim p -> "PRIM[" ^ string_of_prim p ^ "]"
+  | Comb i -> "COMB[" ^ i ^ "]"
+  | Var i  -> "VAR[" ^ i ^ "]"
+
 let rec string_of_expr = function
   | Atom a -> string_of_atom a
   | List es ->
       let ss = List.map string_of_expr es in
         "(" ^ (String.concat " " ss) ^ ")"
+
+let rec string_of_expr_explicit = function
+  | Atom a -> "ATOM[" ^ string_of_atom_explicit a ^ "]"
+  | List es ->
+      let ss = List.map string_of_expr_explicit es in
+        "LIST[" ^ (String.concat " " ss) ^ "]"
 
 let rec string_of_expr2 = function
   | Atom2 a -> string_of_atom a
@@ -60,5 +71,6 @@ let rec string_of_expr2 = function
         "(" ^ sx ^ " " ^ sy ^ ")"
 
 let string_of_form = function
-  | Def (i, e) -> "DEF[" ^ i ^ "][" ^ string_of_expr e ^ "]"
-  | Expr e -> "EXPR[" ^ string_of_expr e ^ "]"
+  | Def (i, e) -> "DEF[" ^ i ^ "][" ^ string_of_expr_explicit e ^ "]"
+  | Expr e -> "EXPR[" ^ string_of_expr_explicit e ^ "]"
+

@@ -31,7 +31,11 @@ val string_of_prim : prim -> string
 
 val string_of_atom : atom -> string
 
+val string_of_atom_explicit : atom -> string
+
 val string_of_expr : expr -> string
+
+val string_of_expr_explicit : expr -> string
 
 val string_of_expr2 : expr2 -> string
 

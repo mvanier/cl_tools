@@ -38,6 +38,9 @@ let parse_open_paren =
 let parse_close_paren =
   parse_token "close parenthesis" (TOK_RPAREN dummy_loc)
 
+let parse_keyword_def =
+  parse_token "keyword def" (TOK_DEF dummy_loc)
+
 let parse_prim input =
   match peek_token input with
     | TOK_PRIM (l, i) -> (skip_token input; Ok (l, i))
@@ -96,8 +99,9 @@ and parse_exprs input =
 
 let parse_def input =
   (wrap_err "top-level definition"
-     (let* (_, c) = parse_comb in
-      let* e = parse_expr in
+     (let* _      = parse_keyword_def in
+      let* (_, c) = parse_comb in
+      let* e      = parse_expr in
         return (Def (c, e))))
   input
 
