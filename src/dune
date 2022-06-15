@@ -10,6 +10,18 @@
 (ocamllex lexer)
 
 (executable
+  (name lexer_test)
+  (libraries clclib)
+  (modules lexer_test)
+  (modes byte))
+
+(executable
+  (name parser_test)
+  (libraries clclib)
+  (modules parser_test)
+  (modes byte))
+
+(executable
   (name main)
   (modules main)
   (libraries clclib)

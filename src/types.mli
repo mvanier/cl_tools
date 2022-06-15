@@ -29,8 +29,10 @@ type env = (id, expr2) Hashtbl.t
 
 val string_of_prim : prim -> string
 
-val string_of_atom : atom -> id
+val string_of_atom : atom -> string
 
-val string_of_expr : expr -> id
+val string_of_expr : expr -> string
 
-val string_of_expr2 : expr2 -> id
+val string_of_expr2 : expr2 -> string
+
+val string_of_form : form -> string

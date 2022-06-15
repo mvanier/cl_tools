@@ -59,3 +59,6 @@ let rec string_of_expr2 = function
       let sy = string_of_expr2 y in
         "(" ^ sx ^ " " ^ sy ^ ")"
 
+let string_of_form = function
+  | Def (i, e) -> "DEF[" ^ i ^ "][" ^ string_of_expr e ^ "]"
+  | Expr e -> "EXPR[" ^ string_of_expr e ^ "]"

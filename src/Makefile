@@ -16,6 +16,22 @@ lang: lib
 > cp ${BUILD}/main.${EXT} ${INSTALL}/${NAME}
 > chmod 755 ${INSTALL}/${NAME}
 
+lexer_deps:  lib lexer.mll lexer.mli
+parser_deps: lexer_deps parser.ml parser.mli
+repl_deps:   parser_deps repl.ml repl.mli
+
+lexer_test: lexer_deps lexer_test.ml
+> rm -f ./lexer_test
+> dune build lexer_test.${EXT}
+> cp ${BUILD}/lexer_test.${EXT} lexer_test
+
+parser_test: parser_deps parser_test.ml
+> rm -f ./parser_test
+> dune build parser_test.${EXT}
+> cp ${BUILD}/parser_test.${EXT} parser_test
+
+test: lexer_test parser_test
+
 clean:
 > dune clean
 > rm -f ${NAME}
