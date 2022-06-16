@@ -3,13 +3,14 @@ TODO
 
 **********
 
-Modify literate programming syntax so code is printed
+Modify literate programming syntax so code outputs are printed
 with two spaces at the front.
 
 Also modify so that input lines are printed in literate mode:
 
   > def I' (S K K)
   > (I' x)
+  > :c :n
 
 Need a "literate_syntax" variable.
 
