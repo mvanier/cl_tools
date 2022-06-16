@@ -1,0 +1,25 @@
+;;| Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 2.
+;;|
+;;| == Non-computational solution
+;;|
+;;| Given conditions C1 and C2 (existence of B and M),
+;;| there is at least one combinator X which is its own fixpoint i.e.
+;;|
+;;|   exists X: XX = X
+;;|
+;;| === Proof
+;;|
+;;| Assuming conditions C1 and C2, by theorem 1 all combinators have fixpoints.
+;;| Therefore, the combinator M has a fixpoint.  Therefore: 
+;;|
+;;|   exists R: MR = R 
+;;|
+;;| But by definition of M, MR = RR. Therefore R = RR. QED.
+;;|
+;;| == Computational solution
+;;|
+;;| To generate 
+
+
+
+

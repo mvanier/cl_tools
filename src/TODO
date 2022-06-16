@@ -3,9 +3,19 @@ TODO
 
 **********
 
+A "literate mode" for files ending in `.lclc`.
+Code is prefaced with `>` e.g.
+
+  > (S K K x)
+
+Everything else is literate comments.
+
+**********
+
 Command to implement:
 
 :scn S 3  ; reduce third S, going depth-first
 
 **********
+
 
