@@ -9,12 +9,11 @@
 ;;| find F, the fixpoint of x, such that x F = F.
 
 def F (M (B x M))
-;; --> ((B x M) (B x M))
-;; --> (B x M (B x M))
-;; --> (x (M (B x M)))
-;; --> (x F)
-;; QED
+F :s :s :s
 
-;; NOTE: The expression F = (M (B x M)) diverges, so it is problematic to say
-;; that x F = F.  This is a strange definition of "equality".
-;; It's kind of like saying that 1 + infinity = infinity.
+;;| = (x F)
+;;| QED
+;;|
+;;| NOTE: The expression F = (M (B x M)) diverges, so it is problematic
+;;| to say that x F = F.  This is a strange definition of "equality".
+;;| It's kind of like saying that 1 + infinity = infinity.
