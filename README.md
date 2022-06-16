@@ -51,6 +51,18 @@ There are commands to reduce combinators in various ways.
     :n     -- reduce to normal form
     :ms N  -- set maximum reduction step to N before it's considered
               an infinite loop (default = 25)
+
+## Literate syntax
+
+Literate filenames end in `.lclc`.  A literate file is the same as
+a regular clc file except:
+
+* Lines that are not literate comments start with "> ";
+  the "> " is discarded and the rest of the line is processed
+  as usual.
+
+* All other lines have a ";;| " prepended to them, so they are all
+  literate comments.
     
 ## Usage
 
@@ -61,6 +73,8 @@ $ clc
 $ clc <filename>
 
   - runs clc on a file
+  - filename should end in `.clc`;
+    if filename ends in `.lclc`, use literate syntax
 
 ## Compiling
 
