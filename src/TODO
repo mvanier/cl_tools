@@ -11,8 +11,3 @@ Commands to implement:
 
 **********
 
-Convert expr2s back to exprs before printing.
-Leave as expr2s while tracing.
-
-**********
-

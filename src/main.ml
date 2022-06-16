@@ -10,7 +10,9 @@ open Eval
 let eval_fn form =
   try
     eval_form form
-  with Failure msg -> Printf.eprintf "%s\n%!" msg
+  with 
+    | Failure msg -> Printf.eprintf "%s\n%!" msg
+    | Not_found   -> Printf.eprintf "combinator not found\n%!"
 
 let print_error loc msg =
   Printf.eprintf "Error: %s (%s)\n%!" msg (string_of_loc_short loc)
@@ -64,7 +66,6 @@ let make_repl eval_fn =
 
 let prim p = Atom (Prim p)
 
-let _ = add_to_env "M" (List [prim W; prim I])
 let _ = add_to_env "A" (List [prim K; prim I])
 let _ = add_to_env "T" (List [prim C; prim I])
 

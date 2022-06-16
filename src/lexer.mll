@@ -64,6 +64,7 @@ rule lex filename = parse
   | 'B'                { TOK_PRIM (make_loc filename lexbuf, "B") }
   | 'C'                { TOK_PRIM (make_loc filename lexbuf, "C") }
   | 'W'                { TOK_PRIM (make_loc filename lexbuf, "W") }
+  | 'M'                { TOK_PRIM (make_loc filename lexbuf, "M") }
 
   (* non-primitive combinators *)
   | comb as lxm        { TOK_COMB (make_loc filename lexbuf, lxm) }

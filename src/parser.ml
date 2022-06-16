@@ -95,7 +95,8 @@ and prim_of_id = function
   | "B" -> B
   | "C" -> C
   | "W" -> W
-  | _   -> failwith "Unknown primitive"
+  | "M" -> M
+  | _   -> failwith "unknown primitive"
 
 and parse_expr input =
   (wrap_err "expression"

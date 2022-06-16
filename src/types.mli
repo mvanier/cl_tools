@@ -21,7 +21,7 @@ type cmd =
   | Quit
 
 (** Primitive combinators. *)
-and prim = S | K | I | B | C | W
+and prim = S | K | I | B | C | W | M
 
 and atom =
   | Prim of prim

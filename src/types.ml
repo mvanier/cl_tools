@@ -13,7 +13,7 @@ type cmd =
   | Undo
   | Quit
 
-and prim = S | K | I | B | C | W
+and prim = S | K | I | B | C | W | M
 
 and atom =
   | Prim of prim
@@ -58,6 +58,7 @@ and string_of_prim = function
   | B -> "B"
   | C -> "C"
   | W -> "W"
+  | M -> "M"
 
 and string_of_atom = function
   | Prim p -> string_of_prim p

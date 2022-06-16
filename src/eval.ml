@@ -17,7 +17,7 @@ let max_reductions = ref 25
  * Desugaring.
  * ---------------------------------------------------------------------- *)
 
-(* Desugar an `expr` into an `expr1`. *)
+(* Desugar an `expr` into an `expr2`. *)
 
 let rec list_to_pairs = function
   | []  -> failwith "empty lists are not allowed"
@@ -32,6 +32,31 @@ and desugar = function
 and reverse = function
   | Atom2 a -> Atom2 a
   | Pair (x, y) -> Pair (reverse y, x)
+
+(* ----------------------------------------------------------------------
+ * Resugaring.
+ * ---------------------------------------------------------------------- *)
+
+(* Resugar an `expr2` into an `expr`.
+ * This is for display purposes. *)
+
+let rec expr_of_expr2 = function
+  | Atom2 a -> Atom a
+  | Pair (Atom2 a, e2) -> List [Atom a; expr_of_expr2 e2]
+  | Pair (Pair (x, y), e2) ->
+    let e1a = expr_of_expr2 x in
+    let e1b = expr_of_expr2 y in
+    let e2' = expr_of_expr2 e2 in
+      match e1a with
+        | List lst -> List (lst @ [e1b; e2'])
+        | _ -> List [e1a; e1b; e2']
+
+(* Convert an expr2 to an expr and then to a string. *)
+let string_of_expr2_expr e =
+  string_of_expr (expr_of_expr2 e)
+
+(* Default display of expressions. *)
+let display e = string_of_expr2_expr e
 
 (* ----------------------------------------------------------------------
  * Environment.
@@ -60,6 +85,7 @@ let reduce e =
   match e with
     | Atom2 a -> evaluate_atom a
     | Pair (Atom2 (Prim I), x) -> Some x
+    | Pair (Atom2 (Prim M), x) -> Some (Pair (x, x))
     | Pair (Pair (Atom2 (Prim K), x), _) -> Some x
     | Pair (Pair (Atom2 (Prim W), x), y) ->
       Some (Pair (Pair (x, y), y))
@@ -102,7 +128,7 @@ let step verbose e =
           (* Push the previous expression onto the stack. *)
           Stack.push e undos;
           if verbose then
-            Printf.printf "-> %s\n%!" (string_of_expr2 re);
+            Printf.printf "-> %s\n%!" (display re);
           (* Make the reduced expression the current expression. *)
           current := Some re;
           Some re
@@ -119,7 +145,7 @@ let norm e =
         | Some re -> iter (i + 1) re
   in
     begin
-      Printf.printf "== %s\n%!" (string_of_expr2 e);
+      Printf.printf "== %s\n%!" (display e);
       iter 0 e
     end
 
@@ -129,7 +155,7 @@ let undo () =
     | Some e ->
         begin
           current := Some e;
-          Printf.printf "%s\n%!" (string_of_expr2 e)
+          Printf.printf "%s\n%!" (display e)
         end
 
 let eval_cmd = function
@@ -139,7 +165,7 @@ let eval_cmd = function
     begin
       match !current with
         | None -> Printf.printf "no current expression\n%!"
-        | Some e -> Printf.printf "%s\n%!" (string_of_expr2 e)
+        | Some e -> Printf.printf "%s\n%!" (display e)
     end
   | Norm ->
     begin
@@ -148,10 +174,10 @@ let eval_cmd = function
         | Some e ->
           begin
             match norm e with
-              | None -> Printf.printf "%s\n%!" (string_of_expr2 e)
+              | None -> Printf.printf "%s\n%!" (display e)
               | Some re ->
                 begin
-                  Printf.printf "%s\n%!" (string_of_expr2 re)
+                  Printf.printf "%s\n%!" (display re)
                 end
           end
     end
@@ -162,10 +188,10 @@ let eval_cmd = function
         | Some e ->
           begin
             match step false e with
-              | None -> Printf.printf "%s\n%!" (string_of_expr2 e)
+              | None -> Printf.printf "%s\n%!" (display e)
               | Some re ->
                 begin
-                  Printf.printf "%s\n%!" (string_of_expr2 re)
+                  Printf.printf "%s\n%!" (display re)
                 end
           end
     end
