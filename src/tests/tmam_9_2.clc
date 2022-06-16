@@ -26,9 +26,9 @@ def F (M (B M M))
 ;;| Now (M F) = (F F) and also (M F) = F, so F = (F F).
 ;;|
 
-F :c :s :s :s :s :s
+F :c :ss 5
 ;;|
-(F F) :c :s :s :sc F
+(F F) :c :ss 2 :sc F
 ;;|
 ;;| So F = (F F). QED.
 
