@@ -3,6 +3,15 @@ TODO
 
 **********
 
+Modify literate programming syntax so code is printed
+with two spaces at the front.
+
+Also modify so that definitions are printed in literate mode.
+
+Need a "literate_syntax" variable.
+
+**********
+
 Commands to implement:
 
 :scn S 3  ; reduce third S, going depth-first
