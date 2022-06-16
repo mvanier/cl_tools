@@ -3,12 +3,6 @@ TODO
 
 **********
 
-Fix literate comments.
-They _cannot_ be immediately printed out.
-They have to be printed out when _evaluated_.
-
-**********
-
 Commands to implement:
 
 :sc S     ; reduce outermost S

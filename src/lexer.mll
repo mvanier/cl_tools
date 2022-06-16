@@ -27,14 +27,12 @@ rule lex filename = parse
    * These are printed to the terminal. *)
   | ";;|\n" { 
       new_line lexbuf; 
-      Printf.printf "\n%!";
-      lex filename lexbuf
+      TOK_TXT (make_loc filename lexbuf, "")
     }
 
   | ";;| " ([^'\n']* as lxm) '\n' { 
       new_line lexbuf; 
-      Printf.printf "%s\n%!" lxm;
-      lex filename lexbuf
+      TOK_TXT (make_loc filename lexbuf, lxm)
     }
 
   (* single-line comments *)

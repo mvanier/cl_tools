@@ -10,6 +10,7 @@ type token =
   | TOK_DEF    of Loc.loc
   | TOK_CMD    of Loc.loc * string
   | TOK_INT    of Loc.loc * int  (* only used by commands *)
+  | TOK_TXT    of Loc.loc * string
 
 type lex_error =
   | LEX_UNTERMINATED_STRING

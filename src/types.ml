@@ -34,6 +34,7 @@ type form =
   | Def  of id * expr
   | Expr of expr
   | Cmd  of cmd
+  | Txt  of string
 
 type env = (id, expr2) Hashtbl.t
 
@@ -96,4 +97,5 @@ let string_of_form = function
   | Def (i, e) -> "DEF[" ^ i ^ "][" ^ string_of_expr_explicit e ^ "]"
   | Expr e -> "EXPR[" ^ string_of_expr_explicit e ^ "]"
   | Cmd c -> "CMD[" ^ string_of_cmd c ^ "]"
+  | Txt s -> "TXT[" ^ s ^ "]"
 

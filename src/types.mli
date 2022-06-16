@@ -42,6 +42,7 @@ type form =
   | Def  of id * expr
   | Expr of expr
   | Cmd  of cmd
+  | Txt  of string
 
 type env = (id, expr2) Hashtbl.t
 

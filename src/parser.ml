@@ -41,6 +41,12 @@ let parse_close_paren =
 let parse_keyword_def =
   parse_token "keyword def" (TOK_DEF dummy_loc)
 
+let parse_literate_comment input =
+  match peek_token input with
+    | TOK_TXT (_, s) -> (skip_token input; Ok s)
+    | TOK_EOF        -> (skip_token input; Incomplete)
+    | t              -> err t "literate comment"
+
 let parse_cmd_name input =
   match peek_token input with
     | TOK_CMD (l, s) -> (skip_token input; Ok (l, s))
@@ -153,6 +159,7 @@ let parse_form input =
   (wrap_err "top-level form"
      (choice
        [parse_def;
+        (let* s = parse_literate_comment in return (Txt s));
         (let* c = parse_cmd in return (Cmd c));
         (let* e = parse_expr in return (Expr e))]))
   input

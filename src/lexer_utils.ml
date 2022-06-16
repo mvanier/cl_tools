@@ -11,6 +11,7 @@ type token =
   | TOK_DEF    of Loc.loc
   | TOK_CMD    of Loc.loc * string
   | TOK_INT    of Loc.loc * int
+  | TOK_TXT    of Loc.loc * string
 
 type lex_error =
   | LEX_UNTERMINATED_STRING
@@ -35,6 +36,7 @@ let string_of_token = function
   | TOK_DEF     _      -> "TOK_DEF"
   | TOK_CMD    (_, s)  -> "TOK_CMD[" ^ s ^ "]"
   | TOK_INT    (_, i)  -> "TOK_INT[" ^ string_of_int i ^ "]"
+  | TOK_TXT    (_, s)  -> "TOK_CMD[" ^ s ^ "]"
 
 let string_of_token_loc tok =
   let sol = string_of_loc_short in
@@ -53,6 +55,8 @@ let string_of_token_loc tok =
         Printf.sprintf "TOK_CMD[%s]  (%s)" s (sol l)
       | TOK_INT    (l, i) ->
         Printf.sprintf "TOK_INT[%d]  (%s)" i (sol l)
+      | TOK_TXT    (l, s) ->
+        Printf.sprintf "TOK_TXT[%s]  (%s)" s (sol l)
 
 let make_loc filename lexbuf =
   get_loc filename (lexeme_start_p lexbuf) (lexeme lexbuf)
@@ -75,7 +79,8 @@ let loc_of_token = function
   | TOK_VAR         (l, _)
   | TOK_DEF          l
   | TOK_CMD         (l, _)
-  | TOK_INT         (l, _) -> l
+  | TOK_INT         (l, _)
+  | TOK_TXT         (l, _) -> l
 
 let token_eq token1 token2 =
   match (token1, token2) with
@@ -88,6 +93,7 @@ let token_eq token1 token2 =
     | (TOK_DEF     l1,      TOK_DEF     l2)      -> loc_eq l1 l2
     | (TOK_CMD   (l1, s1),  TOK_CMD    (l2, s2)) -> loc_eq l1 l2 && s1 = s2
     | (TOK_INT   (l1, i1),  TOK_INT    (l2, i2)) -> loc_eq l1 l2 && i1 = i2
+    | (TOK_TXT   (l1, s1),  TOK_TXT    (l2, s2)) -> loc_eq l1 l2 && s1 = s2
     | _ -> false
 
 let token_eq_constructor token1 token2 =
@@ -100,7 +106,8 @@ let token_eq_constructor token1 token2 =
     | (TOK_VAR    _, TOK_VAR    _)
     | (TOK_DEF    _, TOK_DEF    _)
     | (TOK_CMD    _, TOK_CMD    _)
-    | (TOK_INT    _, TOK_INT    _) -> true
+    | (TOK_INT    _, TOK_INT    _)
+    | (TOK_TXT    _, TOK_TXT    _) -> true
     | _ -> false
 
 let lex_escape loc = function
