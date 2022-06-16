@@ -291,6 +291,25 @@ let eval_from_input input =
             Ok ()
           end
 
+(* File extension for literate files (.lclc). *)
+let literate_ext = Str.regexp {|.*\.lclc$|}
+
+(* Return `true` if the filename ends in
+ * the literate extension. *)
+let is_literate filename =
+  try
+    begin
+      ignore (Str.search_forward literate_ext filename 0);
+      true
+    end
+  with Not_found ->
+    false
+
+(* Convert a literate file to a non-literate file,
+ * and return the contents as a string. *)
+let process_literate_file filename =
+  failwith "TODO"
+
 let load_file filename =
   (* Read in and parse the file. *)
   let channel =
@@ -301,7 +320,12 @@ let load_file filename =
         exit 1
       end
   in
-  let lexbuf = Lexing.from_channel channel in
+  let lexbuf =
+    if is_literate filename then
+      Lexing.from_string (process_literate_file filename)
+    else
+      Lexing.from_channel channel
+  in
   let input  = make_input filename lexbuf in
     match eval_from_input input with
       | Error (l, msg) ->

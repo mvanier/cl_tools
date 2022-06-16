@@ -24,7 +24,7 @@
 (executable
   (name main)
   (modules main)
-  (libraries clclib)
+  (libraries Str clclib)
   (modes byte) )
 
 ;; By default, dune treats warnings as errors.
