@@ -161,6 +161,7 @@ let undo () =
 let eval_cmd = function
   | Undo -> undo ()
   | Quit -> exit 0
+  | MaxSteps i -> max_reductions := i
   | Curr ->
     begin
       match !current with

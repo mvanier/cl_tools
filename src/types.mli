@@ -15,6 +15,8 @@ type cmd =
   | StepC of atom
   (* evaluate Nth outermost redex starting with a particular combinator *)
   | StepCN of atom * int
+  (* Set the maximum number of steps in a reduction. *)
+  | MaxSteps of int
   (* Undo last reduction. *)
   | Undo
   (* Quit the calculator. *)

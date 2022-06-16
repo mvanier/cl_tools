@@ -128,21 +128,24 @@ let parse_cmd input =
         | "u" -> return Undo
         | "q" -> return Quit
         | "sc" ->
-          begin
-            let* (_, a) = parse_atom in
+          let* (_, a) = parse_atom in
+            begin
               match a with
                 | Var _ -> fail l "invalid command"
                 | _ -> return (StepC a)
-          end
+            end
         | "scn" ->
-          begin
-            let* (_, a) = parse_atom in
+          let* (_, a) = parse_atom in
+            begin
               match a with
                 | Var _ -> fail l "invalid command"
                 | _ ->
                   let* (_, n) = parse_int in
                     return (StepCN (a, n))
-          end
+            end
+        | "ms" ->
+           let* (_, i) = parse_int in
+             return (MaxSteps i)
         | _ -> fail l "invalid command"))
   input
 

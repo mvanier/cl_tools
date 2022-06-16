@@ -5,7 +5,6 @@ TODO
 
 Commands to implement:
 
-:mr <int> ; set cutoff for max # of reductions
 :sc S     ; reduce outermost S
 :scn S 3  ; reduce third S, going depth-first
 

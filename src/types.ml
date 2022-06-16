@@ -10,6 +10,7 @@ type cmd =
   | Step
   | StepC  of atom
   | StepCN of atom * int
+  | MaxSteps of int
   | Undo
   | Quit
 
@@ -48,6 +49,8 @@ let rec string_of_cmd = function
     Printf.sprintf "StepC[%s]" (string_of_atom_explicit s)
   | StepCN (s, i) ->
     Printf.sprintf "StepCN[%s, %d]" (string_of_atom_explicit s) i
+  | MaxSteps i ->
+    Printf.sprintf "MaxSteps[%d]" i
   | Undo          -> "Undo"
   | Quit          -> "Quit"
 
