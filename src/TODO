@@ -3,10 +3,6 @@ TODO
 
 **********
 
-BUG: Literate programming syntax broke non-literal syntax!
-
-**********
-
 Modify literate programming syntax so code is printed
 with two spaces at the front.
 

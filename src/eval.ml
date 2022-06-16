@@ -351,7 +351,7 @@ let load_file filename =
     else
       Lexing.from_channel channel
   in
-  let input  = make_input filename lexbuf in
+  let input = make_input filename lexbuf in
     match eval_from_input input with
       | Error (l, msg) ->
         begin
