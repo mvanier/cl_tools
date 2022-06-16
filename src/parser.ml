@@ -128,11 +128,12 @@ let parse_cmd input =
   (wrap_err "top-level command"
      (let* (l, name) = parse_cmd_name in
       match name with
-        | "c" -> return Curr
-        | "n" -> return Norm
-        | "s" -> return Step
-        | "u" -> return Undo
-        | "q" -> return Quit
+        | "c"  -> return Curr
+        | "n"  -> return Norm
+        | "s"  -> return Step
+        | "u"  -> return Undo
+        | "q"  -> return Quit
+        | "ss" -> let* (_, i) = parse_int in return (StepN i)
         | "sc" ->
           let* (_, a) = parse_atom in
             begin

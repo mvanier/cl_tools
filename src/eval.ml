@@ -194,6 +194,19 @@ let undo () =
           Printf.printf "%s\n%!" (display e)
         end
 
+let step1 () =
+  match !current with
+    | None -> Printf.printf "no current expression\n%!"
+    | Some e ->
+      begin
+        match step false reduce e with
+          | None -> Printf.printf "-> %s\n%!" (display e)
+          | Some re ->
+            begin
+              Printf.printf "-> %s\n%!" (display re)
+            end
+      end
+
 let eval_cmd = function
   | Undo -> undo ()
 
@@ -223,20 +236,9 @@ let eval_cmd = function
           end
     end
 
-  | Step ->
-    begin
-      match !current with
-        | None -> Printf.printf "no current expression\n%!"
-        | Some e ->
-          begin
-            match step false reduce e with
-              | None -> Printf.printf "-> %s\n%!" (display e)
-              | Some re ->
-                begin
-                  Printf.printf "-> %s\n%!" (display re)
-                end
-          end
-    end
+  | Step -> step1 ()
+
+  | StepN n -> for _ = 1 to n do step1 () done
 
   | StepC a ->
     begin

@@ -14,8 +14,11 @@ Everything else is literate comments.
 
 Commands to implement:
 
-:ss 3     ; reduce 3 steps
 :scn S 3  ; reduce third S, going depth-first
+
+**********
+
+Add Y as a primitive combinator?
 
 **********
 

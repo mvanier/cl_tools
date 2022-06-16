@@ -11,6 +11,8 @@ type cmd =
   | Norm
   (* evaluate outermost redex only *)
   | Step
+  (* take N steps *)
+  | StepN of int
   (* evaluate outermost redex starting with a particular combinator *)
   | StepC of atom
   (* evaluate Nth outermost redex starting with a particular combinator *)

@@ -8,6 +8,7 @@ type cmd =
   | Curr
   | Norm
   | Step
+  | StepN of int
   | StepC  of atom
   | StepCN of atom * int
   | MaxSteps of int
@@ -46,7 +47,9 @@ let rec string_of_cmd = function
   | Curr          -> "Curr"
   | Norm          -> "Norm"
   | Step          -> "Step"
-  | StepC  s      ->
+  | StepN i       ->
+    Printf.sprintf "StepN[%d]" i
+  | StepC s       ->
     Printf.sprintf "StepC[%s]" (string_of_atom_explicit s)
   | StepCN (s, i) ->
     Printf.sprintf "StepCN[%s, %d]" (string_of_atom_explicit s) i
