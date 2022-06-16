@@ -230,10 +230,10 @@ let eval_cmd = function
         | Some e ->
           begin
             match step false reduce e with
-              | None -> Printf.printf "%s\n%!" (display e)
+              | None -> Printf.printf "-> %s\n%!" (display e)
               | Some re ->
                 begin
-                  Printf.printf "%s\n%!" (display re)
+                  Printf.printf "-> %s\n%!" (display re)
                 end
           end
     end
@@ -245,10 +245,10 @@ let eval_cmd = function
         | Some e ->
           begin
             match step false (reduce_if a) e with
-              | None -> Printf.printf "%s\n%!" (display e)
+              | None -> Printf.printf "-> %s\n%!" (display e)
               | Some re ->
                 begin
-                  Printf.printf "%s\n%!" (display re)
+                  Printf.printf "-> %s\n%!" (display re)
                 end
           end
     end

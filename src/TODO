@@ -12,8 +12,9 @@ Everything else is literate comments.
 
 **********
 
-Command to implement:
+Commands to implement:
 
+:ss 3     ; reduce 3 steps
 :scn S 3  ; reduce third S, going depth-first
 
 **********
