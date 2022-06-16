@@ -1,5 +1,13 @@
 # clc
 
+## Author
+
+Mike Vanier (mvanier@cms.caltech.edu).
+
+## License
+
+GPL version 3. https://www.gnu.org/licenses/gpl-3.0.en.html
+
 ## Overview
 
 `clc` is a combinatory logic calculator.
@@ -53,6 +61,16 @@ $ clc <filename>
 
   - runs clc on a file
 
+## Compiling
 
+This requires OCaml and opam to compile.  The `dune` compilation manager
+is needed, so if you don't have it, do
 
+$ opam update
+$ opam install dune
+
+Tested with OCaml 4.14.
+
+Type `make` to build and install, `make clean` to clean.
+You will want to change the install location in the Makefile.
 
