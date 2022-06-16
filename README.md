@@ -6,7 +6,7 @@ Mike Vanier (mvanier@cms.caltech.edu).
 
 ## License
 
-GPL version 3. https://www.gnu.org/licenses/gpl-3.0.en.html
+GPL version 3. See: https://www.gnu.org/licenses/gpl-3.0.en.html.
 
 ## Overview
 
@@ -71,6 +71,8 @@ $ opam install dune
 
 Tested with OCaml 4.14.
 
-Type `make` to build and install, `make clean` to clean.
-You will want to change the install location in the Makefile.
+Go into the `src` directory and type `make` to build and install.
+Type `make clean` to clean up compilation artifacts.
+
+You will want to change the install location in the Makefile before compiling.
 
