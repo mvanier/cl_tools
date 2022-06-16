@@ -76,7 +76,7 @@ let get_env id = Hashtbl.find env id
 let evaluate_atom = function
   | Prim _ -> None
   | Var _  -> None
-  | Comb i -> Some (get_env i)
+  | Comb c -> Some (get_env c)
 
 (* Reduce the outermost expression.
  * Return None if the expression can't be reduced,
@@ -97,12 +97,48 @@ let reduce e =
       Some (Pair (Pair (x, z), y))
     | _ -> None
 
+(* Reduce the outermost expression if it starts with
+ * a particular combinator. *)
+let reduce_if a e =
+  match (a, e) with
+    | (Var _, _) ->
+      failwith "reduce_if: can't reduce vars"
+
+    | (Comb c, Atom2 (Comb c')) when c = c' ->
+      Some (get_env c)
+
+    | (Comb c, Pair (Atom2 (Comb c'), x)) when c = c' ->
+      Some (Pair (get_env c, x))
+
+    | (Prim I, Pair (Atom2 (Prim I), x)) -> Some x
+
+    | (Prim M, Pair (Atom2 (Prim M), x)) ->
+      Some (Pair (x, x))
+
+    | (Prim K, Pair (Pair (Atom2 (Prim K), x), _)) ->
+      Some x
+
+    | (Prim W, Pair (Pair (Atom2 (Prim W), x), y)) ->
+      Some (Pair (Pair (x, y), y))
+
+    | (Prim S, Pair (Pair (Pair (Atom2 (Prim S), x), y), z)) ->
+      Some (Pair (Pair (x, z), Pair (y, z)))
+
+    | (Prim B, Pair (Pair (Pair (Atom2 (Prim B), x), y), z)) ->
+      Some (Pair (x, Pair (y, z)))
+
+    | (Prim C, Pair (Pair (Pair (Atom2 (Prim C), x), y), z)) ->
+      Some (Pair (Pair (x, z), y))
+
+    | _ -> None
+
 (* Reduce the topmost reducible expression
  * Return None if the expression can't be reduced,
- * Some <new_expr> if it can. *)
-let step verbose e =
+ * Some <new_expr> if it can.
+ * This is parameterized around a reduction function.*)
+let step verbose reducef e =
   let rec iter e =
-    match reduce e with
+    match reducef e with
       | None ->
         begin
           match e with
@@ -140,7 +176,7 @@ let norm e =
     if i >= !max_reductions then
       failwith "ERROR: infinite reduction loop detected"
     else
-      match step true e with
+      match step true reduce e with
         | None -> if i = 0 then None else Some e
         | Some re -> iter (i + 1) re
   in
@@ -160,14 +196,18 @@ let undo () =
 
 let eval_cmd = function
   | Undo -> undo ()
+
   | Quit -> exit 0
+
   | MaxSteps i -> max_reductions := i
+
   | Curr ->
     begin
       match !current with
         | None -> Printf.printf "no current expression\n%!"
         | Some e -> Printf.printf "%s\n%!" (display e)
     end
+
   | Norm ->
     begin
       match !current with
@@ -182,13 +222,14 @@ let eval_cmd = function
                 end
           end
     end
+
   | Step ->
     begin
       match !current with
         | None -> Printf.printf "no current expression\n%!"
         | Some e ->
           begin
-            match step false e with
+            match step false reduce e with
               | None -> Printf.printf "%s\n%!" (display e)
               | Some re ->
                 begin
@@ -196,6 +237,22 @@ let eval_cmd = function
                 end
           end
     end
+
+  | StepC a ->
+    begin
+      match !current with
+        | None -> Printf.printf "no current expression\n%!"
+        | Some e ->
+          begin
+            match step false (reduce_if a) e with
+              | None -> Printf.printf "%s\n%!" (display e)
+              | Some re ->
+                begin
+                  Printf.printf "%s\n%!" (display re)
+                end
+          end
+    end
+
   | _ -> failwith "TODO"
 
 (* Evaluate a top-level form. *)

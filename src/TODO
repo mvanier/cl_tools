@@ -3,9 +3,8 @@ TODO
 
 **********
 
-Commands to implement:
+Command to implement:
 
-:sc S     ; reduce outermost S
 :scn S 3  ; reduce third S, going depth-first
 
 **********
