@@ -305,10 +305,35 @@ let is_literate filename =
   with Not_found ->
     false
 
+(* Process a line.  The trailing newline is assumed to have been removed. *)
+let process_literate_line line =
+  let prepend = ";;|" in
+  let len = String.length line in
+    if len = 0 then
+      prepend   (* empty literate line *)
+    else if line.[0] = '>' then
+      (* Remove the next character if it's a blank. *)
+      (if line.[1] = ' ' then
+         String.sub line 2 (len - 2)
+       else
+         String.sub line 1 (len - 1))
+    else
+      prepend ^ " " ^ line
+
 (* Convert a literate file to a non-literate file,
  * and return the contents as a string. *)
-let process_literate_file filename =
-  failwith "TODO"
+let process_literate_file in_channel =
+  (* Read a file, split into lines.
+   * Convert each line.  Combine the converted lines. *)
+  let rec iter lines =
+    try
+      let next = input_line in_channel in
+      let next' = process_literate_line next in
+        iter (next' :: lines)
+    with End_of_file ->
+      List.rev lines
+  in
+    String.concat "\n" (iter []) ^ "\n"
 
 let load_file filename =
   (* Read in and parse the file. *)
@@ -322,7 +347,7 @@ let load_file filename =
   in
   let lexbuf =
     if is_literate filename then
-      Lexing.from_string (process_literate_file filename)
+      Lexing.from_string (process_literate_file channel)
     else
       Lexing.from_channel channel
   in
