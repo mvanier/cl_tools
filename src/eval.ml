@@ -185,7 +185,7 @@ let norm e =
         | Some re -> iter (i + 1) re
   in
     begin
-      Printf.printf "%s== %s\n%!" (prefix ()) (display e);
+      Printf.printf "%s%s\n%!" (prefix ()) (display e);
       iter 0 e
     end
 
