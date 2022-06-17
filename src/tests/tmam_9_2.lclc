@@ -21,7 +21,6 @@ But by definition of M, (M R) = (R R). Therefore R = (R R). QED.
 To generate the fixpoint of M, compute F = (M (B M M)).
 
 > def F (M (B M M))
-def F (M (B M M))
 
 Now (M F) = (F F) and also (M F) = F, so F = (F F).
 

@@ -13,6 +13,10 @@ let undos : expr2 Stack.t = Stack.create ()
 
 let max_reductions = ref 25 
 
+let literate_mode = ref false
+
+let prefix () = if !literate_mode then "  " else ""
+
 (* ----------------------------------------------------------------------
  * Desugaring.
  * ---------------------------------------------------------------------- *)
@@ -164,7 +168,7 @@ let step verbose reducef e =
           (* Push the previous expression onto the stack. *)
           Stack.push e undos;
           if verbose then
-            Printf.printf "-> %s\n%!" (display re);
+            Printf.printf "%s-> %s\n%!" (prefix ()) (display re);
           (* Make the reduced expression the current expression. *)
           current := Some re;
           Some re
@@ -181,7 +185,7 @@ let norm e =
         | Some re -> iter (i + 1) re
   in
     begin
-      Printf.printf "== %s\n%!" (display e);
+      Printf.printf "%s== %s\n%!" (prefix ()) (display e);
       iter 0 e
     end
 
@@ -191,7 +195,7 @@ let undo () =
     | Some e ->
         begin
           current := Some e;
-          Printf.printf "%s\n%!" (display e)
+          Printf.printf "%s%s\n%!" (prefix ()) (display e)
         end
 
 let step1 () =
@@ -200,10 +204,10 @@ let step1 () =
     | Some e ->
       begin
         match step false reduce e with
-          | None -> Printf.printf "-> %s\n%!" (display e)
+          | None -> Printf.printf "%s-> %s\n%!" (prefix ()) (display e)
           | Some re ->
             begin
-              Printf.printf "-> %s\n%!" (display re)
+              Printf.printf "%s-> %s\n%!" (prefix ()) (display re)
             end
       end
 
@@ -217,21 +221,21 @@ let eval_cmd = function
   | Curr ->
     begin
       match !current with
-        | None -> Printf.printf "no current expression\n%!"
-        | Some e -> Printf.printf "%s\n%!" (display e)
+        | None -> Printf.printf "%sno current expression\n%!" (prefix ())
+        | Some e -> Printf.printf "%s%s\n%!" (prefix ()) (display e)
     end
 
   | Norm ->
     begin
       match !current with
-        | None -> Printf.printf "no current expression\n%!"
+        | None -> Printf.printf "%sno current expression\n%!" (prefix ())
         | Some e ->
           begin
             match norm e with
-              | None -> Printf.printf "%s\n%!" (display e)
+              | None -> Printf.printf "%s%s\n%!" (prefix ()) (display e)
               | Some re ->
                 begin
-                  Printf.printf "%s\n%!" (display re)
+                  Printf.printf "%s%s\n%!" (prefix ()) (display re)
                 end
           end
     end
@@ -243,14 +247,14 @@ let eval_cmd = function
   | StepC a ->
     begin
       match !current with
-        | None -> Printf.printf "no current expression\n%!"
+        | None -> Printf.printf "%sno current expression\n%!" (prefix ())
         | Some e ->
           begin
             match step false (reduce_if a) e with
-              | None -> Printf.printf "-> %s\n%!" (display e)
+              | None -> Printf.printf "%s-> %s\n%!" (prefix ()) (display e)
               | Some re ->
                 begin
-                  Printf.printf "-> %s\n%!" (display re)
+                  Printf.printf "%s-> %s\n%!" (prefix ()) (display re)
                 end
           end
     end
@@ -260,7 +264,13 @@ let eval_cmd = function
 (* Evaluate a top-level form. *)
 
 let eval_form = function
-  | Def (i, e) -> add_to_env i e
+  | Def (i, e) -> 
+    begin
+      if !literate_mode then
+        Printf.printf "%sdef %s %s\n%!"
+          (prefix ()) i (string_of_expr e);
+      add_to_env i e
+    end
 
   | Expr e -> 
     let de = desugar e in
@@ -347,7 +357,10 @@ let load_file filename =
   in
   let lexbuf =
     if is_literate filename then
-      Lexing.from_string (process_literate_file channel)
+      begin
+        literate_mode := true;
+        Lexing.from_string (process_literate_file channel)
+      end
     else
       Lexing.from_channel channel
   in

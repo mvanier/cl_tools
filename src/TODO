@@ -3,19 +3,6 @@ TODO
 
 **********
 
-Modify literate programming syntax so code outputs are printed
-with two spaces at the front.
-
-Also modify so that input lines are printed in literate mode:
-
-  > def I' (S K K)
-  > (I' x)
-  > :c :n
-
-Need a "literate_syntax" variable.
-
-**********
-
 Commands to implement:
 
 :scn S 3  ; reduce third S, going depth-first
@@ -23,6 +10,7 @@ Commands to implement:
 **********
 
 Add Y as a primitive combinator?
+Or as a built-in combinator?
 
 **********
 
