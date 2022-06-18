@@ -54,8 +54,10 @@ There are commands to reduce combinators in various ways.
 
 ## Literate syntax
 
-Literate filenames end in `.lclc`.  A literate file is the same as
-a regular clc file except:
+Normal clc filenames end in `.cl`.
+Literate filenames end in `.lc`.
+
+A literate file is the same as a regular clc file except:
 
 * Lines that are not literate comments start with "> ";
   the "> " is discarded and the rest of the line is processed
@@ -73,8 +75,8 @@ $ clc
 $ clc <filename>
 
   - runs clc on a file
-  - filename should end in `.clc`;
-    if filename ends in `.lclc`, use literate syntax
+  - filename should end in `.cl`;
+    if filename ends in `.lc`, use literate syntax
 
 ## Compiling
 
