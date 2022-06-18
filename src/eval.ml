@@ -302,7 +302,7 @@ let eval_from_input input =
           end
 
 (* File extension for literate files (.lc). *)
-let literate_ext = Str.regexp {|.*\.lc$|}
+let literate_ext = Str.regexp {|\.lc$|}
 
 (* Return `true` if the filename ends in
  * the literate extension. *)
