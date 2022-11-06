@@ -19,8 +19,13 @@ There are commands to reduce combinators in various ways.
 
 ## Syntax
 
-* Comments start with a semicolon and go to the end of the line ; like this.
-A literate comment starts with `;;|` and gets printed out when "evaluated".
+* Comments start with a semicolon and go to the end of the line:
+
+  ~~~
+  ; This is a comment
+  ~~~
+
+  A literate comment starts with `;;|` and gets printed out when "evaluated".
 
 * Variables: start with a lowercase letter, like this: `x y z`. 
 
