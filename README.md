@@ -58,12 +58,11 @@ Literate filenames end in `.lc`.
 
 A literate file is the same as a regular clc file except:
 
-* Lines that are not literate comments start with "> ";
-  the "> " is discarded and the rest of the line is processed
+* Lines that are not literate comments start with `> `;
+  the `> ` is discarded and the rest of the line is processed
   as usual.
 
-* All other lines have a ";;| " prepended to them, so they are all
-  literate comments.
+* All other lines are considered to be comments.
     
 ## Usage
 
