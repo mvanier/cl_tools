@@ -19,37 +19,31 @@ There are commands to reduce combinators in various ways.
 
 ## Syntax
 
-* Comments
-    ; like this
-    ;;| literate comment; gets printed out when evaluated
+* Comments start with a semicolon and go to the end of the line ; like this.
+A literate comment starts with `;;|` and gets printed out when "evaluated".
 
-* Variables: 
-    x y z ...  ; must start with a lower-case letter
+* Variables: start with a lowercase letter, like this: `x y z`. 
 
-* Combinators: 
-    S K I ...  ; must start with an upper-case letter
+* Combinators: start with an uppercase letter, like this: `S K I`.
 
-* Primitive combinators:
-    currently S K I B C W M
+* Primitive combinators: currently include: `S K I B C W M`.
 
-* Expressions:
-    (S K K x)  ; must be surrounded by parentheses;
-               ; application associates to the left,
-               ; so this is equivalent to: (((S K) K) x)
-    Entering an expression makes it the current expression,
-    but does not reduce it.
+* Expressions must be surrounded by parentheses, like this: `(S K K x)`.
+  Function application associates to the left, so this is equivalent to
+  `(((S K) K) x)`. Entering an expression makes it the current expression,
+  but does not reduce it.
 
-* Definitions:
-    def Q (K I)  ; defines new combinator `Q`
+* Definitions use the `def` keyword: `def Q (K I)` defines a new combinator
+  called `Q`.
 
-* Commands:
-    :q     -- quit  (ctrl-D also works)
-    :c     -- print current expression
-    :s     -- one reduction step (outermost redex)
-    :sc X  -- one reduction step (outermost redex, combinator X only)
-    :u     -- undo last step
-    :n     -- reduce to normal form
-    :ms N  -- set maximum reduction step to N before it's considered
+* Commands start with a colon (`:`) and include:
+  * `:q`      quit  (ctrl-D also works)
+  * `:c`      print current expression
+  * `:s`      one reduction step (outermost redex)
+  * `:sc X`   one reduction step (outermost redex, combinator X only)
+  * `:u`      undo last step
+  * `:n`      reduce to normal form
+  * `:ms N`   set maximum reduction step to N before it's considered
               an infinite loop (default = 25)
 
 ## Literate syntax
@@ -68,23 +62,25 @@ A literate file is the same as a regular clc file except:
     
 ## Usage
 
+~~~
 $ clc
-
-  - starts a REPL
+  ; starts a REPL
   
 $ clc <filename>
-
-  - runs clc on a file
-  - filename should end in `.cl`;
-    if filename ends in `.lc`, use literate syntax
+  ; runs clc on a file
+  ; filename should end in `.cl`;
+  ; if filename ends in `.lc`, use literate syntax
+~~~
 
 ## Compiling
 
 This requires OCaml and opam to compile.  The `dune` compilation manager
 is needed, so if you don't have it, do
 
+~~~
 $ opam update
 $ opam install dune
+~~~
 
 Tested with OCaml 4.14.
 
