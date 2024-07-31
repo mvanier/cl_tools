@@ -6,8 +6,8 @@ Mike Vanier (mvanier@cms.caltech.edu).
 
 ## License
 
-GPL version 3. See: https://www.gnu.org/licenses/gpl-3.0.en.html
-or the file `LICENSE`.
+GPL version 3.
+See: https://www.gnu.org/licenses/gpl-3.0.en.html or the file `LICENSE`.
 
 ## Overview
 
@@ -21,11 +21,11 @@ There are commands to reduce combinators in various ways.
 
 * Comments start with a semicolon and go to the end of the line:
 
-  ~~~
-  ; This is a comment
-  ~~~
+    ```
+    ; This is a comment
+    ```
 
-  A literate comment starts with `;;|` and gets printed out when "evaluated".
+    A literate comment starts with `;;|` and gets printed out when "evaluated".
 
 * Variables: start with a lowercase letter, like this: `x y z`. 
 
@@ -66,7 +66,7 @@ A literate file is the same as a regular clc file except:
     
 ## Usage
 
-~~~
+```
 $ clc
   ; starts a REPL
   
@@ -74,21 +74,21 @@ $ clc <filename>
   ; runs clc on a file
   ; filename should end in `.cl`;
   ; if filename ends in `.lc`, use literate syntax
-~~~
+```
 
 ## Compiling
 
-This requires OCaml and opam to compile.  The `dune` compilation manager
-is needed, so if you don't have it, do
+This requires OCaml and opam to compile.  
+The `dune` compilation manager is needed, so if you don't have it, do
 
-~~~
+```
 $ opam update
 $ opam install dune
-~~~
+```
 
-Tested with OCaml 4.14.
+Tested with OCaml 5.2.0.
 
-Go into the `src` directory and type `make` to build and install.
+Go into the `src/clc` directory and type `make` to build and install.
 Type `make clean` to clean up compilation artifacts.
 
 You will want to change the install location in the Makefile before compiling.
