@@ -5,6 +5,7 @@
     lexer_utils lexer
     parser_utils parser repl
     eval)
+  (libraries str)
   (modes byte))
 
 (ocamllex lexer)
@@ -24,7 +25,7 @@
 (executable
   (name main)
   (modules main)
-  (libraries Str clclib)
+  (libraries clclib)
   (modes byte) )
 
 ;; By default, dune treats warnings as errors.
