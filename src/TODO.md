@@ -3,20 +3,12 @@ TODO
 
 **********
 
-Add support for entering lambda calculus expressions
-and converting them to combinators:
-
-* SKI only
-* BCKWI only
-
-Syntax:
+Improve the definition syntax so I can write e.g.
 
 ```
-(\xyz (x z (y z)))
-:C SKI
---> S
-:C BCKWI
-[whatever]
+def F = (K I)
+def S (f g x) = (f x (g x))
+def X (x) = (x K S K)  ; universal combinator
 ```
 
 **********
