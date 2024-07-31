@@ -1,7 +1,14 @@
-TODO
-====
+# TODO
 
-**********
+## Syntax
+
+### Implementation
+
+Change all the syntax so that `;` ends the input.
+Use `//` for comments and `///` for literate comments.
+Write the parser in Menhir.
+
+### Definitions
 
 Improve the definition syntax so I can write e.g.
 
@@ -11,17 +18,14 @@ def S (f g x) = (f x (g x))
 def X (x) = (x K S K)  ; universal combinator
 ```
 
-**********
+## Commands
 
 Commands to implement:
 
 :scn S 3  ; reduce third S, going depth-first
 
-**********
+## Other
 
 Add Y as a primitive combinator?
 Or as a built-in combinator?
-
-**********
-
 
