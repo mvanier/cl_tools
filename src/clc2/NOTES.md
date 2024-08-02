@@ -12,6 +12,7 @@ This is a complete refactor of clc.
   conversions from lambda calculus in the language
 
 ```
+// Definitions.
 def I x = x ;
 def K x y = x ;
 def B f g x = f (g x) ;
@@ -20,10 +21,34 @@ def W f x = f x x ;
 def S f g x = f x (g x) ;
 def X x = x K S K ;
 def Y x = x S K ;
-#n : S K K x ;
+def Q = K I ;
+
+// Make working expression.
+S K K x ;
+
+// Normalize expression.
+#n ;
+--> K x (K x)
 --> x
+
+// Single-stepping.
+S K K x ;
+#s ;
+--> K x (K x)
+#s ;
+--> x
+
+// Make working expression and normalize.
+#n  S K K x ;
+--> K x (K x)
+--> x
+
+// Convert lambda calculus to SKI combinators.
 #c ski : \fgx . f x (g x) ;
 --> S
+
+// Change parameters.
+#p max_steps = 1000 ;   // maximum normalization steps before stopping.
 ```
 
 ## Evaluation
