@@ -3,7 +3,8 @@
   (modules
     ast
     )
-  (modes byte))
+  (modes byte)
+  )
 
 ;(ocamllex lexer)
 

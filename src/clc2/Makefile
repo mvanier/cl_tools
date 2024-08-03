@@ -1,10 +1,11 @@
 BUILD   = ./_build/default
 NAME    = clc2
 INSTALL = ${HOME}/_/bin
-LIB		= clclib.cma
+LIB		= clc2lib.cma
 EXT		= exe
 
-default: lang
+#default: lang
+default: lib
 
 lib:
 	dune build ${LIB}
