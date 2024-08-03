@@ -1,10 +1,12 @@
 (library
   (name clc2lib)
   (modules
+    pprint
     ast
     )
-  (modes byte)
-  )
+  (libraries sexplib)
+  (preprocess (pps ppx_sexp_conv))
+  (modes byte))
 
 ;(ocamllex lexer)
 
