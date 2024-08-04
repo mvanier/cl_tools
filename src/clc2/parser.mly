@@ -10,71 +10,23 @@ type bindings = binding list * expr list
 %}
 
 (* Punctuation. *)
-%token <Loc.loc> LPAREN
-%token <Loc.loc> RPAREN
-%token <Loc.loc> LBRACE
-%token <Loc.loc> RBRACE
-%token <Loc.loc> COMMA
-%token <Loc.loc> SEMI
-%token <Loc.loc> LBRACK
-%token <Loc.loc> RBRACK
+%token LPAREN
+%token RPAREN
+%token SEMI
+%token EQ
 
 (* Keywords. *)
-%token <Loc.loc> CALL
-%token <Loc.loc> CATCH
-%token <Loc.loc> COND
-%token <Loc.loc> DEF
-%token <Loc.loc> DO
-%token <Loc.loc> ELSE
-%token <Loc.loc> FUN
-%token <Loc.loc> IF
-%token <Loc.loc> IN
-%token <Loc.loc> LET
-%token <Loc.loc> LETREC
-%token <Loc.loc> LETSTAR
-%token <Loc.loc> OP
-%token <Loc.loc> SET
-%token <Loc.loc> THROW
-%token <Loc.loc> TRY
-%token <Loc.loc> USE
-%token <Loc.loc> VAL
-%token <Loc.loc> VALREC
+%token DEF
 
 (* Identifiers. *)
-%token <Loc.loc * Utils.sym> ID
+%token <Utils.sym> ID
 
 (* Literals. *)
-%token <Loc.loc> UNIT
-%token <Loc.loc * bool>           BOOL
-%token <Loc.loc * Utils.longint>  INT
-%token <Loc.loc * Utils.rational> RAT
-%token <Loc.loc * float>          FLOAT
-%token <Loc.loc * string>         STR
-%token <Loc.loc * Utils.sym>      SYM
-
-(* Operators. *)
-%token <Loc.loc> EQ
-%token <Loc.loc> COLONEQ
-%token <Loc.loc> OROP
-%token <Loc.loc> ANDOP
-%token <Loc.loc * Utils.sym> INFIXOP0  (* <... >... =... !... *)
-%token <Loc.loc * Utils.sym> INFIXOP1  (* +... -... *)
-%token <Loc.loc * Utils.sym> INFIXOP2  (* *... /... *)
-%token <Loc.loc * Utils.sym> INFIXOP3  (* ^... *)
-%token <Loc.loc * Utils.sym> UNARYOP   (* ~... *)
+%token UNIT
+%token <int> INT
 
 %token EOF  (* end of file *)
 %token EOI  (* end of interactive input *)
-
-(* Operator precedence and associativity. *)
-%nonassoc COLONEQ
-%left     OROP
-%left     ANDOP
-%nonassoc INFIXOP0
-%left     INFIXOP1
-%left     INFIXOP2
-%right    INFIXOP3
-%nonassoc UNARYOP
 
 (* There are two entry points.
    One (`repl`) is for entering code in a REPL,

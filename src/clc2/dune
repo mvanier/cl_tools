@@ -3,13 +3,18 @@
   (modules
     pprint
     ast
+    parser
     lexer
     )
-  (libraries sexplib)
+  (libraries sexplib menhirLib)
   (preprocess (pps ppx_sexp_conv))
   (modes byte))
 
 (ocamllex lexer)
+
+(menhir 
+  (modules parser)
+  (flags --unused-tokens --exn-carries-state)) 
 
 ;(executable
 ;  (name main)
