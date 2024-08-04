@@ -21,3 +21,4 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+val print : form -> unit
