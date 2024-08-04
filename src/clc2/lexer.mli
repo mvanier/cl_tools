@@ -6,7 +6,7 @@ type lex_error =
   | LEX_UNRECOGNIZED
   | LEX_UNKNOWN_ESCAPE of char
 
-exception Lexer_error of Loc.loc * lex_error
+exception Lexer_error of lex_error
 
 val string_of_lex_error : lex_error -> string
 
