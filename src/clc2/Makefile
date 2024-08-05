@@ -4,8 +4,7 @@ INSTALL = ${HOME}/_/bin
 LIB		= clc2lib.cma
 EXT		= exe
 
-#default: lang
-default: lib
+default: lang
 
 lib:
 	dune build ${LIB}

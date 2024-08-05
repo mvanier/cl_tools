@@ -16,11 +16,11 @@
   (modules parser)
   (flags --unused-tokens --exn-carries-state)) 
 
-;(executable
-;  (name main)
-;  (modules main)
-;  (libraries clc2lib)
-;  (modes byte) )
+(executable
+  (name main)
+  (modules main)
+  (libraries clc2lib)
+  (modes byte) )
 
 ;; By default, dune treats warnings as errors.
 ;; This makes dune print warnings but not treat them as errors.
