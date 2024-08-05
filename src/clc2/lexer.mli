@@ -1,11 +1,7 @@
 (** Tokenizer *)
 
-type lex_error =
-  | LEX_UNTERMINATED_STRING
-  | LEX_UNTERMINATED_COMMENT
-  | LEX_UNRECOGNIZED
-  | LEX_UNKNOWN_ESCAPE of char
-
+type lex_error = LEX_UNRECOGNIZED
+  
 exception Lexer_error of lex_error
 
 val string_of_lex_error : lex_error -> string
