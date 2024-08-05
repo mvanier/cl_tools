@@ -32,7 +32,7 @@ let id_char =
 let id = id_char+
 
 rule lex filename = parse
-  | eof { EOI }
+  | eof { raise End_of_file }
   | ";" { EOI }
 
   (* single-line comments *)
