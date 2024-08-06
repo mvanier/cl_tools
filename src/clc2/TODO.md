@@ -2,7 +2,7 @@
 
 ## Intermediate representations
 
-Need IR2, which converts applications to a numeric form.
+Need IR2, which converts definitions to a numeric form.
 It's a bit like de Bruijn indices, but it's not that.
 
 ```

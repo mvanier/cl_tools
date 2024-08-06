@@ -4,6 +4,7 @@
     pprint
     ast
     ir
+    ir2
     parser
     lexer
     )
