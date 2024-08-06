@@ -1,19 +1,22 @@
-(** Intermediate representation 1. *)
+(** Intermediate representation 2. *)
 
 (*
 
-This IR is responsible for expanding out function applications
-into a more explicit form.  Specifically, it makes the implicit
-left-folding of applications explicit. So:
+This IR is responsible for changing the representation of definitions
+to a numeric form, reminiscent of (but distinct from) de Bruijn indices.
+In particular, variables are replaced by integers.
+This makes evaluation a bit simpler and avoids all possible problems
+with variable capture (though I don't think you would have any 
+such problems even without this pass).
 
 ```
-(a b c d e)
+def S x y z = ((x z) (y z))
 ```
 
-becomes:
+becomes (schematically):
 
 ```
-((((a b) c) d) e)
+def S = (3, [[0 2] [1 2]]);
 ```
 
 *)
@@ -30,13 +33,18 @@ type expr =
   | App   of expr * expr
 [@@deriving sexp_of]
 
+type dexpr =
+  | DVar of int
+  | DConst of id
+  | DApp of dexpr * dexpr
+
 type form =
-  | Def  of id * id list * expr   (* const * var * expr *)
+  | Def  of int * dexpr
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]
 
 val print : form -> unit
 
-val convert : Ast.form -> form
+val convert : Ir.form -> form
 
