@@ -47,7 +47,7 @@ form:
   | c = cmd  { Cmd c }
 
 def:
-  | DEF; id = CONST; LPAREN; args = list(VAR); RPAREN; EQ; e = expr {
+  | DEF; id = CONST; args = list(VAR); EQ; e = expr {
       Def (id, args, e)
     }
 
