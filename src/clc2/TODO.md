@@ -1,25 +1,5 @@
 # TODO for clc2
 
-## Bugs
-
-The IR conversion is wrong!
-
-```
-def S x y z = (x z (y z));
-```
-
-Should become:
-
-```
-def S x y z = ((x z) (y z));
-```
-
-But is actually:
-
-```
-def S x y z = (x (z (y z)));
-```
-
 ## Intermediate representations
 
 Need IR2, which converts applications to a numeric form.

@@ -37,7 +37,7 @@ let rec fold es =
     | []
     | [_] -> parse_err "fold: too few expressions"
     | [e1; e2] -> App (e1, e2)
-    | e1 :: es' -> App (e1, fold es')
+    | e1 :: e2 :: es' -> fold (App (e1, e2) :: es')
 
 let rec convert_expr expr =
   match expr with
