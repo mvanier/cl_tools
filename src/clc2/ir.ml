@@ -3,6 +3,8 @@ open Pprint
 
 module A = Ast
 
+exception Parse_error of string
+
 type id = string
 [@@deriving sexp_of]
 
@@ -28,12 +30,22 @@ let print form =
  * Conversion from AST.
  *)
 
-let convert_expr expr =
+let parse_err msg = raise (Parse_error msg)
+
+let rec fold es =
+  match es with
+    | []
+    | [_] -> parse_err "fold: too few expressions"
+    | [e1; e2] -> App (e1, e2)
+    | e1 :: es' -> App (e1, fold es')
+
+let rec convert_expr expr =
   match expr with
     | A.Var id -> Var id
     | A.Const id -> Const id
     | A.List es ->
-        failwith "TODO"
+        let es' = List.map convert_expr es in
+          fold es'
 
 let convert form =
   match form with

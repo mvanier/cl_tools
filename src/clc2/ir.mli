@@ -18,6 +18,8 @@ becomes:
 
 *)
 
+exception Parse_error of string
+
 type id = string
 
 type cmd = Ast.cmd
