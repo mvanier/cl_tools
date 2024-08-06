@@ -3,6 +3,7 @@
   (modules
     pprint
     ast
+    ir
     parser
     lexer
     )
