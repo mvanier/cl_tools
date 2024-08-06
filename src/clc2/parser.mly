@@ -20,7 +20,8 @@ open Ast
 %token QUIT
 
 (* Identifiers. *)
-%token <string> ID
+%token <string> CONST
+%token <string> VAR
 
 (* Literals. *)
 %token UNIT
@@ -46,16 +47,17 @@ form:
   | c = cmd  { Cmd c }
 
 def:
-  | DEF; id = ID; LPAREN; args = list(ID); RPAREN; EQ; e = expr {
+  | DEF; id = CONST; LPAREN; args = list(VAR); RPAREN; EQ; e = expr {
       Def (id, args, e)
     }
 
-  | DEF; id = ID; EQ; e = expr {
+  | DEF; id = CONST; EQ; e = expr {
       Def (id, [], e)
     }
 
 expr:
-  | id = ID { Atom id }
+  | id = CONST { Const id }
+  | id = VAR { Var id }
 
   | LPAREN; es = list(expr); RPAREN { List es }
 
@@ -64,3 +66,4 @@ cmd:
   | STEP { Step }
   | MAXSTEPS; i = INT { MaxSteps i }
   | QUIT { Quit }
+

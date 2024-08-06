@@ -26,10 +26,12 @@ let floating   = digits '.' digits exp?
 
 (*** Identifiers and identifier characters. ***)
 
-let id_char =
-  ['A' - 'Z' 'a' - 'z' '0' - '9' '\'' '*']
+let const_char = ['A' - 'Z']
+let var_char   = ['a' - 'z']
+let id_char    = ['A' - 'Z' 'a' - 'z' '0' - '9' '\'' '*']
 
-let id = id_char+
+let const = const_char id_char*
+let var = var_char id_char*
 
 rule lex filename = parse
   | eof { raise End_of_file }
@@ -58,7 +60,9 @@ rule lex filename = parse
 
   (* identifiers *)
 
-  | id as lxm { ID lxm }
+  | const as lxm { CONST lxm }
+
+  | var as lxm { VAR lxm }
 
   (* Anything else is an error. *)
 

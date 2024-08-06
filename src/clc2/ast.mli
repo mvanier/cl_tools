@@ -11,12 +11,13 @@ type cmd =
 [@@deriving sexp_of]
 
 type expr =
-  | Atom of id
-  | List of expr list
+  | Var   of id
+  | Const of id
+  | List  of expr list
 [@@deriving sexp_of]
 
 type form =
-  | Def  of id * id list * expr
+  | Def  of id * id list * expr   (* const * var * expr *)
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]
