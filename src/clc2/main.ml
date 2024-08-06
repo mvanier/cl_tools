@@ -29,6 +29,7 @@ let repl_test () =
       with
         | Lexer.Lexer_error err ->
           begin
+            Lexing.flush_input lexbuf;
             Printf.printf "Lexer error: %s\n%!"
               (Lexer.string_of_lex_error err);
             iter ()

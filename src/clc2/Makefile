@@ -14,6 +14,10 @@ lang: lib
 	cp ${BUILD}/main.${EXT} ${INSTALL}/${NAME}
 	chmod 755 ${INSTALL}/${NAME}
 
+conflicts:
+	cp ${BUILD}/parser.conflicts .
+
 clean:
 	dune clean
 	rm -f ${NAME}
+	rm -f parser.conflicts

@@ -4,6 +4,9 @@
 
 Write `ir2.ml`.
 
+Need to validate definitions;
+any free variables are forbidden!
+
 ## main
 
 Need basis.

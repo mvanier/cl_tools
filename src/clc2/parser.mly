@@ -43,16 +43,25 @@ repl:
 
 form:
   | d = def  { d }
-  | es = list(expr) { Expr (List es) }
+  | es = nonempty_list(expr) {
+      match es with
+        | [e] -> Expr e
+        | _ -> Expr (List es)
+    }
   | c = cmd  { Cmd c }
 
 def:
-  | DEF; id = CONST; args = list(VAR); EQ; es = list(expr) {
-      Def (id, args, List es)
+  | DEF; id = CONST; args = nonempty_list(VAR);
+    EQ; es = nonempty_list(expr) {
+      match es with
+        | [e] -> Def (id, args, e)
+        | _ -> Def (id, args, List es)
     }
 
-  | DEF; id = CONST; EQ; e = expr {
-      Def (id, [], e)
+  | DEF; id = CONST; EQ; es = nonempty_list(expr) {
+      match es with
+        | [e] -> Def (id, [], e)
+        | _ -> Def (id, [], List es)
     }
 
 expr:
