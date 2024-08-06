@@ -15,40 +15,40 @@ This is a complete refactor of clc.
 // Definitions.
 def I x = x ;
 def K x y = x ;
-def B f g x = f (g x) ;
-def C f x y = f y x ;
-def W f x = f x x ;
-def S f g x = f x (g x) ;
-def X x = x K S K ;
-def Y x = x S K ;
-def Q = K I ;
+def B f g x = (f (g x)) ;
+def C f x y = (f y x) ;
+def W f x = (f x x) ;
+def S f g x = (f x (g x)) ;
+def X x = (x K S K) ;
+def Y x = (x S K) ;
+def Q = (K I) ;
 
-// Make working expression.
-S K K x ;
+// Enter a working expression.
+(S K K x) ;
 
-// Normalize expression.
+// Normalize the working expression.
 #n ;
 --> K x (K x)
 --> x
 
 // Single-stepping.
-S K K x ;
+(S K K x) ;
 #s ;
 --> K x (K x)
 #s ;
 --> x
 
 // Make working expression and normalize.
-#n  S K K x ;
+#n  (S K K x) ;
 --> K x (K x)
 --> x
 
 // Convert lambda calculus to SKI combinators.
-#c ski : \fgx . f x (g x) ;
+#c ski : (\fgx . f x (g x)) ;
 --> S
 
 // Change parameters.
-#p max_steps = 1000 ;   // maximum normalization steps before stopping.
+#maxsteps 1000 ;   // maximum normalization steps before stopping.
 ```
 
 ## Evaluation
@@ -57,7 +57,10 @@ S K K x ;
 
 1. Convert to AST
 2. Expand to IR
-3. Convert to deBruijn representation
+3. Convert to number representation:
+   def S x y z = (x z (y z));
+   -->
+   def S = [3, (0 2 (1 2))];
 
 ### Top-level expressions
 
@@ -79,7 +82,7 @@ S K K x ;
 #max-steps : 1000 ;
 
 // Set working expression
-#w : S K K x ;
+(S K K x) ;
 
 // One evaluation step of working expression
 #s ;
