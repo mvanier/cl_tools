@@ -16,4 +16,6 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+val convert : Ast.form -> form
+
 val print : form -> unit

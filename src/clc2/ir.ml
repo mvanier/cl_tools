@@ -19,5 +19,8 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+let convert form =
+  failwith "TODO"
+
 let print form = 
   sexp_of_form form |> print_sexp
