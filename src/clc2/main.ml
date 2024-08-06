@@ -6,33 +6,41 @@ let progname = "clc2"
 
 let repl_test () =
   let lexbuf = Lexing.from_channel stdin in
-  let f = use_lexbuf_repl "<repl>" lexbuf in
+  let lex = Lexer.lex "<repl>" in
   let prompt = ">> " in
   let rec iter () =
     begin
       Printf.printf "%s%!" prompt;
       try
-        match f env with
-          | None -> 
+        match Parser.repl lex lexbuf with
+          | None -> iter ()
+          | Some form ->
             begin
-              Printf.printf "  \n%!";  (* an ugly hack to make exiting look clean *)
-              exit 0
-            end
-          | Some (env', v) ->
-            begin
-              (* TODO: Print the form. *)
-              iter env'
+              Ast.print form;
+              iter ()
             end
       with
-        | Lexer.Lexer_error (l, err) ->
+        | Lexer.Lexer_error err ->
           begin
             Printf.printf "Lexer error: %s\n%!"
               (Lexer.string_of_lex_error err);
-            iter env
+            iter ()
           end
+        | Parser.Error _ ->
+            let pos = Lexing.lexeme_start_p lexbuf in
+            let pos = { pos with pos_fname = "<repl>" } in
+            let loc =
+              Printf.sprintf "file: %s, line: %d, char: %d"
+                pos.pos_fname pos.pos_lnum (pos.pos_cnum - pos.pos_bol + 1)
+            in
+              begin
+                Lexing.flush_input lexbuf;
+                Printf.printf "Parser error: %s\n%!" loc;
+                iter ()
+              end
     end
   in
-    iter env
+    iter ()
 
 let _ = 
   match Sys.argv with
