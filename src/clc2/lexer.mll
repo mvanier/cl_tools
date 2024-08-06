@@ -15,14 +15,7 @@ let string_of_lex_error = function
 }
 
 let whitespace = [' ' '\t' '\r']
-let digit      = ['0' - '9']+
-let digits     = digit+
-let hexdigit   = ['0' - '9' 'a' - 'f']
-let octdigit   = ['0' - '7']
-let bindigit   = ['0' - '1']
-let sign       = ['+' '-']?
-let exp        = ['e' 'E'] sign digits
-let floating   = digits '.' digits exp?
+let digits     = ['0' - '9']+
 
 (*** Identifiers and identifier characters. ***)
 
@@ -54,15 +47,22 @@ rule lex filename = parse
 
   | "=" { EQ }
 
-  (* integers *)
+  (* Integers. *)
 
   | digits as lxm { INT (int_of_string lxm) }
 
-  (* identifiers *)
+  (* Identifiers. *)
 
   | const as lxm { CONST lxm }
 
   | var as lxm { VAR lxm }
+
+  (* Commands. *)
+
+  | "#q" { QUIT }
+  | "#n" { NORM }
+  | "#s" { STEP }
+  | "#maxsteps" { MAXSTEPS }
 
   (* Anything else is an error. *)
 
