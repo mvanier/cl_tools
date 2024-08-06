@@ -1,10 +1,12 @@
 open Sexplib.Conv
 open Pprint
 
+module A = Ast
+
 type id = string
 [@@deriving sexp_of]
 
-type cmd = Ast.cmd
+type cmd = A.cmd
 [@@deriving sexp_of]
 
 type expr =
@@ -19,8 +21,23 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
-let convert form =
-  failwith "TODO"
-
 let print form = 
   sexp_of_form form |> print_sexp
+
+(*
+ * Conversion from AST.
+ *)
+
+let convert_expr expr =
+  match expr with
+    | A.Var id -> Var id
+    | A.Const id -> Const id
+    | A.List es ->
+        failwith "TODO"
+
+let convert form =
+  match form with
+    | A.Def (id, ids, e) -> Def (id, ids, convert_expr e)
+    | A.Expr e -> Expr (convert_expr e)
+    | A.Cmd c -> Cmd c
+
