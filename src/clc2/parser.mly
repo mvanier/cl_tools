@@ -43,12 +43,12 @@ repl:
 
 form:
   | d = def  { d }
-  | e = expr { Expr e }
+  | es = list(expr) { Expr (List es) }
   | c = cmd  { Cmd c }
 
 def:
-  | DEF; id = CONST; args = list(VAR); EQ; e = expr {
-      Def (id, args, e)
+  | DEF; id = CONST; args = list(VAR); EQ; es = list(expr) {
+      Def (id, args, List es)
     }
 
   | DEF; id = CONST; EQ; e = expr {

@@ -15,16 +15,16 @@ This is a complete refactor of clc.
 // Definitions.
 def I x = x ;
 def K x y = x ;
-def B f g x = (f (g x)) ;
-def C f x y = (f y x) ;
-def W f x = (f x x) ;
-def S f g x = (f x (g x)) ;
-def X x = (x K S K) ;
-def Y x = (x S K) ;
-def Q = (K I) ;
+def B f g x = f (g x) ;
+def C f x y = f y x ;
+def W f x = f x x ;
+def S f g x = f x (g x) ;
+def X x = x K S K ;
+def Y x = x S K ;
+def Q = K I ;
 
 // Enter a working expression.
-(S K K x) ;
+S K K x ;
 
 // Normalize the working expression.
 #n ;
@@ -39,7 +39,7 @@ def Q = (K I) ;
 --> x
 
 // Make working expression and normalize.
-#n  (S K K x) ;
+#n  S K K x ;
 --> K x (K x)
 --> x
 
@@ -82,7 +82,7 @@ def Q = (K I) ;
 #max-steps : 1000 ;
 
 // Set working expression
-(S K K x) ;
+S K K x ;
 
 // One evaluation step of working expression
 #s ;
