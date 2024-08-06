@@ -5,7 +5,7 @@
     utils
     ast
     ir
-    ;ir2
+    ir2
     parser
     lexer
     )

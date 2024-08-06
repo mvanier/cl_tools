@@ -21,6 +21,7 @@ becomes:
 open Utils
 
 type cmd = Ast.cmd
+[@@deriving sexp_of]
 
 type expr =
   | Var   of id

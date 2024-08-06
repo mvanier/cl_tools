@@ -21,9 +21,10 @@ def S = (3, [[0 2] [1 2]]);
 
 *)
 
-type id = string
+open Utils
 
 type cmd = Ast.cmd
+[@@deriving sexp_of]
 
 type expr =
   | Var   of id
@@ -32,9 +33,10 @@ type expr =
 [@@deriving sexp_of]
 
 type dexpr =
-  | DVar of int
+  | DVar   of int
   | DConst of id
-  | DApp of dexpr * dexpr
+  | DApp   of dexpr * dexpr
+[@@deriving sexp_of]
 
 type form =
   | Def  of int * dexpr

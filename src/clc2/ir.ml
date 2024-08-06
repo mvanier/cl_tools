@@ -26,8 +26,6 @@ let print form =
  * Conversion from AST.
  *)
 
-let parse_err msg = raise (Parse_error msg)
-
 let rec fold es =
   match es with
     | []
