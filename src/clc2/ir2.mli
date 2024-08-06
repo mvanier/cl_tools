@@ -21,8 +21,6 @@ def S = (3, [[0 2] [1 2]]);
 
 *)
 
-exception Parse_error of string
-
 type id = string
 
 type cmd = Ast.cmd

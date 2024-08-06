@@ -1,0 +1,4 @@
+(** Utilities. *)
+
+type id = string
+

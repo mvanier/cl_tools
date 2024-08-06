@@ -2,6 +2,7 @@
   (name clc2lib)
   (modules
     pprint
+    utils
     ast
     ir
     ;ir2
