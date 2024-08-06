@@ -1,6 +1,7 @@
 (* The interpreter: entry point. *)
 
 open Clc2lib
+open Utils
 
 let progname = "clc2"
 
@@ -46,7 +47,7 @@ let repl_test () =
                 Printf.printf "Parser error: %s\n%!" loc;
                 iter ()
               end
-        | Ir.Parse_error msg ->
+        | Parse_error msg ->
             begin
               Printf.printf "Parse error: %s\n%!" msg;
               iter ()

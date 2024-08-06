@@ -1,8 +1,6 @@
 open Sexplib.Conv
 open Pprint
-
-type id = string
-[@@deriving sexp_of]
+open Utils
 
 type cmd =
   | Norm

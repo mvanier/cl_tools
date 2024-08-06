@@ -1,7 +1,6 @@
 (* Abstract syntax tree. *)
 
-type id = string
-[@@deriving sexp_of]
+open Utils
 
 type cmd =
   | Norm

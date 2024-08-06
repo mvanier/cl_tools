@@ -1,12 +1,8 @@
 open Sexplib.Conv
 open Pprint
+open Utils
 
 module A = Ast
-
-exception Parse_error of string
-
-type id = string
-[@@deriving sexp_of]
 
 type cmd = A.cmd
 [@@deriving sexp_of]
