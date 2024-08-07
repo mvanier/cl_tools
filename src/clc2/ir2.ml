@@ -32,6 +32,18 @@ let print form =
  * Conversion from IR.
  *)
 
-let convert form =
+let rec convert_expr e =
+  match e with
+    | I.Var id -> Var id
+    | I.Const id -> Const id
+    | I.App (e1, e2) -> App (convert_expr e1, convert_expr e2)
+
+let rec convert_def id vars e =
   failwith "TODO"
+
+let convert form =
+  match form with
+    | I.Def (id, vars, e) -> convert_def id vars e
+    | I.Expr e -> Expr (convert_expr e)
+    | I.Cmd c -> Cmd c
 
