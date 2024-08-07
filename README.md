@@ -19,8 +19,14 @@ Combinator expressions are entered as S-expressions.
 You can define new combinators in terms of old ones.
 There are commands to reduce combinators in various ways.
 
-### `clx`
+### `clc2`
 
-`clx` is a tool for converting lambda calculus expressions
-to combinatory logic expressions in a variety of ways.
+`clc2` is an upgraded version of `clc` which will replace `clc`.
+
+Features:
+
+* nicer syntax (input and output)
+
+* tools for converting lambda calculus expressions
+  to combinatory logic expressions in a variety of ways
 
