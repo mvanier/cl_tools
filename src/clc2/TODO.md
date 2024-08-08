@@ -1,11 +1,8 @@
 # TODO for clc2
 
-## Intermediate representations
+## evaluator
 
-Write `ir2.ml`.
-
-Need to validate definitions;
-any free variables are forbidden!
+TODO
 
 ## main
 
