@@ -19,8 +19,15 @@ type dexpr =
   | DApp   of dexpr * dexpr
 [@@deriving sexp_of]
 
+type def =
+  {
+    size : int;
+    body : dexpr;
+  }
+[@@deriving sexp_of]
+
 type form =
-  | Def  of id * int * dexpr
+  | Def  of id * def
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]
@@ -50,14 +57,14 @@ let rec convert_def_expr vars e =
     | I.App (e1, e2) ->
         DApp (convert_def_expr vars e1, convert_def_expr vars e2)
 
-let convert_def id vars e =
+let convert_def vars e =
   let len = List.length vars in
   let de = convert_def_expr vars e in
-    Def (id, len, de)
+    { size = len; body = de }
 
 let convert form =
   match form with
-    | I.Def (id, vars, e) -> convert_def id vars e
+    | I.Def (id, vars, e) -> Def (id, convert_def vars e)
     | I.Expr e -> Expr (convert_expr e)
     | I.Cmd c -> Cmd c
 

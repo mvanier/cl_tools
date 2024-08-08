@@ -38,8 +38,15 @@ type dexpr =
   | DApp   of dexpr * dexpr
 [@@deriving sexp_of]
 
+type def =
+  {
+    size : int;
+    body : dexpr;
+  }
+[@@deriving sexp_of]
+
 type form =
-  | Def  of id * int * dexpr  (* name, #vars, dexpr *)
+  | Def  of id * def
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]
