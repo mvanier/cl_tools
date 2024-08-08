@@ -6,3 +6,7 @@ type id = string
 exception Parse_error of string
 
 let parse_err msg = raise (Parse_error msg)
+
+exception Compile_error of string
+
+let compile_err msg = raise (Compile_error msg)

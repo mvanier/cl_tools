@@ -38,8 +38,17 @@ let rec convert_expr e =
     | I.Const id -> Const id
     | I.App (e1, e2) -> App (convert_expr e1, convert_expr e2)
 
+let rec convert_def_expr vars e =
+  match e with
+    | I.Var id -> failwith "TODO"
+    | I.Const c -> DConst c
+    | I.App (e1, e2) ->
+        DApp (convert_def_expr vars e1, convert_def_expr vars e2)
+
 let convert_def id vars e =
-  failwith "TODO"
+  let len = List.length vars in
+  let de = convert_def_expr vars e in
+    Def (len, de)
 
 let convert form =
   match form with

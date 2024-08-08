@@ -5,4 +5,8 @@ type id = string
 
 exception Parse_error of string
 
+exception Compile_error of string
+
 val parse_err : string -> 'a
+
+val compile_err : string -> 'a
