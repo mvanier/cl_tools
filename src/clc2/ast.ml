@@ -3,8 +3,8 @@ open Pprint
 open Utils
 
 type cmd =
-  | Norm
   | Step
+  | Norm
   | MaxSteps of int
   | Quit
 [@@deriving sexp_of]

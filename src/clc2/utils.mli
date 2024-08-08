@@ -10,3 +10,5 @@ exception Compile_error of string
 val parse_err : string -> 'a
 
 val compile_err : string -> 'a
+
+val runtime_err : string -> 'a

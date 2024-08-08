@@ -10,3 +10,7 @@ let parse_err msg = raise (Parse_error msg)
 exception Compile_error of string
 
 let compile_err msg = raise (Compile_error msg)
+
+exception Runtime_error of string
+
+let runtime_err msg = raise (Runtime_error msg)
