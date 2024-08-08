@@ -30,7 +30,7 @@ type expr =
 [@@deriving sexp_of]
 
 type form =
-  | Def  of id * id list * expr   (* const * var * expr *)
+  | Def  of id * id list * expr   (* name, var, expr *)
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]

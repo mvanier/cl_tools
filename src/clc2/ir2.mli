@@ -39,7 +39,7 @@ type dexpr =
 [@@deriving sexp_of]
 
 type form =
-  | Def  of int * dexpr
+  | Def  of id * int * dexpr  (* name, #vars, dexpr *)
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]

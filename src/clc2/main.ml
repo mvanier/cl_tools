@@ -16,17 +16,18 @@ let repl_test () =
         match Parser.repl lex lexbuf with
           | None -> iter ()
           | Some ast ->
-            begin
-              Printf.printf "AST:\n\n";
-              Ast.print ast;
               let ir = Ir.convert ast in
+              let ir2 = Ir2.convert ir in
                 begin
+                  Printf.printf "AST:\n\n";
+                  Ast.print ast;
                   Printf.printf "\nIR:\n\n";
                   Ir.print ir;
+                  Printf.printf "\nIR2:\n\n";
+                  Ir2.print ir2;
                   Printf.printf "\n%!";
                   iter ()
                 end
-            end
       with
         | Lexer.Lexer_error err ->
           begin
@@ -50,6 +51,11 @@ let repl_test () =
         | Parse_error msg ->
             begin
               Printf.printf "Parse error: %s\n%!" msg;
+              iter ()
+            end
+        | Compile_error msg ->
+            begin
+              Printf.printf "Compile error: %s\n%!" msg;
               iter ()
             end
     end

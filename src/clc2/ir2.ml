@@ -20,7 +20,7 @@ type dexpr =
 [@@deriving sexp_of]
 
 type form =
-  | Def  of int * dexpr
+  | Def  of id * int * dexpr
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]
@@ -40,7 +40,12 @@ let rec convert_expr e =
 
 let rec convert_def_expr vars e =
   match e with
-    | I.Var id -> failwith "TODO"
+    | I.Var id ->
+      begin
+        match List.find_index (fun v -> id = v) vars with
+          | None -> compile_err "invalid combinator"
+          | Some i -> DVar i
+      end
     | I.Const c -> DConst c
     | I.App (e1, e2) ->
         DApp (convert_def_expr vars e1, convert_def_expr vars e2)
@@ -48,7 +53,7 @@ let rec convert_def_expr vars e =
 let convert_def id vars e =
   let len = List.length vars in
   let de = convert_def_expr vars e in
-    Def (len, de)
+    Def (id, len, de)
 
 let convert form =
   match form with
