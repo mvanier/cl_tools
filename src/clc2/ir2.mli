@@ -51,6 +51,8 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+val print_expr : expr -> unit
+
 val print : form -> unit
 
 val convert : Ir.form -> form

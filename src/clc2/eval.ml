@@ -26,7 +26,7 @@ let get_env id = Hashtbl.find env id
 
 (* Display an expression. *)
 let show_expr e =
-  ()  (* TODO *)
+  print_expr e
 
 (* Reduce the outermost redex of an expression.
    Return `None` if the expression can't be reduced,

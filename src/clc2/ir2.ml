@@ -32,6 +32,9 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+let print_expr expr = 
+  sexp_of_expr expr |> print_sexp
+
 let print form = 
   sexp_of_form form |> print_sexp
 
