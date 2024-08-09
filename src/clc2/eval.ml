@@ -39,7 +39,8 @@ let show_expr e =
    Return `None` if the expression can't be reduced,
    `Some <new_expr>` if it can. *)
 let reduce e =
-  (* Apply a combinator to its arguments. *)
+  (* Apply a combinator to its arguments,
+     generating a new expression. *)
   let apply { arity; body } args =
     failwith "TODO"
   in
