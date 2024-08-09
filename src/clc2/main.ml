@@ -64,7 +64,7 @@ let repl_test () =
 
 let _ = 
   match Sys.argv with
-    | [| _ |] ->
+    | [| _; "-test" |] ->
       begin
         try 
           repl_test ()

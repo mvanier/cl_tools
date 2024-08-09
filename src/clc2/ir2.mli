@@ -38,15 +38,15 @@ type dexpr =
   | DApp   of dexpr * dexpr
 [@@deriving sexp_of]
 
-type def =
+type comb =
   {
-    size : int;
+    arity : int;
     body : dexpr;
   }
 [@@deriving sexp_of]
 
 type form =
-  | Def  of id * def
+  | Def  of id * comb
   | Expr of expr
   | Cmd  of cmd
 [@@deriving sexp_of]
