@@ -24,6 +24,12 @@ let get_env id = Hashtbl.find env id
  * Utilities.
  * ---------------------------------------------------------------------- *)
 
+(* Flatten an expression from the leftmost side. *)
+let rec left_flatten e =
+  match e with
+    | App (e1, e2) -> left_flatten e1 @ [e2]
+    | _ -> [e]
+
 (* Display an expression. *)
 let show_expr e =
   print_expr e
