@@ -130,6 +130,14 @@ let load_basis () =
   let lexbuf = Lexing.from_string Basis.basis in
     load "<basis>" lexbuf
 
+let load_file filename =
+  let in_chan = open_in filename in
+  let lexbuf = Lexing.from_channel in_chan in
+    begin
+      load filename lexbuf;
+      close_in in_chan
+    end
+
 let end_program () =
   begin
     Printf.printf "  \n%!";  (* an ugly hack to make exiting look clean *)
@@ -149,6 +157,12 @@ let _ =
         try 
           load_basis ();
           repl ()
+        with End_of_file -> end_program ()
+      end
+    | [| _; filename |] ->
+      begin
+        try 
+          load_file filename
         with End_of_file -> end_program ()
       end
     | _ -> 

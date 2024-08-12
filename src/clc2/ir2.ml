@@ -75,7 +75,7 @@ let convert form =
  * Pretty-printing of expressions,
  * for use in REPL output.
  *)
-let pprint_expr expr =
+let pprint_expr ?(prefix = "--> ") expr =
   let rec left_flatten e =
     match e with
       | App (e1, e2) -> left_flatten e1 @ [e2]
@@ -95,5 +95,5 @@ let pprint_expr expr =
       | App _ ->
           "(" ^ String.concat " " (List.map show (left_flatten e)) ^ ")"
   in
-    Printf.printf "--> %s\n%!" (strip_parens (show expr))
+    Printf.printf "%s%s\n%!" prefix (strip_parens (show expr))
 

@@ -32,10 +32,6 @@ let rec left_flatten e =
     | App (e1, e2) -> left_flatten e1 @ [e2]
     | _ -> [e]
 
-(* Display an expression. *)
-let show_expr e =
-  pprint_expr e
-
 (* Convert a dexpr to an expr.
    This only works if the expression has no variables. *)
 let rec expr_of_dexpr d =
@@ -130,7 +126,7 @@ let step1 e =
     | None -> None
     | Some e' ->
       begin
-        show_expr e';
+        pprint_expr e';
         Some e'
       end
 
@@ -158,7 +154,11 @@ let norm () =
   in
     match !current with
       | None -> runtime_err "no current expression"
-      | Some e -> iter 0 e
+      | Some e ->
+        begin
+          pprint_expr ~prefix:"" e;
+          iter 0 e
+        end
 
 let set_max_steps i =
   if i > 0 then

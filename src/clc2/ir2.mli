@@ -55,7 +55,7 @@ type form =
 val print_expr : expr -> unit
 
 (** Pretty-print an expression, for REPL output. *)
-val pprint_expr : expr -> unit
+val pprint_expr : ?prefix:string -> expr -> unit
 
 (** Print a form. *)
 val print : form -> unit
