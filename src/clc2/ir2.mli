@@ -51,9 +51,15 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+(** Print an expression. *)
 val print_expr : expr -> unit
 
+(** Pretty-print an expression, for REPL output. *)
+val pprint_expr : expr -> unit
+
+(** Print a form. *)
 val print : form -> unit
 
+(** Convert an IR form to a form. *)
 val convert : Ir.form -> form
 

@@ -71,3 +71,29 @@ let convert form =
     | I.Expr e -> Expr (convert_expr e)
     | I.Cmd c -> Cmd c
 
+(*
+ * Pretty-printing of expressions,
+ * for use in REPL output.
+ *)
+let pprint_expr expr =
+  let rec left_flatten e =
+    match e with
+      | App (e1, e2) -> left_flatten e1 @ [e2]
+      | _ -> [e]
+  in
+  let strip_parens s =
+    let len = String.length s in
+    if s.[0] = '(' && s.[len - 1] = ')' then
+      String.sub s 1 (len - 2)
+    else
+      s
+  in
+  let rec show e =
+    match e with
+      | Var id
+      | Const id -> id
+      | App _ ->
+          "(" ^ String.concat " " (List.map show (left_flatten e)) ^ ")"
+  in
+    Printf.printf "--> %s\n%!" (strip_parens (show expr))
+

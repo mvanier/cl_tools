@@ -1,6 +1,8 @@
 open Utils
 open Ir2
 
+let _debug msg = Printf.printf "%s\n%!" msg
+
 (* ----------------------------------------------------------------------
  * Global state.
  * ---------------------------------------------------------------------- *)
@@ -32,8 +34,7 @@ let rec left_flatten e =
 
 (* Display an expression. *)
 let show_expr e =
-  (* FIXME: Should left-flatten first. *)
-  print_expr e
+  pprint_expr e
 
 (* Reduce the outermost redex of an expression.
    Return `None` if the expression can't be reduced,
@@ -111,8 +112,6 @@ let norm () =
   let rec iter i e =
     if i >= !max_reductions then
       runtime_err "too many reductions - infinite loop?"
-    else if i = 0 then
-      ()
     else
       match step e with
         | None -> ()  (* done reducing *)
