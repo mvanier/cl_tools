@@ -12,13 +12,6 @@ K a b c --> a c
 K a b c d --> nothing!
 ```
 
-SUBTLE PROBLEM:
-
-- we left-flatten the form
-- we can only reduce a _prefix_ of the left-flattened form!
-
-Is this a good way to evaluate forms?  Probably not.
-
 ## Basis
 
 TODO
