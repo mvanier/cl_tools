@@ -1,0 +1,34 @@
+// Problems from chapter 9 of Smullyan's "To Mock a Mockingbird".
+
+#{
+*** PROBLEM 1 ***
+
+Definitions:
+def B x y z) = x (y z);
+def M x = x x;
+
+Problem:
+
+Given the combinators B and M, for an arbitrary combinator x,
+find F, the fixpoint of x, such that `x (F x) = F x`
+(Smullyan says `F` where we say `F x`;
+it's easier to work with `F` as a function.)
+
+Solution:
+
+def F x = M (B x M);
+};
+
+// B is built-in.
+def M x = x x;
+def F x = M (B x M);
+
+#{F x};
+F x;
+#s;
+#s;
+#s;
+#{= x (F x)};
+#{QED};
+
+
