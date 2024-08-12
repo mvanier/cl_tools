@@ -1,0 +1,27 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 12.
+
+== Definitions
+
+ego(X) = (X X) = X.              ; ego = egocentric
+hego(X) = forall x . (X x) = X.  ; hego = hopelessly egocentric
+fond(X, Y) = (X Y) = Y.
+
+== Problem
+
+Given:
+
+  ego((K x)).
+
+Prove:
+
+  fond(K, x).
+
+== Solution
+
+  ego((K x)) = ((K x) (K x)) = (K x).
+  ((K x) (K x)) = (K x (K x)) = x.
+  -> (K x) = x.
+  -> fond(K, x).
+
+QED.
+

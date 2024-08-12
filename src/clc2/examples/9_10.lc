@@ -1,0 +1,23 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 10.
+
+== Definitions
+
+fix(X, Y) = forall x . (X x) = Y.   ; fixated
+fond(X, Y) = (X Y) = Y.
+
+== Problem
+
+Given:
+
+  fix(X, Y)
+
+Prove:
+
+  fond(X, Y)
+
+== Solution
+
+fix(X, Y) = forall x . (X x) = Y.  Select x = Y.
+Then (X Y) = Y or fond(X, Y).
+QED.
+

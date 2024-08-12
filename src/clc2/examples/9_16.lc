@@ -1,0 +1,24 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 16.
+
+== Definitions
+
+== Problem
+
+Given:
+
+  (K x) = (K y)
+
+Prove:
+
+  x = y
+
+== Solution
+
+  If (K x) = (K y) then for any z:
+  ((K x) z) = ((K y) z).
+  -> ((K x) z) = x.
+  -> ((K y) z) = y.
+  -> x = y.
+
+QED.
+

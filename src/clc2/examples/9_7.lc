@@ -1,0 +1,21 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 7.
+
+== Definitions
+
+normal(X) = exists x . (X x) = x.
+happy(X) = exists x y . (X x) = y /\ (X y) = x.
+
+== Problem
+
+Given: normal(X).
+Prove: happy(X).
+
+== Solution
+
+normal(X)
+-> exists x . (X x) = x; call x -> x'
+-> (X x') = x'
+If x = x' and y = x', then (X x) = y /\ (X y) = x
+(x and y do not need to be distinct)
+QED.
+

@@ -1,0 +1,32 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 2.
+
+== Non-computational solution
+
+Given conditions C1 and C2 (existence of B and M),
+there is at least one combinator X which is its own fixpoint i.e.
+
+  exists X: (X X) = X
+
+=== Proof
+
+Assuming conditions C1 and C2, by problem 1 all combinators have fixpoints.
+Therefore, the combinator M has a fixpoint.  Therefore: 
+
+  exists R: (M R) = R 
+
+But by definition of M, (M R) = (R R). Therefore R = (R R). QED.
+
+== Computational solution
+
+To generate the fixpoint of M, compute F = (M (B M M)).
+
+> def F (M (B M M))
+
+Now (M F) = (F F) and also (M F) = F, so F = (F F).
+
+> F :c :ss 5
+
+> (F F) :c :ss 2 :sc F
+
+So F = (F F). QED.
+

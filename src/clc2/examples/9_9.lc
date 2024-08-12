@@ -1,0 +1,30 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 9.
+
+== Definitions
+
+ego(X) = (X X) = X.              ; ego = egocentric
+hego(X) = forall x . (X x) = X.  ; hego = hopelessly egocentric
+
+== Problem
+
+Given:
+  Conditions C1 and C2 (exists B, M).
+  exists K.
+
+Prove:
+
+  exists X . hego(X).
+
+== Solution
+
+Assume exists X' . K X' = X' (fixpoint of K).
+Then hego(X') since (X' x) = (K X' x) = X'.
+We can also find X':
+
+> def X' (M (B K M))
+> (X' x)
+> :c :ss 4
+  = X'
+
+QED.
+

@@ -1,0 +1,24 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 6.
+
+== Definition
+
+compat(A', B') = exists x y . (A' x) = y /\ (B' y) = x.
+
+== Problem
+
+Given: Conditions C1 and C2 i.e. B and M combinators exist.
+Prove: forall X' Y' . compat(X', Y').
+
+== Solution
+
+Pick two arbitrary combinators A' and B'.
+From conditions C1 and C2, we know that all combinators have fixpoints.
+So (B A' B') has a fixpoint.
+So exists x . (B A' B' x) = x.  Call this x x'.
+
+(B A' B' x') = (A' (B' x')) = x'
+Let y' = (B' x').
+So (A' y') = x' and (B' x') = y'.
+
+QED.
+

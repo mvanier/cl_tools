@@ -1,0 +1,23 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 11.
+
+== Definitions
+
+ego(X) = (X X) = X.              ; ego = egocentric
+hego(X) = forall x . (X x) = X.  ; hego = hopelessly egocentric
+
+== Problem
+
+Given:
+
+  ego(K) -> (K K) = K.
+
+Prove:
+
+  hego(K) -> forall x . (K x) = K.
+
+== Solution
+
+  (K x) = ((K K) x) = (K K x) = K.
+
+QED.
+

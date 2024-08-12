@@ -1,0 +1,13 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problems 13 to 15.
+
+These have been grouped together because they are so obvious.
+
+13. If (forall x . (A x) = A) then for any x and y, (A x) = (A y).
+    Proof: (A x) = A.  (A y) = A.  Therefore (A x) = (A y).
+
+14. If (forall x . (A x) = A), then for any x and y, ((A x) y) = A.
+    Proof: (A x) = A, so ((A x) y) = (A y) = A.
+
+15. If (forall x . (A x) = A), then for any x, (forall y . ((A x) y) = A).
+    Proof: (A x) = A, so ((A x) y) = (A y) = A.
+

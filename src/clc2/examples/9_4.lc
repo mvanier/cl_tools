@@ -1,0 +1,27 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 4.
+
+== Definition
+
+Ag(x) = forall y . exists z . (x z) = (y z).
+
+== Problem
+
+Assume B combinator exists and c = (B a b).
+Show: if Ag(c) then Ag(a).
+
+== Solution
+
+c = (B a b).
+Ag(c) -> forall y . exists z . (c z) = (y z).
+Show Ag(a) -> forall y . exists z . (a z) = (y z).
+
+Pick an arbitrary y = y'.
+Need to find z' st (a z') = (y' z').
+Consider w = (B y' b).
+Then exists e . (c e) = (w e).  Set e = e'.
+So (c e') = (w e') = ((B y' b) e') = (B y' b e') = (y' (b e')).
+Also, (c e') = ((B a b) e') = (B a b e') = (a (b e')).
+So (a (b e')) = (y' (b e')).
+Set z = (b e').  Then (a z) = (y' z).
+Since y' is arbitrary, then Ag(a).  QED.
+

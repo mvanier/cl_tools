@@ -1,0 +1,33 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 8.
+
+== Definitions
+
+normal(X) = exists x . (X x) = x.
+happy(X) = exists x y . (X x) = y /\ (X y) = x.
+
+== Problem
+
+Given:
+  There is a B combinator (condition C1).
+  exists X . happy(X).
+
+Prove:
+
+  exists X . normal(X).
+
+== Solution
+
+happy(X)
+-> = exists x y . (X x) = y /\ (X y) = x; pick x = x', y = y'
+-> (X x') = y' /\ (X y') = x'
+-> (X x') = y'
+-> (X y') = x'
+
+So (X x') = (X (X y')) = y'
+(B X X y') = (X (X y')) = y'
+((B X X) y') = y'
+So (B X X) is normal.
+So exists X . normal(X).
+QED.
+
+

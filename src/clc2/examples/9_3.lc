@@ -1,0 +1,36 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 3.
+
+== Problem
+
+Given the B combinator and a combinator A with the property
+
+  forall X . exists c . (A c) = (X c)
+
+(but no M combinator), then
+
+  forall X . exists y . (X y) = y
+
+== Solution
+
+Pick a combinator x.
+Find y st (x y) = y.
+Consider w = (B x A).
+-> exists r st (A r) = (w r).  Set r = r'.
+-> (A r') = (w r').
+-> (A r') = ((B x A) r') = (B x A r') = (x (A r'))
+Let y = (A r').
+Then y = (x y).  QED.
+
+== Bonus question
+
+Is it true that
+
+  forall x . exists c . (M x) = (x c)
+
+?
+
+  (M x) = (x x) so c = x and the answer is yes.
+
+So if M exists then M is the A combinator required for this problem.
+Therefore, problem 1 is a special case of problem 3 with A = M.
+

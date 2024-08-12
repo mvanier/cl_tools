@@ -1,0 +1,14 @@
+Smullyan, _To Mock A Mockingbird_: Chapter 9, Problem 5.
+
+== Problem
+
+Given: The composition condition C1.
+Equivalent: There is a B combinator.
+Prove: forall a b c . exists D . forall x . (D x) = (a (b (c x))).
+
+== Solution
+
+> def D (B a (B b c))
+> (D x) :c :ss 3
+
+QED.
