@@ -39,10 +39,12 @@ let show_expr e =
    Return `None` if the expression can't be reduced,
    `Some <new_expr>` if it can. *)
 let reduce e =
-  (* Apply a combinator to its arguments,
-     generating a new expression. *)
-  let apply { arity; body } args =
-    failwith "TODO"
+  (* Apply a combinator to its arguments, generating a new expression. *)
+  let rec apply body args =
+    match body with
+      | DVar i -> List.nth args i
+      | DConst id -> Const id
+      | DApp (d1, d2) -> App (apply d1 args, apply d2 args)
   in
   (* ALGORITHM:
      - Left-flatten the expression.
@@ -65,7 +67,7 @@ let reduce e =
                 | None -> None
                 | Some def -> 
                     if def.arity = len - 1 then
-                      Some (apply def args)
+                      Some (apply def.body args)
                     else
                       None
             end
