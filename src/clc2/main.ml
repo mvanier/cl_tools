@@ -56,6 +56,8 @@ let repl_test () =
               Printf.printf "Parse error: %s\n%!" msg
           | Compile_error msg ->
               Printf.printf "Compile error: %s\n%!" msg
+          | Runtime_error msg ->
+              Printf.printf "Runtime error: %s\n%!" msg
       end;
       iter ()
     end
@@ -86,6 +88,8 @@ let repl () =
               Printf.printf "Parse error: %s\n%!" msg
           | Compile_error msg ->
               Printf.printf "Compile error: %s\n%!" msg
+          | Runtime_error msg ->
+              Printf.printf "Runtime error: %s\n%!" msg
       end;
       iter ()
     end
@@ -116,6 +120,8 @@ let load source lexbuf =
             Printf.printf "Parse error: %s\n%!" msg
         | Compile_error msg ->
             Printf.printf "Compile error: %s\n%!" msg
+        | Runtime_error msg ->
+            Printf.printf "Runtime error: %s\n%!" msg
     end
   in
     iter ()

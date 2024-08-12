@@ -36,6 +36,14 @@ let rec left_flatten e =
 let show_expr e =
   pprint_expr e
 
+(* Convert a dexpr to an expr.
+   This only works if the expression has no variables. *)
+let rec expr_of_dexpr d =
+  match d with
+    | DVar _ -> runtime_err "expr_of_dexpr: no variables allowed"
+    | DConst id -> Const id
+    | DApp (d1, d2) -> App (expr_of_dexpr d1, expr_of_dexpr d2)
+
 (* Reduce the outermost redex of an expression.
    Return `None` if the expression can't be reduced,
    `Some <new_expr>` if it can. *)
@@ -48,32 +56,51 @@ let rec reduce e =
       | DApp (d1, d2) -> App (apply d1 args, apply d2 args)
   in
   (* ALGORITHM:
-     - Left-flatten the expression.
+     - If the expression is a variable, return None.
+     - If the expression is a constant:
+       - reduce it if it has arity 0;
+       - otherwise, return None.
+     - Otherwise, it's an application. Left-flatten the expression.
        - If its length is < 2, return None.
-       - If the first element is a combinator
+       - If the first element is a constant
          whose arity is the correct length, reduce that.
        - Otherwise try reducing the left expression,
          then (if that fails) the right.
    *)
   let aux e =
-    let le = left_flatten e in
-    let len = List.length le in
-      if len < 2 then
-        None
-      else
-        match le with
-          | Const c :: args ->
+    match e with
+      | Var _ -> None
+      | Const id ->
+        begin
+          match get_env id with
+            | None -> None
+            | Some e' -> 
+                if e'.arity = 0 then
+                  Some (expr_of_dexpr e'.body)
+                else
+                  None
+        end
+      | App _ ->
+          let le = left_flatten e in
+          let len = List.length le in
             begin
-              match get_env c with
-                | None -> None
-                | Some def -> 
-                    if def.arity = len - 1 then
-                      Some (apply def.body args)
-                    else
-                      None
+              if len < 2 then
+                None
+              else
+                match le with
+                  | Const c :: args ->
+                    begin
+                      match get_env c with
+                        | None -> None
+                        | Some def -> 
+                            if def.arity = len - 1 then
+                              Some (apply def.body args)
+                            else
+                              None
+                    end
+                      
+                  | _ -> None
             end
-              
-          | _ -> None
   in
     match aux e with
       | None ->  (* Couldn't reduce full expression. *)
