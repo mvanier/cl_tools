@@ -135,7 +135,8 @@ let load_file filename =
   let lexbuf = Lexing.from_channel in_chan in
     begin
       load filename lexbuf;
-      close_in in_chan
+      close_in in_chan;
+      flush stdout;
     end
 
 let end_program () =
@@ -162,6 +163,7 @@ let _ =
     | [| _; filename |] ->
       begin
         try 
+          load_basis ();
           load_file filename
         with End_of_file -> end_program ()
       end
