@@ -185,6 +185,8 @@ let eval_expr e =
 let eval_cmd c =
   let open Ast in
     match c with
+      | Literate s ->
+          print_string s
       | Step ->
           step ()
       | Norm ->

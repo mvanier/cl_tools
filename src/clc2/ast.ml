@@ -3,6 +3,7 @@ open Pprint
 open Utils
 
 type cmd =
+  | Literate of string
   | Step
   | Norm
   | MaxSteps of int

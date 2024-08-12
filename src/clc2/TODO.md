@@ -2,8 +2,6 @@
 
 ## main
 
-Allow reading code from files (trivial).
-
 Allow "literate" code with this syntax:
 
 ```
