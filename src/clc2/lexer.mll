@@ -5,12 +5,15 @@
 open Parser
 open Lexing
 
-type lex_error = LEX_UNRECOGNIZED
+type lex_error =
+  | LEX_UNRECOGNIZED
+  | LEX_UNTERMINATED_COMMENT
 
 exception Lexer_error of lex_error
 
 let string_of_lex_error = function
   | LEX_UNRECOGNIZED -> "unrecognized token"
+  | LEX_UNTERMINATED_COMMENT -> "unterminated literate comment"
 
 }
 
@@ -63,10 +66,29 @@ rule lex filename = parse
   | "#n" { NORM }
   | "#s" { STEP }
   | "#maxsteps" { MAXSTEPS }
+  | "#{" { lex_literate_comment [] lexbuf }
+
+  (* Literate comments. *)
+  (* TODO *)
 
   (* Anything else is an error. *)
 
   | _ { raise (Lexer_error LEX_UNRECOGNIZED) }
+
+and lex_literate_comment curr = parse
+  | "}" { 
+       let s = curr |> List.rev |> List.to_seq |> String.of_seq in
+         LITERATE s
+    }
+
+  | '\n' {
+      new_line lexbuf;
+      lex_literate_comment ('\n' :: curr) lexbuf
+    }
+
+  | _ as lxm { lex_literate_comment (lxm :: curr) lexbuf }
+
+  | eof { raise (Lexer_error LEX_UNTERMINATED_COMMENT) }
 
 {
 (* Nothing. *)

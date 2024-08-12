@@ -18,6 +18,7 @@ open Ast
 %token STEP 
 %token MAXSTEPS
 %token QUIT
+%token <string> LITERATE
 
 (* Identifiers. *)
 %token <string> CONST
@@ -75,4 +76,5 @@ cmd:
   | STEP { Step }
   | MAXSTEPS; i = INT { MaxSteps i }
   | QUIT { Quit }
+  | l = LITERATE { Literate l }
 

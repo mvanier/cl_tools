@@ -1,6 +1,8 @@
 (** Tokenizer *)
 
-type lex_error = LEX_UNRECOGNIZED
+type lex_error = 
+  | LEX_UNRECOGNIZED
+  | LEX_UNTERMINATED_COMMENT
   
 exception Lexer_error of lex_error
 

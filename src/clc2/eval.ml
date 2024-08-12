@@ -186,7 +186,7 @@ let eval_cmd c =
   let open Ast in
     match c with
       | Literate s ->
-          print_string s
+          print_endline s
       | Step ->
           step ()
       | Norm ->
