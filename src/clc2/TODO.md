@@ -12,8 +12,10 @@ K a b c --> a c
 K a b c d --> nothing!
 ```
 
-## main
+## Basis
 
->>> Need basis.
+TODO
+
+## main
 
 Might want the ability to read in a file.
