@@ -1,5 +1,9 @@
 let basis = "
 def I x = x;
+"
+
+let _ = "
+def I x = x;
 def K x y = x;
 def B f g x = f (g x);
 def C f x y = f y x;

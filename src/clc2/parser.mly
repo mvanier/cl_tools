@@ -29,14 +29,14 @@ open Ast
 
 %token EOI  (* end of interactive input *)
 
-%start <Ast.form option> repl
+%start <Ast.form option> parse
 
 %type <Ast.expr> expr
 %type <Ast.cmd> cmd
 
 %%
 
-repl:
+parse:
   | EOI { None }
   | f = form EOI { Some f }
   ;

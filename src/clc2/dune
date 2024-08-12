@@ -9,6 +9,7 @@
     ir
     ir2
     eval
+    basis
     )
   (libraries sexplib menhirLib)
   (preprocess (pps ppx_sexp_conv))

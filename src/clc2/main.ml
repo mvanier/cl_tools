@@ -33,7 +33,7 @@ let repl_test () =
       Printf.printf "%s%!" prompt;
       begin
         try
-          match Parser.repl lex lexbuf with
+          match Parser.parse lex lexbuf with
             | None -> iter ()
             | Some ast ->
                 let ir = Ir.convert ast in
@@ -71,7 +71,7 @@ let repl () =
       Printf.printf "%s%!" prompt;
       begin
         try
-          match Parser.repl lex lexbuf with
+          match Parser.parse lex lexbuf with
             | None -> iter ()
             | Some ast ->
                 let ir = Ir.convert ast in
@@ -92,6 +92,45 @@ let repl () =
   in
     iter ()
 
+let load source lexbuf =
+  let lex = Lexer.lex source in
+  let rec iter () =
+    begin
+      Printf.printf "ITER\n%!";
+      try
+        match Parser.parse lex lexbuf with
+          | None -> 
+            begin
+              Printf.printf "DONE!\n%!";
+              ()
+            end
+          | Some ast ->
+              let _ = Printf.printf "SOME\n%!" in
+              let ir = Ir.convert ast in
+              let ir2 = Ir2.convert ir in
+                begin
+                  Eval.eval_form ir2;
+                  Printf.printf "HERE\n%!";
+                  iter ()
+                end
+      with
+        | End_of_file -> ()
+        | Lexer.Lexer_error err ->
+            handle_lex_error lexbuf err
+        | Parser.Error _ ->
+            handle_parser_error lexbuf
+        | Parse_error msg ->
+            Printf.printf "Parse error: %s\n%!" msg
+        | Compile_error msg ->
+            Printf.printf "Compile error: %s\n%!" msg
+    end
+  in
+    iter ()
+
+let load_basis () =
+  let lexbuf = Lexing.from_string Basis.basis in
+    load "<basis>" lexbuf
+
 let end_program () =
   begin
     Printf.printf "  \n%!";  (* an ugly hack to make exiting look clean *)
@@ -109,6 +148,8 @@ let _ =
     | [| _ |] ->
       begin
         try 
+          load_basis ();
+          Printf.printf "HERE 2\n%!";
           repl ()
         with End_of_file -> end_program ()
       end
