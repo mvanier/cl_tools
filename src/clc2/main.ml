@@ -96,21 +96,14 @@ let load source lexbuf =
   let lex = Lexer.lex source in
   let rec iter () =
     begin
-      Printf.printf "ITER\n%!";
       try
         match Parser.parse lex lexbuf with
-          | None -> 
-            begin
-              Printf.printf "DONE!\n%!";
-              ()
-            end
+          | None -> ()
           | Some ast ->
-              let _ = Printf.printf "SOME\n%!" in
               let ir = Ir.convert ast in
               let ir2 = Ir2.convert ir in
                 begin
                   Eval.eval_form ir2;
-                  Printf.printf "HERE\n%!";
                   iter ()
                 end
       with
@@ -149,7 +142,6 @@ let _ =
       begin
         try 
           load_basis ();
-          Printf.printf "HERE 2\n%!";
           repl ()
         with End_of_file -> end_program ()
       end
