@@ -98,7 +98,7 @@ let reduce e =
 
 (* Take one step in the current expression.
    Print the result if any. *)
-let step e =
+let step1 e =
   match reduce e with
     | None -> None
     | Some e' ->
@@ -107,13 +107,25 @@ let step e =
         Some e'
       end
 
+(* Take one step from the current expression; if reduced,
+   print the result and assign the resulting expr to current expr *)
+let step () =
+  match !current with
+    | None -> runtime_err "no current expression"
+    | Some e ->
+      begin
+        match step1 e with
+          | None -> ()
+          | Some e' -> current := Some e'
+      end
+
 (* Reduce to a normal form, if any. *)
 let norm () =
   let rec iter i e =
     if i >= !max_reductions then
       runtime_err "too many reductions - infinite loop?"
     else
-      match step e with
+      match step1 e with
         | None -> ()  (* done reducing *)
         | Some e' -> iter (i + 1) e'
   in
@@ -147,9 +159,7 @@ let eval_cmd c =
   let open Ast in
     match c with
       | Step ->
-          failwith "TODO"
-          (* step and assign resulting expr to current expr *)
-          (* step () *)
+          step ()
       | Norm ->
           norm ()
       | MaxSteps i ->
