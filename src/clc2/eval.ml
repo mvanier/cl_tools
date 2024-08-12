@@ -160,6 +160,11 @@ let norm () =
           iter 0 e
         end
 
+let curr () =
+  match !current with
+    | None -> runtime_err "no current expression"
+    | Some e -> pprint_expr ~prefix:"" e
+
 let set_max_steps i =
   if i > 0 then
     max_reductions := i
@@ -187,6 +192,8 @@ let eval_cmd c =
     match c with
       | Literate s ->
           print_endline s
+      | Curr ->
+          curr ()
       | Step ->
           step ()
       | Norm ->

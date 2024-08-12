@@ -1,15 +1,5 @@
 # TODO for clc2
 
-## Commands
-
-A command to print the working expression.
-
-```
-#w;
-```
-
-This is useful in conjunction with stepping.
-
 ## Verbosity
 
 Need a way to display definitions for use in literate programs.

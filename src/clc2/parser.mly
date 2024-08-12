@@ -14,11 +14,12 @@ open Ast
 %token DEF
 
 (* Commands. *)
+%token <string> LITERATE
+%token CURR
 %token NORM
 %token STEP 
 %token MAXSTEPS
 %token QUIT
-%token <string> LITERATE
 
 (* Identifiers. *)
 %token <string> CONST
@@ -72,9 +73,10 @@ expr:
   | LPAREN; es = list(expr); RPAREN { List es }
 
 cmd:
+  | l = LITERATE { Literate l }
+  | CURR { Curr }
   | NORM { Norm }
   | STEP { Step }
   | MAXSTEPS; i = INT { MaxSteps i }
   | QUIT { Quit }
-  | l = LITERATE { Literate l }
 

@@ -23,12 +23,13 @@ def F x = M (B x M);
 // B and M are built-in.
 def F x = M (B x M);
 
-#{F x};
 F x;
+#c;
 #s;
 #s;
 #s;
 #{= x (F x)};
-#{QED};
-
+#{
+QED
+};
 
