@@ -1,0 +1,343 @@
+%% THEOREM 16
+
+\begin{thm}
+
+If $Kx = Ky$ then $x = y$.  (The "left cancellation law" for $K$.)
+
+\bp
+
+Pick an arbitrary $z$.  Then:
+
+\begin{align*}
+     Kx &= Ky      && \text{[Hypothesis]}  \\
+  (Kx)z &= (Ky)z   && \text{[Apply each side to $z$]}  \\
+      x &= y       && \text{[Definition of $K$]}   \qedhere
+\end{align*}
+
+\ep
+
+\end{thm}
+
+%% THEOREM 17
+
+\begin{thm}
+
+A combinator cannot be fixated on more than one combinator.  In other words,
+if $\forall x\ Ax = B \andm \forall x\ Ax = C$, then $B = C$.
+
+\bp
+
+Pick an arbitrary bird $z$.  Then $Az = B \andm Az = C$, and thus $Az = B = C$
+and $B = C$. \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 18
+
+\begin{thm}
+
+If $K$ is fond of $Kx$ \ie $K(Kx) = Kx$, then $K$ is fond of $x$ \ie $Kx = x$.
+
+\bp
+
+\begin{align*}
+     K(Kx) &= Kx && \text{[Hypothesis]} \\
+     K(Kx) &= K  && \text{[Definition of K]} \\
+        Kx &= K  && \text{[Substitution of equals for equals]}
+\end{align*}
+
+\ni $x$ is thus a fixpoint of $K$ and thus $K$ is fond of $x$.  \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 19
+
+\begin{thm}
+
+If $K = KK$, then $K$ is the only combinator.
+
+\bp
+
+From theorem 11, if $K = KK$ then $\forall x\ Kx = K$ \ie $K$ is hopelessly
+egocentric.  Pick arbitrary combinators $x$ and $y$.  We have:
+
+\begin{align*}
+Kx &= K && \text{[$K$ is hopelessly egocentric.]}  \\
+Ky &= K && \text{[Same.]}  \\
+Kx &= Ky && \text{[Substitute $Ky$ for $K$.]} \\
+x &= y   && \text{[Left cancellation rule for $K$.]}
+\end{align*}
+
+Therefore, for any two combinators $x$ and $y$, $x = y$ so there is only one
+(kind of) combinator.  Since we know that $K$ is a combinator, all combinators
+must be $K$.  \qedhere
+
+\ep
+
+\end{thm}
+
+\section{Identity Birds}
+
+%% Definition: Identity combinator.
+
+\begin{defn}
+
+The \it{identity combinator} $I$ has the property that $\forall x\ Ix = x$.
+
+\end{defn}
+
+%% THEOREM 20
+
+\begin{thm}
+
+Given the identity combinator $I$ and that $I$ is agreeable \ie $\forall A\
+\exists x\ Ax = Ix$ (but not conditions $C1$ or $C2$), then every combinator is
+fond of at least one other combinator \ie every combinator has a fixpoint.  
+
+\bp
+
+Since $I$ is agreeable, for a given combinator $A$ pick the $x$ that satisfies
+$Ax = Ix$.  Then $Ax = x$ (definition of $I$), so $x$ is the fixpoint of $A$, so
+$A$ has a fixpoint.  \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 21
+
+\begin{thm}
+
+Given the identity combinator $I$ and the fact that all combinators have
+fixpoints, $I$ is agreeable.
+
+\bp
+
+For a given combinator $A$, by hypothesis there is a combinator $x$ \st $Ax =
+x$.  By definition of $I$, we can rewrite this as $Ax = Ix$, \ie $I$ is
+agreeable (by definition of agreeability).  \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 22
+
+\begin{thm}
+
+Given the identity combinator $I$ and that all combinators are agreeable \ie
+$\forall A, B\ \exists x, y\ \st Ax = y \andm By = x$, every combinator is
+normal (has a fixpoint) and $I$ is agreeable.
+
+\bp
+
+Choose an arbitrary combinator $A$ and let $B = I$.  Then $\exists x, y$ such
+that $Ax = y \andm Iy = x$ which means that $y = x$ and thus $Ax = x$.
+Therefore $A$ has a fixpoint, and therefore all combinators have fixpoints.  By
+theorem 21, $I$ is agreeable.  \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 23
+
+\begin{thm}
+
+If $I$ is hopelessly egocentric, then all combinators are $I$.
+
+\bp
+
+If $I$ is hopelessly egocentric, then $\forall x\ Ix = I$, which by definition
+of $I$ means that $\forall x\ x = I$, so all combinators are $I$.  \qedhere
+
+\ep
+
+\end{thm}
+
+\section{Larks}
+
+\begin{defn}
+
+The \it{lark} combinator $L$ has the property that $\forall x, y\ (Lx)y =
+x(yy)$.
+
+\end{defn}
+
+%% THEOREM 24
+
+\begin{thm}
+
+If we have a lark combinator $L$ and an identity combinator $I$, then we have a
+mockingbird combinator $M$.
+
+\bp
+
+By definition of $L$, we have $\forall x, y\ (Lx)y = x(yy)$.  Choose $x = I$ to
+get $\forall y\ (LI)y = I(yy)$ or $\forall y\ (LI)y = yy$.  Thus $LI = M$.
+\qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 25 
+\begin{thm}
+
+Given a lark $L$, all combinators have fixpoints.
+
+\bp
+
+Consider an arbitrary combinator $x$.  Then by definition of $L$, $(Lx)(Lx)$ 
+$= x((Lx)(Lx))$, so $(Lx)(Lx)$ is a fixpoint of $x$. \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 26 
+\begin{thm}
+
+If $L$ is hopelessly egocentric \ie $\forall x\ Lx = L$ then $L$ is a fixpoint
+of all combinators.
+
+\bp
+
+Take an arbitrary combinator $x$.  Compute $(Lx)L$:
+
+\begin{align*}
+   (Lx)L &= LL = L    && \text{[$L$ is hopelessly egocentric]}  \\
+   (Lx)L &= x(LL)     && \text{[Definition of $L$]} \\
+         &= xL        && \text{[$L$ is hopelessly egocentric]}
+\end{align*}
+
+\ni Therefore $xL = L$, therefore $L$ is a fixpoint of $x$.  Since $x$ is
+arbitrary, we have $\forall x\ xL = L$, so every combinator is fond of $L$, so
+$L$ is ``unusually attractive''. \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 27
+\begin{thm}
+
+Given $L \neq K$, then $LK \neq K$ \ie $K$ is not a fixpoint of $L$.
+
+\bp
+
+Assume $LK = K$.  We will prove that $L = K$, which is a contradiction, so hence
+$LK \neq K$.  From the definition of $L$, for all $x$ we have $((LK)K)x =
+(K(KK))x = KK$.  But given the assumption, $((LK)K)x = (KK)x = K$.  Therefore,
+$K = KK$.  Then $(KK)L = K = KL$ and $(KL)K = L = KK = K$ so $L = K$.  \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 28 
+\begin{thm}
+
+If $KL = L$, then $\forall x\ xL = L$.
+
+\bp
+
+For an arbitrary combinator $x$, we have $(KL)x = L = Lx$ so $\forall x\ Lx = L$
+($L$ is hopelessly egocentric).  Thus $(Lx)L = x(LL) = xL = LL = L$ so $xL = L$
+for arbitrary $x$, so $\forall x\ xL = L$. \qedhere
+
+\ep
+
+\end{thm}
+
+%% THEOREM 29 
+\begin{thm}
+
+There exist combinators made only of $L$ which are egocentric.
+
+% Combinators taken from:
+% http://stanford.library.usyd.edu.au/archives/fall2013/entries/reasoning-automated/#ForVerSof
+% Glickfeld and Overbeek 1986 A foray into combinatory logic
+% Journal of Automated Reasoning 1986, 419-431 (Volume 2, Issue 4).
+% Also see:
+% William McCune and Larry Wos,
+% A Case Study in Automated Theorem Proving:
+% Finding Sages in Combinatory Logic
+% Journal of Automated Reasoning 1987: 91-107 (Volume 3, Issue 1).
+
+\bp
+
+We will show that the combinator $((L(LL))(L(LL)))((L(LL))(L(LL)))$ is
+egocentric \ie if this combinator is called $E$ then $E = EE$.
+
+\vsep
+
+\ni Let $D = L(LL)$.  We will show that $(DD)(DD)$ is egocentric \ie that
+$(DD)(DD) = ((DD)(DD))((DD)(DD))$.
+
+\begin{align*}
+D &= L(LL)  \\
+Dx &= (L(LL))x = (LL)(xx) = L((xx)(xx))  \\
+(Dx)(xx) &= (L((xx)(xx)))(xx) = ((xx)(xx))((xx)(xx))  \\
+(DD)(DD) &= ((DD)(DD))((DD)(DD))  \qedhere
+\end{align*}
+
+\ni Note also that $((LL)(L(LL)))(L(LL))$ is egocentric.  This combinator is
+equal to $((LL)D)D$, and $((LL)D)D = (L(DD))D = (DD)(DD)$ which we have just
+shown to be egocentric.
+
+\ep
+
+\end{thm}
+
+\chapter{Is There A Sage Bird?}
+
+We're given a bird $A$ that has the property that $Ax = x \circ M$.  This means
+that $(Ax)y = (x \circ M)y = x(My) = x(yy)$.  From this we see that $A = L$, the
+lark combinator of the previous chapter.  We are also given conditions $C1$ and
+$C2$, the composition condition and the mockingbird condition, respectively.
+From this, we will show that there exists a "sage bird" $\Theta$ \ie a
+fixed-point combinator such that $\Theta x = x(\Theta x)$.
+
+\vsep
+
+\ni Consider the combinator $M \circ L$.  We have $(M \circ L)x = M(Lx) =
+(Lx)(Lx)$.  Also, $(Lx)(Lx) = x((Lx)(Lx))$ so by setting $\Theta = M \circ L$ we
+have $\Theta x = x(\Theta x)$.  So we have not only shown that there exists a
+fixed-point combinator $\Theta$, we have derived it.  The caveat is that
+condition $C1$ merely states that the composition of two combinators must
+``exist'', but it doesn't identify what that composition is \ie it doesn't
+identify what combinator that is apart from it being the composition of two
+other combinators.
+
+\chapter{Birds Galore}
+
+\section{Exercises}
+
+\ni Simple exercises:
+
+\begin{align*}
+xy(zwy)v &= ((xy)((zw)y))v \\
+(xyz)(wvx) &= ((xy)z)((wv)x) \\
+xy(zwv)(xz) &= ((xy)((zw)v))(xz) \\
+xy(zwv)xz &= (((xy)((zw)v))x)z \\
+x(y(zwv))xz &= ((x(y((zw)v)))x)z \\
+xyz(AB) &= ((xy)z)(AB) \\
+(xyz)(AB) &= ((xy)z)(AB) \\
+\text{so: } xyz(AB) &= (xyz)(AB)
+\end{align*}
+
+\vsep
+
+\ni If $A_1 = A_2$ then we can conclude that $BA_1 = BA_2$ because both sides
+represent the same expression.  Similarly, $A_1B = A_2B$.
+
+\vsep
+
+\ni If $xy = z$ then $xyw = (xy)w = zw$.  However, $wxy = (wx)y \neq w(xy) =
+wz$.
+
