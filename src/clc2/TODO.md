@@ -10,10 +10,6 @@ Y x;
 #n;  // should say `--> I` but doesn't say anything
 ```
 
-## Basis
-
-TODO
-
 ## main
 
-Might want the ability to read in a file.
+Allow reading code from files (trivial).
