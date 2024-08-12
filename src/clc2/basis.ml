@@ -7,4 +7,5 @@ def W f x = f x x;
 def S f g x = f x (g x);
 def X x = x K S K;
 def Q = K I;
+def M x = x x;
 "

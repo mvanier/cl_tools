@@ -4,6 +4,7 @@
 *** PROBLEM 1 ***
 
 Definitions:
+
 def B x y z) = x (y z);
 def M x = x x;
 
@@ -19,8 +20,7 @@ Solution:
 def F x = M (B x M);
 };
 
-// B is built-in.
-def M x = x x;
+// B and M are built-in.
 def F x = M (B x M);
 
 #{F x};
