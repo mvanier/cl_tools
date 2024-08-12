@@ -39,7 +39,7 @@ let show_expr e =
 (* Reduce the outermost redex of an expression.
    Return `None` if the expression can't be reduced,
    `Some <new_expr>` if it can. *)
-let reduce e =
+let rec reduce e =
   (* Apply a combinator to its arguments, generating a new expression. *)
   let rec apply body args =
     match body with
@@ -82,11 +82,11 @@ let reduce e =
             | App (e1, e2) ->
               begin
                 (* Try reducing left subexpression. *)
-                match aux e1 with
+                match reduce e1 with
                   | None ->
                     begin
                       (* Try reducing right subexpression. *)
-                      match aux e2 with
+                      match reduce e2 with
                         | None -> None
                         | Some e' -> Some (App (e1, e'))
                     end
