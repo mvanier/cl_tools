@@ -4,8 +4,6 @@
 
 #p K x y;  // print definition of K using x and y
 
-#sn N;     // Do N steps.
-
 #sl loc;
 
 // Reduce a specific expression, identified by its "location" in the form.

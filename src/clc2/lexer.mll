@@ -68,6 +68,7 @@ rule lex filename = parse
   | "#q"  { QUIT }
   | "#n"  { NORM }
   | "#s"  { STEP }
+  | "#sn" { STEPN }
   | "#maxsteps" { MAXSTEPS }
 
   (* Literate comments. *)

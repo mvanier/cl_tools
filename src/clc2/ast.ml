@@ -7,6 +7,7 @@ type cmd =
   | Newline
   | Curr
   | Step
+  | StepN of int
   | Norm
   | MaxSteps of int
   | Quit

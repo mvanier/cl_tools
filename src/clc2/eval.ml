@@ -198,6 +198,12 @@ let eval_cmd c =
           curr ()
       | Step ->
           step ()
+      | StepN n ->
+        begin
+          for _ = 1 to n do
+            step ()
+          done
+        end
       | Norm ->
           norm ()
       | MaxSteps i ->

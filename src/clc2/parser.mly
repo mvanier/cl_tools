@@ -19,6 +19,7 @@ open Ast
 %token CURR
 %token NORM
 %token STEP 
+%token STEPN
 %token MAXSTEPS
 %token QUIT
 
@@ -79,6 +80,7 @@ cmd:
   | CURR { Curr }
   | NORM { Norm }
   | STEP { Step }
+  | STEPN; i = INT { StepN i }
   | MAXSTEPS; i = INT { MaxSteps i }
   | QUIT { Quit }
 
