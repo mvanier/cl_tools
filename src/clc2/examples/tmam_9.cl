@@ -77,23 +77,26 @@ x (F x);
 * Computational solution:
 };
 
-#{
-Compute the fixpoint of [M], called [F]:
-};
+#{  Compute the fixpoint of [M], called [F]:};
+#nl;
+
 def F = M (B M M);
 #{def F = M (B M M);}; // TODO #p
 #nl;
 M F;
 #c;
 #s;
+#nl;
+F;
+#c;
 #s;
 #s;
 #s;
-#{= M F F};
+#{= M F};
+#{= F F};
 
 #{
-TODO
-  So [M F = F F] and also [M F = F], so [F = F F]. QED.
+  So [F F = F]. QED.
 };
 
 
