@@ -39,7 +39,7 @@ F x;
 #s;
 #s;
 #s;
-#{};  // TODO: Replace with #nl;
+#nl;
 x (F x);
 #c;
 #s;

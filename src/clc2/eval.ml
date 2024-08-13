@@ -192,6 +192,8 @@ let eval_cmd c =
     match c with
       | Literate s ->
           print_endline s
+      | Newline ->
+          print_endline ""
       | Curr ->
           curr ()
       | Step ->

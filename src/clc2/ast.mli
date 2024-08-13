@@ -4,6 +4,7 @@ open Utils
 
 type cmd =
   | Literate of string
+  | Newline
   | Curr
   | Step
   | Norm

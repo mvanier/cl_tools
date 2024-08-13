@@ -15,6 +15,7 @@ open Ast
 
 (* Commands. *)
 %token <string> LITERATE
+%token NEWLINE
 %token CURR
 %token NORM
 %token STEP 
@@ -74,6 +75,7 @@ expr:
 
 cmd:
   | l = LITERATE { Literate l }
+  | NEWLINE { Newline }
   | CURR { Curr }
   | NORM { Norm }
   | STEP { Step }
