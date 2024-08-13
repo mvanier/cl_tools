@@ -55,44 +55,45 @@ x (F x);
 #{
 *** PROBLEM 2 ***
 
-Problem:
-
-  TODO
-
-Non-computational solution:
+* Problem:
 
   Given conditions C1 and C2 (existence of [B] and [M]),
   there is at least one combinator [X] which is its own fixpoint i.e.
 
     exists X: X X = X
 
-  Proof:
+* Non-computational solution:
 
-    Assuming conditions C1 and C2,
-    by problem 1 all combinators have fixpoints.
-    Therefore, the combinator [M] has a fixpoint.
-    Therefore: 
+  Assuming conditions C1 and C2,
+  by problem 1 all combinators have fixpoints.
+  Therefore, the combinator [M] has a fixpoint.
+  Therefore: 
 
-      exists R: M R = R 
+    exists R: M R = R 
 
-    But by definition of [M], [M R = R R]. 
-    Therefore [R = R R]. QED.
+  But by definition of [M], [M R = R R]. 
+  Therefore [R = R R]. QED.
 
-// TO BE EDITED:
-Computational solution:
+* Computational solution:
+};
 
-  To generate the fixpoint of M, compute F = (M (B M M)).
+#{
+Compute the fixpoint of [M], called [F]:
+};
+def F = M (B M M);
+#{def F = M (B M M);}; // TODO #p
+#nl;
+M F;
+#c;
+#s;
+#s;
+#s;
+#s;
+#{= M F F};
 
-  > def F (M (B M M))
-
-  Now (M F) = (F F) and also (M F) = F, so F = (F F).
-
-  > F :c :ss 5
-
-  > (F F) :c :ss 2 :sc F
-
-  So F = (F F). QED.
-
+#{
+TODO
+  So [M F = F F] and also [M F = F], so [F = F F]. QED.
 };
 
 
