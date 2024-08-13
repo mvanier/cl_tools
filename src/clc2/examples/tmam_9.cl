@@ -81,19 +81,37 @@ x (F x);
 #nl;
 
 def F = M (B M M);
-#{def F = M (B M M);}; // TODO #p
-#nl;
-M F;
+
+// #{def F = M (B M M);}; // TODO #p
+// #nl;
+// M F;
+// #c;
+// #s;
+// #nl;
+// F;
+// #c;
+// #s;
+// #s;
+// #s;
+// #{= M F};
+// #{= F F};
+
+F F;
 #c;
 #s;
+#s;
+#{TODO: Reduce starting from F to get:};
+#{= B M M (B M M) (M (B M M))};
+
 #nl;
+
 F;
 #c;
 #s;
 #s;
 #s;
-#{= M F};
-#{= F F};
+#s;
+#s;
 
 #{
   So [F F = F]. QED.
