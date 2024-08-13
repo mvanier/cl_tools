@@ -3,10 +3,17 @@
 #{
 *** PROBLEM 1 ***
 
-Definitions:
+Given:
 
 def B x y z) = x (y z);
 def M x = x x;
+
+Note:
+
+  The "composition condition" (i.e. that given X and Y
+  there exists Z such that for all x, Z x = X (Y x))
+  is equivalent to the existence of the B combinator,
+  since Z = B X Y implies Z x = B X Y x = X (Y x).
 
 Problem:
 
@@ -20,8 +27,9 @@ Solution:
 def F x = M (B x M);
 };
 
-// B and M are built-in.
+// Note: B and M are built-in.
 def F x = M (B x M);
+// #p F x;
 
 F x;
 #c;
