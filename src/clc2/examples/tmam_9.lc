@@ -5,39 +5,55 @@
 
 Given:
 
-def B x y z) = x (y z);
-def M x = x x;
+  def B x y z) = x (y z);
+  def M x = x x;
 
 Note:
 
-  The "composition condition" (i.e. that given X and Y
-  there exists Z such that for all x, Z x = X (Y x))
-  is equivalent to the existence of the B combinator,
-  since Z = B X Y implies Z x = B X Y x = X (Y x).
+  The "composition condition" (i.e. that given [X] and [Y]
+  there exists [Z] such that for all [x], [Z x = X (Y x)])
+  is equivalent to the existence of the [B] combinator,
+  since [Z = B X Y] implies [Z x = B X Y x = X (Y x)].
 
 Problem:
 
-Given the combinators B and M, for an arbitrary combinator x,
-find F, the fixpoint of x, such that `x (F x) = F x`
-(Smullyan says `F` where we say `F x`;
-it's easier to work with `F` as a function.)
+  Given the combinators [B] and [M], for an arbitrary combinator [x],
+  find [F], the fixpoint of [x], such that [x (F x) = F x]
+  (Smullyan says [F] where we say [F x];
+  it's easier to work with [F] as a function.)
 
 Solution:
 
-def F x = M (B x M);
+  def F x = M (B x M);
+
+Solution without using B:
+
+  Given x and M, compose x and M to get A:
+
+    Define [A = compose(x, M)]
+    --> A y = x (M y)
+    Define [F = M A]
+    --> F = M A = A A = x (M A) = x F
+    --> F = x F
+    Therefore [F] is the fixpoint of [x]. QED.
 };
 
 // Note: B and M are built-in.
 def F x = M (B x M);
-// #p F x;
+// #p F x;  // TODO
 
 F x;
 #c;
 #s;
 #s;
 #s;
-#{= x (F x)};
+#{};  // TODO: Replace with #nl;
+x (F x);
+#c;
+#s;
 #{
-QED
+Therefore [F x = x (F x)].
+Therefore [F x] is the fixpoint of [x].
+QED.
 };
 
