@@ -4,17 +4,9 @@
 
 #p K x y;  // print definition of K using x and y
 
-## Verbosity
+#sn N;     // Do N steps.
 
-Need a way to display definitions for use in literate programs.
-Also need a way of turning this display on or off.
-
-```
-#display_def ON;
-#display_def OFF;
-```
-
-Of course, it will be off by default.
+#sc X;     // Reduce outermost redex starting from combinator X.
 
 ## lambda conversions
 
