@@ -2,7 +2,6 @@
 
 ## Commands
 
-#nl;       // print newline
 #p K x y;  // print definition of K using x and y
 
 ## Verbosity

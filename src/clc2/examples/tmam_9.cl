@@ -3,7 +3,7 @@
 #{
 *** PROBLEM 1 ***
 
-Note:
+* Note:
 
   The "composition condition" (i.e. that given [X] and [Y]
   there exists [Z] such that for all [x], [Z x = X (Y x)])
@@ -11,14 +11,14 @@ Note:
   since [Z = B X Y] implies [Z x = B X Y x = X (Y x)].
   We will use this in our computational solution.
 
-Problem:
+* Problem:
 
   Given the combinators [B] and [M], for an arbitrary combinator [x],
   find [F], the fixpoint of [x], such that [x (F x) = F x]
   (Smullyan says [F] where we say [F x];
   it's easier to work with [F] as a function.)
 
-Non-computational solution:
+* Non-computational solution:
 
   Given x and M, compose x and M to get A:
 
@@ -28,6 +28,8 @@ Non-computational solution:
     --> F = M A = A A = x (M A) = x F
     --> F = x F
     Therefore [F] is the fixpoint of [x]. QED.
+
+* Computational solution:
 };
 
 // Note: B and M are built-in.
@@ -44,9 +46,9 @@ x (F x);
 #c;
 #s;
 #{
-Therefore [F x = x (F x)].
-Therefore [F x] is the fixpoint of [x].
-QED.
+  Therefore [F x = x (F x)].
+  Therefore [F x] is the fixpoint of [x].
+  QED.
 };
 
 
