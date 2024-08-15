@@ -11,7 +11,6 @@
 // where 0 means left subexpression in an application,
 // and 1 means the right subexpression.
 
-#cc;  // Print out current expr in fully-parenthesized form.
 #ccc; // Like #cc, but also print numbers of all subexpressions.
 
 Example:
