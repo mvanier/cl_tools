@@ -23,8 +23,12 @@ open Ast
 %token NORM
 %token STEP 
 %token STEPN
+%token STEPL
 %token MAXSTEPS
 %token QUIT
+
+(* Direction indicator, for STEPL. *)
+%token <Ast.dir list> LOC
 
 (* Identifiers. *)
 %token <string> CONST

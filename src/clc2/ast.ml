@@ -2,6 +2,9 @@ open Sexplib.Conv
 open Pprint
 open Utils
 
+type dir = L | R
+[@@deriving sexp_of]
+
 type cmd =
   | Literate of string
   | Newline
@@ -11,6 +14,7 @@ type cmd =
   | Curr3
   | Step
   | StepN of int
+  | StepL of dir list
   | Norm
   | MaxSteps of int
   | Quit

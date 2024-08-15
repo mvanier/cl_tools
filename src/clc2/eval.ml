@@ -381,6 +381,8 @@ let eval_cmd c =
             step ()
           done
         end
+      | StepL dirs ->
+          failwith "TODO"
       | Norm ->
           norm ()
       | MaxSteps i ->

@@ -3,6 +3,7 @@
 type lex_error = 
   | LEX_UNRECOGNIZED
   | LEX_UNTERMINATED_COMMENT
+  | LEX_INVALID_LOC
   
 exception Lexer_error of lex_error
 

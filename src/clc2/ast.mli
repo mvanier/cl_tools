@@ -2,6 +2,9 @@
 
 open Utils
 
+type dir = L | R
+[@@deriving sexp_of]
+
 type cmd =
   | Literate of string     (* print a literate comment *)
   | Newline                (* print a newline *)
@@ -11,6 +14,7 @@ type cmd =
   | Curr3                  (* print current raw expression, annotated *)
   | Step                   (* evaluate one step *)
   | StepN of int           (* evaluate N steps *)
+  | StepL of dir list      (* evaluate one step of a subexpression *)
   | Norm                   (* normalize the current expression *)
   | MaxSteps of int        (* set the maximum number of reduction steps *)
   | Quit                   (* exit the interpreter *)
