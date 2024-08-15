@@ -26,10 +26,23 @@ let get_env id = Hashtbl.find_opt env id
  * Utilities.
  * ---------------------------------------------------------------------- *)
 
+(* List left scan.  Like a left fold, but
+   - must have at least one element to fold over
+   - all intermediate results are collected and returned. *)
+let scan_left (f : 'a -> 'a -> 'a) (lst : 'a list) : 'a list =
+  let rec iter x xs lst =
+    match xs with
+      | [] -> List.rev lst
+      | y :: ys -> let x' = f x y in iter x' ys (x' :: lst)
+  in
+  match lst with
+    | [] -> invalid_arg "scan_left"
+    | x :: xs -> iter x xs [x]
+
 (* Partition a list of elements into a list of lists
    based on a number that can be computed from each element.
    Sort the resulting list of lists by that number. *)
-let partition (lst : 'a list) (f : 'a -> int) : 'a list list =
+let partition (f : 'a -> int) (lst : 'a list) : 'a list list =
   (* Convert the list elements to a list of (number, element) pairs. *)
   let lst' = List.map (fun e -> (f e, e)) lst in
   (* Collect all the numbers. *)
@@ -216,89 +229,78 @@ let curr3 () =
         (* Get rid of the depth 0 element. *)
         List.filter (fun (n, _, _) -> n > 0) lst
   in
-  let display (lst : (int * int * int) list list) : unit =
-    let combine_chars c1 c2 =
-      match (c1, c2) with
-        | ('0', ' ')
-        | ('1', ' ')
-        | ('|', ' ') -> '|'
-        | _ -> c2
+  let remove_depths (lst : (int * int * int) list) : (int * int) list =
+    List.map (fun (indent, _, index) -> (indent, index)) lst
+  in
+  let pad_to (s : string) n : string =
+    let len = String.length s in
+      if len > n then
+        invalid_arg "pad"
+      else
+        s ^ (String.make (n - len) ' ')
+  in
+  let combine_chars c1 c2 =
+    match (c1, c2) with
+      | ('0', ' ')
+      | ('1', ' ')
+      | ('|', ' ') -> '|'
+      | _ -> c2
+  in
+  let combine_strings s1 s2 =
+    (* We assume that the length of s1 and s2 is the same. *)
+    let len = String.length s1 in
+    let buffer = Bytes.make len ' ' in
+      begin
+        for i = 0 to String.length s1 - 1 do
+          Bytes.set buffer i (combine_chars s1.[i] s2.[i]) 
+        done;
+        Bytes.to_string buffer
+      end
+  in
+  let convert_to_string (lst : (int * int) list) : string =
+    (* Find the largest indent in the line.
+       Make a string buffer that is that many characters long,
+       containing only blank characters.
+       Set the 0s and 1s at the appropriate locations.
+       Convert to a string and print it. *)
+    let max_indent =
+      List.fold_left (fun m (i, _) -> max m i) 0 lst
     in
-    let combine_strings s1 s2 =
-      (* We assume that the length of s1 and s2 is the same. *)
-      let len = String.length s1 in
-      let buffer = Bytes.make len ' ' in
-        begin
-          for i = 0 to String.length s1 - 1 do
-            Bytes.set buffer i (combine_chars s1.[i] s2.[i]) 
-          done;
-          Bytes.to_string buffer
-        end
-    in
-    let pad_to (s : string) n : string =
-      let len = String.length s in
-        if len > n then
-          invalid_arg "pad"
-        else
-          s ^ (String.make (n - len) ' ')
-    in
-    let display_line (lst : (int * int) list) : unit =
-      (* Find the largest indent in the line.
-         Make a string buffer that is that many characters long,
-         containing only blank characters.
-         Set the 0s and 1s at the appropriate locations.
-         Convert to a string and print it. *)
-      let max_indent =
-        List.fold_left (fun m (i, _) -> max m i) 0 lst
-      in
-      let buffer = Bytes.make (max_indent + 1) ' ' in
-        begin
-          List.iter
-            (fun (i, n) ->
-               Bytes.set buffer i
-                 (match n with
-                    | 0 -> '0'
-                    | 1 -> '1'
-                    | -1 -> '|'
-                    | _ -> failwith "display_line: invalid index"))
-            lst;
-          Printf.printf "%s\n%!" (Bytes.to_string buffer)
-        end
-    in
-    let display_lines (lst : (int * int * int) list) : unit =
-      let lst' =
-        List.map (fun (indent, _, index) -> (indent, index)) lst
-      in
-      let lst'' =
-        lst'  (* FIXME *)
-      in
-        display_line lst''
-    in
-      List.iter display_lines lst
+    let buffer = Bytes.make (max_indent + 1) ' ' in
+      begin
+        List.iter
+          (fun (i, n) ->
+             Bytes.set buffer i
+               (match n with
+                  | 0 -> '0'
+                  | 1 -> '1'
+                  | _ -> failwith "convert_line: invalid index"))
+          lst;
+        Bytes.to_string buffer
+      end
   in
     match !current with
       | None -> runtime_err "no current expression"
       | Some e ->
-          let data = analyze e in
-          let data2 = partition data (fun (_, i, _) -> i) in
+          let strings =
+            e |> analyze
+              |> partition (fun (_, i, _) -> i)
+              |> List.map remove_depths
+              |> List.map convert_to_string
+          in
+          let max_len =
+            List.fold_left (fun ml s -> max ml (String.length s)) 0 strings
+          in
+          let strings' =
+            strings
+              |> List.map (fun s -> pad_to s max_len)
+              |> List.rev
+              |> scan_left combine_strings
+              |> List.rev
+          in
             begin
               pprint_expr2 e;
-              (*
-              List.iter
-                (fun (indent, depth, index) ->
-                   Printf.printf "%d, %d, %d\n" indent depth index)
-                data;
-              *)
-              (*
-              List.iter
-                (fun lst ->
-                   List.iter
-                     (fun (indent, depth, index) ->
-                        Printf.printf "%d, %d, %d\n" depth indent index)
-                     lst) 
-                data2;
-              *)
-              display data2
+              List.iter (fun s -> Printf.printf "%s\n%!" s) strings'
             end
 
 let set_max_steps i =

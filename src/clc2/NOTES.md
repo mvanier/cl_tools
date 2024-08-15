@@ -86,6 +86,15 @@ S K K x ;
 #cc;
 --> (((S K) K) x)
 
+// Like #cc, but also print numbers of all subexpressions.
+B M M (B M M) F;
+#ccc;
+((((B M) M) ((B M) M)) F)
+ 0||| |  |  ||| |  |   1
+  0|| |  |  1|| |  |
+   0| |  1   0| |  1
+    0 1       0 1
+
 // Normalize working expression.
 #n;
 

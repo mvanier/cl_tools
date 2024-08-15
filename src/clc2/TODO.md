@@ -2,37 +2,19 @@
 
 ## Commands
 
+```
 #p K x y;  // print definition of K using x and y
 
-#sl loc;
+#sl loc;  // "step at location"
 
 // Reduce a specific expression, identified by its "location" in the form.
 // Locations are indicated by 0-1 strings,
 // where 0 means left subexpression in an application,
 // and 1 means the right subexpression.
+// Example:
 
-#ccc; // Like #cc, but also print numbers of all subexpressions.
-
-Example:
-
-```
-#c;
-F F
-
-#s;
---> M (B M M) F
-
-#s;
---> B M M (B M M) F
-
-#ccc;
-((((B M) M) ((B M) M)) F)
- 0                     1
-  0         1       
-   0     1   0     1
-    0 1       0 1
-
-// This is nicer but is harder to implement (TODO):
+// F = M (B M M)
+B M M (B M M) F;
 #ccc;
 ((((B M) M) ((B M) M)) F)
  0||| |  |  ||| |  |   1
