@@ -3,8 +3,6 @@
 ## Commands
 
 ```
-#p K x y;  // print definition of K using x and y
-
 #sl loc;  // "step at location"
 
 // Reduce a specific expression, identified by its "location" in the form.

@@ -94,7 +94,7 @@ let spprint_expr expr =
     strip_parens (show expr)
 
 let pprint_expr ?(prefix = "--> ") expr =
-  Printf.printf "%s%s" prefix (spprint_expr expr)
+  Printf.printf "%s%s\n%!" prefix (spprint_expr expr)
 
 let pprint_expr2 expr =
   let rec show e =

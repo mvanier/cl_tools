@@ -34,7 +34,8 @@
 
 // Note: B and M are built-in.
 def F x = M (B x M);
-// #p F x;  // TODO
+#p F x;
+#nl;
 
 F x;
 #c;
@@ -79,9 +80,9 @@ x (F x);
 #nl;
 
 def F = M (B M M);
+#p F;
+#nl;
 
-// #{def F = M (B M M);}; // TODO #p
-// #nl;
 // M F;
 // #c;
 // #s;
@@ -108,5 +109,4 @@ F;
 #{
   So [F F = F]. QED.
 };
-
 
