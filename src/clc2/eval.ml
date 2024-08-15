@@ -190,6 +190,11 @@ let step () =
           | Some e' -> current := Some e'
       end
 
+(* Take one step on a subexpression whose location is indicated
+   by a list of dirs (L or R). *)
+let stepl dirs =
+  Printf.printf "TODO\n%!"
+
 (* Reduce to a normal form, if any. *)
 let norm () =
   let rec iter i e =
@@ -382,7 +387,7 @@ let eval_cmd c =
           done
         end
       | StepL dirs ->
-          failwith "TODO"
+          stepl dirs
       | Norm ->
           norm ()
       | MaxSteps i ->

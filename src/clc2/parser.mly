@@ -102,6 +102,8 @@ cmd:
 
   | STEPN; i = INT { StepN i }
 
+  | STEPL; l = LOC { StepL l }
+
   | MAXSTEPS; i = INT { MaxSteps i }
 
   | QUIT { Quit }
