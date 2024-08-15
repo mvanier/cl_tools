@@ -217,6 +217,31 @@ let curr3 () =
         List.filter (fun (n, _, _) -> n > 0) lst
   in
   let display (lst : (int * int * int) list list) : unit =
+    let combine_chars c1 c2 =
+      match (c1, c2) with
+        | ('0', ' ')
+        | ('1', ' ')
+        | ('|', ' ') -> '|'
+        | _ -> c2
+    in
+    let combine_strings s1 s2 =
+      (* We assume that the length of s1 and s2 is the same. *)
+      let len = String.length s1 in
+      let buffer = Bytes.make len ' ' in
+        begin
+          for i = 0 to String.length s1 - 1 do
+            Bytes.set buffer i (combine_chars s1.[i] s2.[i]) 
+          done;
+          Bytes.to_string buffer
+        end
+    in
+    let pad_to (s : string) n : string =
+      let len = String.length s in
+        if len > n then
+          invalid_arg "pad"
+        else
+          s ^ (String.make (n - len) ' ')
+    in
     let display_line (lst : (int * int) list) : unit =
       (* Find the largest indent in the line.
          Make a string buffer that is that many characters long,
@@ -241,9 +266,13 @@ let curr3 () =
         end
     in
     let display_lines (lst : (int * int * int) list) : unit =
-      lst
-        |> List.map (fun (indent, _, index) -> (indent, index))
-        |> display_line
+      let lst' =
+        List.map (fun (indent, _, index) -> (indent, index)) lst
+      in
+      let lst'' =
+        lst'  (* FIXME *)
+      in
+        display_line lst''
     in
       List.iter display_lines lst
   in
