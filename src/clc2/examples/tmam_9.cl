@@ -32,7 +32,9 @@
 * Computational solution:
 };
 
-// Note: B and M are built-in.
+#{----};
+#p B f g x;
+#p M x;
 def F x = M (B x M);
 #p F x;
 #nl;
@@ -45,9 +47,10 @@ x (F x);
 #c;
 #s;
 #{
-  Therefore [F x = x (F x)].
-  Therefore [F x] is the fixpoint of [x].
-  QED.
+// Therefore [F x = x (F x)].
+// Therefore [F x] is the fixpoint of [x].
+// QED.
+----
 };
 
 
@@ -74,10 +77,10 @@ x (F x);
   Therefore [R = R R]. QED.
 
 * Computational solution:
-};
 
-#{  Compute the fixpoint of [M], called [F]:};
-#nl;
+----
+// Compute the fixpoint of [M], called [F]:
+};
 
 def F = M (B M M);
 #p F;
@@ -96,9 +99,9 @@ def F = M (B M M);
 F F;
 #c;
 #sn 2;
-#{TODO: Reduce starting from F to get:};
-#{TODO: #sl 1;};
-#{= B M M (B M M) (M (B M M))};
+#{// TODO: Reduce starting from F to get:};
+#{// TODO: #sl 1;};
+#{// = B M M (B M M) (M (B M M))};
 
 #nl;
 
@@ -107,6 +110,7 @@ F;
 #sn 5;
 
 #{
-  So [F F = F]. QED.
+// So [F F = F]. QED.
+----
 };
 
