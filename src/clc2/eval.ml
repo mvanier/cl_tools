@@ -28,9 +28,21 @@ let get_env id = Hashtbl.find_opt env id
 
 (* Partition a list of elements into a list of lists
    based on a number that can be computed from each element.
-   Sort the resulting list of lists by number. *)
+   Sort the resulting list of lists by that number. *)
 let partition (lst : 'a list) (f : 'a -> int) : 'a list list =
-  failwith "TODO"
+  (* Convert the list elements to a list of (number, element) pairs. *)
+  let lst' = List.map (fun e -> (f e, e)) lst in
+  (* Collect all the numbers. *)
+  let nums = List.map fst lst' in
+  (* Sort the number list. *)
+  let nums' = List.sort_uniq compare nums in
+  (* Collect the list of elements for each number. *)
+    List.map
+      (fun n ->
+         List.filter_map
+           (fun (n', e) -> if n' = n then Some e else None)
+             lst')
+      nums'
 
 (* Flatten an expression from the leftmost side. *)
 let rec left_flatten e =
@@ -204,6 +216,23 @@ let curr3 () =
         (* Get rid of the depth 0 element. *)
         List.filter (fun (n, _, _) -> n > 0) lst
   in
+  let display (lst : (int * int * int) list list) : unit =
+    let display_line (lst : (int * int) list) : unit =
+      begin
+        List.iter
+          (fun (indent, index) ->
+             Printf.printf "%d, %d; " indent index)
+          lst;
+        Printf.printf "\n%!"
+      end
+    in
+    let display_lines (lst : (int * int * int) list) : unit =
+      lst
+        |> List.map (fun (indent, _, index) -> (indent, index))
+        |> display_line
+    in
+      List.iter display_lines lst
+  in
     match !current with
       | None -> runtime_err "no current expression"
       | Some e ->
@@ -211,18 +240,22 @@ let curr3 () =
           let data2 = partition data (fun (_, i, _) -> i) in
             begin
               pprint_expr2 e;
+              (*
               List.iter
                 (fun (indent, depth, index) ->
                    Printf.printf "%d, %d, %d\n" indent depth index)
                 data;
+              *)
+              (*
               List.iter
                 (fun lst ->
                    List.iter
-                     (fun (_, depth, index) ->
-                        Printf.printf "%d, %d\n" depth index)
+                     (fun (indent, depth, index) ->
+                        Printf.printf "%d, %d, %d\n" depth indent index)
                      lst) 
                 data2;
-              Printf.printf "TODO\n%!"
+              *)
+              display data2
             end
 
 let set_max_steps i =
