@@ -218,13 +218,27 @@ let curr3 () =
   in
   let display (lst : (int * int * int) list list) : unit =
     let display_line (lst : (int * int) list) : unit =
-      begin
-        List.iter
-          (fun (indent, index) ->
-             Printf.printf "%d, %d; " indent index)
-          lst;
-        Printf.printf "\n%!"
-      end
+      (* Find the largest indent in the line.
+         Make a string buffer that is that many characters long,
+         containing only blank characters.
+         Set the 0s and 1s at the appropriate locations.
+         Convert to a string and print it. *)
+      let max_indent =
+        List.fold_left (fun m (i, _) -> max m i) 0 lst
+      in
+      let buffer = Bytes.make (max_indent + 1) ' ' in
+        begin
+          List.iter
+            (fun (i, n) ->
+               Bytes.set buffer i
+                 (match n with
+                    | 0 -> '0'
+                    | 1 -> '1'
+                    | -1 -> '|'
+                    | _ -> failwith "display_line: invalid index"))
+            lst;
+          Printf.printf "%s\n%!" (Bytes.to_string buffer)
+        end
     in
     let display_lines (lst : (int * int * int) list) : unit =
       lst

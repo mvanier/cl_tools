@@ -24,12 +24,22 @@ F F
 
 #s;
 --> B M M (B M M) F
+
+#ccc;
+((((B M) M) ((B M) M)) F)
+ 0                     1
+  0         1       
+   0     1   0     1
+    0 1       0 1
+
+// This is nicer but is harder to implement (TODO):
 #ccc;
 ((((B M) M) ((B M) M)) F)
  0||| |  |  ||| |  |   1
   0|| |  |  1|| |  |
    0| |  1   0| |  1
     0 1       0 1
+
 #sl 1
 --> B M M (B M M) (M (B M M))
 ```
