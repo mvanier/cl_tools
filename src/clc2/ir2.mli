@@ -54,7 +54,10 @@ type form =
 (** Print an expression. *)
 val print_expr : expr -> unit
 
-(** Pretty-print an expression, for REPL output. *)
+(** Pretty-print an expression, for REPL output. Return the string. *)
+val spprint_expr : expr -> string
+
+(** Pretty-print an expression, for REPL output. Add an optional prefix. *)
 val pprint_expr : ?prefix:string -> expr -> unit
 
 (** Pretty-print an expression, for REPL output.

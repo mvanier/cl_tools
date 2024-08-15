@@ -5,6 +5,7 @@ open Utils
 type cmd =
   | Literate of string
   | Newline
+  | Print of id * id list
   | Curr
   | Curr2
   | Curr3

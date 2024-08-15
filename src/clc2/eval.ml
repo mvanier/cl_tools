@@ -71,6 +71,23 @@ let rec expr_of_dexpr d =
     | DConst id -> Const id
     | DApp (d1, d2) -> App (expr_of_dexpr d1, expr_of_dexpr d2)
 
+(* Convert a dexpr to an expr given a list of variable names.
+   The list must be the right length. *)
+let expr_of_dexpr_with_vars cname vs d =
+  let rec aux body =
+    match body with
+      | DVar i -> Var (List.nth vs i)
+      | DConst id -> Const id
+      | DApp (d1, d2) -> App (aux d1, aux d2)
+  in
+    if d.arity <> List.length vs then
+      runtime_err @@
+        Printf.sprintf
+          "expr_of_dexpr_with_vars (%s): invalid length of variable list"
+          cname
+    else
+      aux d.body
+
 (* Reduce the outermost redex of an expression.
    Return `None` if the expression can't be reduced,
    `Some <new_expr>` if it can. *)
@@ -190,6 +207,18 @@ let norm () =
           pprint_expr ~prefix:"" e;
           iter 0 e
         end
+
+let print_def cname vs =
+  match get_env cname with
+    | None ->
+        let msg = Printf.sprintf "unknown combinator: %s" cname in
+          runtime_err msg
+    | Some comb ->
+        (* Convert the combinator to an expr. *)
+        let be = expr_of_dexpr_with_vars cname vs comb in
+        (* Print the definition in the form [def C = ...;]. *)
+        let cs = spprint_expr be in
+          Printf.printf "def %s = %s;" cname cs
 
 let curr () =
   match !current with
@@ -332,6 +361,8 @@ let eval_cmd c =
           print_endline s
       | Newline ->
           print_endline ""
+      | Print (c, vs) ->
+          print_def c vs
       | Curr ->
           curr ()
       | Curr2 ->

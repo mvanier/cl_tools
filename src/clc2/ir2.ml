@@ -71,7 +71,7 @@ let convert form =
     | I.Expr e -> Expr (convert_expr e)
     | I.Cmd c -> Cmd c
 
-let pprint_expr ?(prefix = "--> ") expr =
+let spprint_expr expr =
   let rec left_flatten e =
     match e with
       | App (e1, e2) -> left_flatten e1 @ [e2]
@@ -91,7 +91,10 @@ let pprint_expr ?(prefix = "--> ") expr =
       | App _ ->
           "(" ^ String.concat " " (List.map show (left_flatten e)) ^ ")"
   in
-    Printf.printf "%s%s\n%!" prefix (strip_parens (show expr))
+    strip_parens (show expr)
+
+let pprint_expr ?(prefix = "--> ") expr =
+  Printf.printf "%s%s" prefix (spprint_expr expr)
 
 let pprint_expr2 expr =
   let rec show e =

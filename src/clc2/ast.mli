@@ -3,16 +3,17 @@
 open Utils
 
 type cmd =
-  | Literate of string  (* print a literate comment *)
-  | Newline             (* print a newline *)
-  | Curr                (* print current expression *)
-  | Curr2               (* print current raw expression *)
-  | Curr3               (* print current raw expression, annotated *)
-  | Step                (* evaluate one step *)
-  | StepN of int        (* evaluate N steps *)
-  | Norm                (* normalize the current expression *)
-  | MaxSteps of int     (* set the maximum number of reduction steps *)
-  | Quit                (* exit the interpreter *)
+  | Literate of string     (* print a literate comment *)
+  | Newline                (* print a newline *)
+  | Print of id * id list  (* print a definition *)
+  | Curr                   (* print current expression *)
+  | Curr2                  (* print current raw expression *)
+  | Curr3                  (* print current raw expression, annotated *)
+  | Step                   (* evaluate one step *)
+  | StepN of int           (* evaluate N steps *)
+  | Norm                   (* normalize the current expression *)
+  | MaxSteps of int        (* set the maximum number of reduction steps *)
+  | Quit                   (* exit the interpreter *)
 [@@deriving sexp_of]
 
 type expr =
