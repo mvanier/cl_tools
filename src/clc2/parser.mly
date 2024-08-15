@@ -17,6 +17,7 @@ open Ast
 %token <string> LITERATE
 %token NEWLINE
 %token CURR
+%token CURR2
 %token NORM
 %token STEP 
 %token STEPN
@@ -76,11 +77,12 @@ expr:
 
 cmd:
   | l = LITERATE { Literate l }
-  | NEWLINE { Newline }
-  | CURR { Curr }
-  | NORM { Norm }
-  | STEP { Step }
-  | STEPN; i = INT { StepN i }
+  | NEWLINE      { Newline }
+  | CURR         { Curr }
+  | CURR2        { Curr2 }
+  | NORM         { Norm }
+  | STEP         { Step }
+  | STEPN; i = INT    { StepN i }
   | MAXSTEPS; i = INT { MaxSteps i }
-  | QUIT { Quit }
+  | QUIT         { Quit }
 

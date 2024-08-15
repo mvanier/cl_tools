@@ -57,6 +57,10 @@ val print_expr : expr -> unit
 (** Pretty-print an expression, for REPL output. *)
 val pprint_expr : ?prefix:string -> expr -> unit
 
+(** Pretty-print an expression, for REPL output.
+    This prints all applications explicitly. *)
+val pprint_expr2 : expr -> unit
+
 (** Print a form. *)
 val print : form -> unit
 

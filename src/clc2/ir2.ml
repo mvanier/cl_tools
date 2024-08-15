@@ -71,10 +71,6 @@ let convert form =
     | I.Expr e -> Expr (convert_expr e)
     | I.Cmd c -> Cmd c
 
-(*
- * Pretty-printing of expressions,
- * for use in REPL output.
- *)
 let pprint_expr ?(prefix = "--> ") expr =
   let rec left_flatten e =
     match e with
@@ -96,4 +92,13 @@ let pprint_expr ?(prefix = "--> ") expr =
           "(" ^ String.concat " " (List.map show (left_flatten e)) ^ ")"
   in
     Printf.printf "%s%s\n%!" prefix (strip_parens (show expr))
+
+let pprint_expr2 expr =
+  let rec show e =
+    match e with
+      | Var id
+      | Const id -> id
+      | App (e1, e2) -> "(" ^ show e1 ^ " " ^ show e2 ^ ")"
+  in
+    Printf.printf "%s\n%!" (show expr)
 

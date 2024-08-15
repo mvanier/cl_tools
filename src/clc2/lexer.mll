@@ -65,6 +65,7 @@ rule lex filename = parse
   | "#{"  { lex_literate_comment [] lexbuf }
   | "#nl" { NEWLINE }
   | "#c"  { CURR }
+  | "#cc" { CURR2 }
   | "#q"  { QUIT }
   | "#n"  { NORM }
   | "#s"  { STEP }

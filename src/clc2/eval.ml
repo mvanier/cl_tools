@@ -165,6 +165,11 @@ let curr () =
     | None -> runtime_err "no current expression"
     | Some e -> pprint_expr ~prefix:"" e
 
+let curr2 () =
+  match !current with
+    | None -> runtime_err "no current expression"
+    | Some e -> pprint_expr2 e
+
 let set_max_steps i =
   if i > 0 then
     max_reductions := i
@@ -196,6 +201,8 @@ let eval_cmd c =
           print_endline ""
       | Curr ->
           curr ()
+      | Curr2 ->
+          curr2 ()
       | Step ->
           step ()
       | StepN n ->

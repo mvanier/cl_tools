@@ -6,6 +6,7 @@ type cmd =
   | Literate of string
   | Newline
   | Curr
+  | Curr2
   | Step
   | StepN of int
   | Norm
