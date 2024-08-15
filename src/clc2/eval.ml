@@ -218,7 +218,8 @@ let print_def cname vs =
         let be = expr_of_dexpr_with_vars cname vs comb in
         (* Print the definition in the form [def C = ...;]. *)
         let cs = spprint_expr be in
-          Printf.printf "def %s = %s;" cname cs
+        let vars = String.concat " " vs in
+          Printf.printf "def %s %s = %s;\n%!" cname vars cs
 
 let curr () =
   match !current with

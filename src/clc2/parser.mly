@@ -16,6 +16,7 @@ open Ast
 (* Commands. *)
 %token <string> LITERATE
 %token NEWLINE
+%token PRINT_DEF
 %token CURR
 %token CURR2
 %token CURR3
@@ -78,13 +79,26 @@ expr:
 
 cmd:
   | l = LITERATE { Literate l }
-  | NEWLINE      { Newline }
-  | CURR         { Curr }
-  | CURR2        { Curr2 }
-  | CURR3        { Curr3 }
-  | NORM         { Norm }
-  | STEP         { Step }
-  | STEPN; i = INT    { StepN i }
+
+  | NEWLINE { Newline }
+
+  | PRINT_DEF; cname = CONST; vars = list(VAR) {
+      Print (cname, vars)
+    }
+
+  | CURR { Curr }
+
+  | CURR2 { Curr2 }
+
+  | CURR3 { Curr3 }
+
+  | NORM { Norm }
+
+  | STEP { Step }
+
+  | STEPN; i = INT { StepN i }
+
   | MAXSTEPS; i = INT { MaxSteps i }
-  | QUIT         { Quit }
+
+  | QUIT { Quit }
 
