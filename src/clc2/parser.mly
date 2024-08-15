@@ -18,6 +18,7 @@ open Ast
 %token NEWLINE
 %token CURR
 %token CURR2
+%token CURR3
 %token NORM
 %token STEP 
 %token STEPN
@@ -80,6 +81,7 @@ cmd:
   | NEWLINE      { Newline }
   | CURR         { Curr }
   | CURR2        { Curr2 }
+  | CURR3        { Curr3 }
   | NORM         { Norm }
   | STEP         { Step }
   | STEPN; i = INT    { StepN i }

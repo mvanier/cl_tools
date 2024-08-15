@@ -62,14 +62,15 @@ rule lex filename = parse
 
   (* Commands. *)
 
-  | "#{"  { lex_literate_comment [] lexbuf }
-  | "#nl" { NEWLINE }
-  | "#c"  { CURR }
-  | "#cc" { CURR2 }
-  | "#q"  { QUIT }
-  | "#n"  { NORM }
-  | "#s"  { STEP }
-  | "#sn" { STEPN }
+  | "#{"   { lex_literate_comment [] lexbuf }
+  | "#nl"  { NEWLINE }
+  | "#c"   { CURR }
+  | "#cc"  { CURR2 }
+  | "#ccc" { CURR3 }
+  | "#q"   { QUIT }
+  | "#n"   { NORM }
+  | "#s"   { STEP }
+  | "#sn"  { STEPN }
   | "#maxsteps" { MAXSTEPS }
 
   (* Literate comments. *)

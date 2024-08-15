@@ -7,6 +7,7 @@ type cmd =
   | Newline             (* print a newline *)
   | Curr                (* print current expression *)
   | Curr2               (* print current raw expression *)
+  | Curr3               (* print current raw expression, annotated *)
   | Step                (* evaluate one step *)
   | StepN of int        (* evaluate N steps *)
   | Norm                (* normalize the current expression *)

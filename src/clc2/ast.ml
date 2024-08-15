@@ -7,6 +7,7 @@ type cmd =
   | Newline
   | Curr
   | Curr2
+  | Curr3
   | Step
   | StepN of int
   | Norm
