@@ -102,8 +102,12 @@ B M M (B M M) F;
 #s ;
 --> K x (K x)
 
-// Make N steps
-#s <n>;
+// Make N steps.
+#sn 3;
+
+// Make one step for a location indicated by 0-1 strings
+// (0 = left subexpression, 1 = right).
+#sl :101;  (* right, left, right *)
 
 // Convert lambda expressions to combinators.
 #convert ski : \fgx . f x (g x) ;
