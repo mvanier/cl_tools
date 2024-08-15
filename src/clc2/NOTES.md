@@ -72,20 +72,32 @@ S K K x ;
 ## Commands
 
 ```
-// Conversions
-#c ski : \fgx . f x (g x) ;
+// Set maximum number of reduction steps.
+#max-steps 1000 ;
 
-// Normalization
-#n : S K K x ;
-
-// Set parameters ;
-#max-steps : 1000 ;
-
-// Set working expression
+// Set working expression.
 S K K x ;
 
-// One evaluation step of working expression
+// Print current expression.
+#c;
+--> S K K x
+
+// Print current expression, with all applications explicit.
+#cc;
+--> (((S K) K) x)
+
+// Normalize working expression.
+#n;
+
+// Make one evaluation step of working expression
 #s ;
 --> K x (K x)
+
+// Make N steps
+#s <n>;
+
+// Convert lambda expressions to combinators.
+#convert ski : \fgx . f x (g x) ;
+--> S
 ```
 
