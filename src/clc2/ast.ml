@@ -10,7 +10,21 @@ type disp =
   | Raw
 [@@deriving sexp_of]
 
+type converter =
+  | SKI
+  | SKIBC
+  | BCKW
+[@@deriving sexp_of]
+
+type lambda =
+  | LVar of id
+  | LApp of lambda * lambda
+  | LLam of id * lambda
+[@@deriving sexp_of]
+
 type cmd =
+  | Convert of converter * lambda
+      (* convert lambda expression to combinators *)
   | Display of disp
   | Literate of string
   | Newline

@@ -408,6 +408,9 @@ let eval_expr e =
 let eval_cmd c =
   let open Ast in
     match c with
+      | Convert (converter, lambda) ->
+          let e = Convert.convert converter lambda in
+            pprint_expr e
       | Display mode ->
         begin
           display_mode := mode;

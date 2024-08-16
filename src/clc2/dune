@@ -8,6 +8,7 @@
     lexer
     ir
     ir2
+    convert
     eval
     basis
     )
