@@ -36,6 +36,20 @@ https://en.wikipedia.org/wiki/Combinatory_logic
 
 Note especially the eta-reduction rule.
 
+### Other useful features
+
+* Make the converted lambda expression the current expression.
+
+* Allow "appending" to the current expression:
+
+```
+>> S;
+>> #append K K x;
+>> #n;
+--> K x (K x)
+--> x
+```
+
 ## Archive the old CLC, make clc2 the definitive one.
 
 Also merge this branch with the main branch.
