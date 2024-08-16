@@ -209,10 +209,10 @@ let stepl dirs =
           begin
             match d with
               | Ast.L ->
-                  let cont' = failwith "TODO" in
+                  let cont' e' = cont (App (e', e2)) in
                     find_k ds e1 cont'
               | Ast.R ->
-                  let cont' = failwith "TODO" in
+                  let cont' e' = cont (App (e1, e')) in
                     find_k ds e2 cont'
           end
     in
