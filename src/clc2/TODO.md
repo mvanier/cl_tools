@@ -6,6 +6,8 @@ I need a definitive list of commands and syntax.
 
 ## lambda conversions
 
+Add a :skibcw converter!
+
 Some converters are very inefficient.
 What would improve things a lot is if there was a table of equivalences!
 Examples:
