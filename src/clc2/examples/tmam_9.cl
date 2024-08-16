@@ -82,6 +82,7 @@ x (F x);
 // Compute the fixpoint of [M], called [F]:
 };
 
+#display-raw;
 def F = M (B M M);
 #p F;
 #nl;
