@@ -14,6 +14,8 @@ open Ast
 %token DEF
 
 (* Commands. *)
+%token DISPLAY_NORMAL
+%token DISPLAY_RAW
 %token <string> LITERATE
 %token NEWLINE
 %token PRINT_DEF
@@ -82,6 +84,10 @@ expr:
   | LPAREN; es = list(expr); RPAREN { List es }
 
 cmd:
+  | DISPLAY_NORMAL { Display Normal }
+
+  | DISPLAY_RAW { Display Raw }
+
   | l = LITERATE { Literate l }
 
   | NEWLINE { Newline }

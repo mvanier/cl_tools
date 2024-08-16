@@ -84,6 +84,8 @@ rule lex filename = parse
 
   (* Commands. *)
 
+  | "#display-normal" { DISPLAY_NORMAL }
+  | "#display-raw"    { DISPLAY_RAW }
   | "#{"   { lex_literate_comment [] lexbuf }
   | "#nl"  { NEWLINE }
   | "#p"   { PRINT_DEF }

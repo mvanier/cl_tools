@@ -5,7 +5,13 @@ open Utils
 type dir = L | R
 [@@deriving sexp_of]
 
+type disp =
+  | Normal    (* Use the standard display conventions. *)
+  | Raw       (* Show all applications explicitly. *)
+[@@deriving sexp_of]
+
 type cmd =
+  | Display of disp        (* set display mode *)
   | Literate of string     (* print a literate comment *)
   | Newline                (* print a newline *)
   | Print of id * id list  (* print a definition *)

@@ -5,7 +5,13 @@ open Utils
 type dir = L | R
 [@@deriving sexp_of]
 
+type disp =
+  | Normal
+  | Raw
+[@@deriving sexp_of]
+
 type cmd =
+  | Display of disp
   | Literate of string
   | Newline
   | Print of id * id list

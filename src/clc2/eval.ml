@@ -13,6 +13,8 @@ let current = ref None
 
 let max_reductions = ref 25 
 
+let display_mode = ref Ast.Normal
+
 (* ----------------------------------------------------------------------
  * Environment.
  * ---------------------------------------------------------------------- *)
@@ -408,6 +410,8 @@ let eval_expr e =
 let eval_cmd c =
   let open Ast in
     match c with
+      | Display mode ->
+          display_mode := mode
       | Literate s ->
           print_endline s
       | Newline ->
