@@ -410,7 +410,10 @@ let eval_cmd c =
     match c with
       | Convert (converter, lambda) ->
           let e = Convert.convert converter lambda in
-            pprint_expr e
+            begin
+              current := Some e;
+              pprint_expr e
+            end
       | Display mode ->
         begin
           display_mode := mode;

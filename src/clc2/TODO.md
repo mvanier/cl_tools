@@ -20,13 +20,13 @@ https://en.wikipedia.org/wiki/Combinatory_logic
 
 ### Other useful features
 
-* Make the converted lambda expression the current expression.
-
 * Allow "appending" to the current expression:
 
 ```
 >> S;
 >> #append K K x;
+>> #c
+S K K x
 >> #n;
 --> K x (K x)
 --> x
