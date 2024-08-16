@@ -8,10 +8,11 @@ I need a definitive list of commands and syntax.
 
 TODO: SKIBC, BCKW
 
-Test case:
+Test cases:
 
 ```
 #convert :ski \f . ((\x . (f (x x))) (\x . (f (x x))));
+#convert :skibc \f . ((\x . (f (x x))) (\x . (f (x x))));
 ```
 
 Try implementing some optimizations as described in:
