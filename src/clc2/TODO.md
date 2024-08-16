@@ -6,16 +6,13 @@ I need a definitive list of commands and syntax.
 
 ## lambda conversions
 
-* Parsing
+Currently broken at the parser level!
+I need to be able to handle recursive lambda expressions.
+The most obvious one is the (normal order) Y combinator:
 
 ```
-#convert ski [\f g x -> f x (g x)]
---> S
+\f . (\x . f (x x)) (\x . f (x x))
 ```
-
-* Conversions
-
-In `convert.ml`.
 
 ## Archive the old CLC, make clc2 the definitive one.
 

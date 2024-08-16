@@ -47,6 +47,7 @@ let const_char = ['A' - 'Z']
 let var_char   = ['a' - 'z']
 let id_char    = ['A' - 'Z' 'a' - 'z' '0' - '9' '\'' '*']
 let loc        = ':' ['0' '1']+
+let converter  = ':' var_char+
 
 let const = const_char id_char*
 let var = var_char id_char*
@@ -70,7 +71,11 @@ rule lex filename = parse
 
   | "def" { DEF }
 
-  | "=" { EQ }
+  (* Punctuation. *)
+
+  | "="  { EQ }
+  | '\\' { BS }
+  | '.'  { DOT }
 
   (* Integers. *)
 
@@ -84,6 +89,7 @@ rule lex filename = parse
 
   (* Commands. *)
 
+  | "#convert" { CONVERT }
   | "#display-normal" { DISPLAY_NORMAL }
   | "#display-raw"    { DISPLAY_RAW }
   | "#{"   { lex_literate_comment [] lexbuf }
@@ -101,6 +107,9 @@ rule lex filename = parse
 
   (* Location, for STEPL. *)
   | loc as lxm { LOC (dirs_of_loc lxm) }
+
+  (* Converter, for CONVERT. *)
+  | converter as lxm { CONVERTER lxm }
 
   (* Anything else is an error. *)
   | _ { lex_err LEX_UNRECOGNIZED }

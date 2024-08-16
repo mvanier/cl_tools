@@ -2,6 +2,23 @@
 
 open Ast
 
+let rec fold es =
+  match es with
+    | []
+    | [_] -> Utils.parse_err "fold: too few expressions"
+    | [e1; e2] -> LApp (e1, e2)
+    | e1 :: e2 :: es' -> fold (LApp (e1, e2) :: es')
+
+let rec parse_expr e =
+  match e with
+    | Var id -> LVar id
+    | Const id -> LVar id
+    | List es -> 
+        let es' = List.map parse_expr es in fold es'
+
+let parse_lambda vars e : lambda =
+  List.fold_right (fun v e -> LLam (v, e)) vars (parse_expr e)
+
 %}
 
 (* Punctuation. *)
@@ -9,11 +26,14 @@ open Ast
 %token RPAREN
 %token SEMI
 %token EQ
+%token BS   (* backslash *)
+%token DOT
 
 (* Keywords. *)
 %token DEF
 
 (* Commands. *)
+%token CONVERT
 %token DISPLAY_NORMAL
 %token DISPLAY_RAW
 %token <string> LITERATE
@@ -28,6 +48,9 @@ open Ast
 %token STEPL
 %token MAXSTEPS
 %token QUIT
+
+(* Converter specifier for CONVERT. *)
+%token <string> CONVERTER
 
 (* Direction indicator, for STEPL. *)
 %token <Ast.dir list> LOC
@@ -83,7 +106,20 @@ expr:
 
   | LPAREN; es = list(expr); RPAREN { List es }
 
+lambda:
+  | BS; vars = list(VAR); DOT; e = expr {
+      parse_lambda vars e 
+    }
+
 cmd:
+  | CONVERT; c = CONVERTER; l = lambda {
+      match c with
+        | ":ski"   -> Convert (SKI, l)
+        | ":skibc" -> Convert (SKIBC, l)
+        | ":bckw"  -> Convert (BCKW, l)
+        | _ -> Utils.parse_err "invalid lambda converter name"
+    }
+
   | DISPLAY_NORMAL { Display Normal }
 
   | DISPLAY_RAW { Display Raw }
