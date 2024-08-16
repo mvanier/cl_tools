@@ -17,9 +17,10 @@ type converter =
 [@@deriving sexp_of]
 
 type lambda =
-  | LVar of id
-  | LApp of lambda * lambda
-  | LLam of id * lambda
+  | LVar   of id
+  | LConst of id
+  | LApp   of lambda * lambda
+  | LLam   of id * lambda
 [@@deriving sexp_of]
 
 type cmd =

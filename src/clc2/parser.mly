@@ -102,7 +102,7 @@ expr:
 
 lexpr:
   | id = VAR   { LVar id }
-  | id = CONST { LVar id }
+  | id = CONST { LConst id }
   | LPAREN; ls = list(lexpr); RPAREN { 
       parse_lambda_app ls
     }
