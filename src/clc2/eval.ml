@@ -255,6 +255,9 @@ let norm () =
           iter 0 e
         end
 
+let append_to_current e =
+  failwith "TODO"
+
 let print_def cname vs =
   match get_env cname with
     | None ->
@@ -408,6 +411,8 @@ let eval_expr e =
 let eval_cmd c =
   let open Ast in
     match c with
+      | Append e ->
+          append_to_current e
       | Convert (converter, lambda) ->
           let e = Convert.convert converter lambda in
             begin

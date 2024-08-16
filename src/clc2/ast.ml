@@ -23,10 +23,16 @@ type lambda =
   | LLam   of id * lambda
 [@@deriving sexp_of]
 
+type expr =
+  | Var   of id
+  | Const of id
+  | List  of expr list
+[@@deriving sexp_of]
+
 type cmd =
-  | Convert of converter * lambda
-      (* convert lambda expression to combinators *)
-  | Display of disp
+  | Append   of expr
+  | Convert  of converter * lambda
+  | Display  of disp
   | Literate of string
   | Newline
   | Print of id * id list
@@ -39,12 +45,6 @@ type cmd =
   | Norm
   | MaxSteps of int
   | Quit
-[@@deriving sexp_of]
-
-type expr =
-  | Var   of id
-  | Const of id
-  | List  of expr list
 [@@deriving sexp_of]
 
 type form =

@@ -89,6 +89,7 @@ rule lex filename = parse
 
   (* Commands. *)
 
+  | "#append"  { APPEND }
   | "#convert" { CONVERT }
   | "#display-normal" { DISPLAY_NORMAL }
   | "#display-raw"    { DISPLAY_RAW }

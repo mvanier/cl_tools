@@ -23,7 +23,15 @@ type lambda =
   | LLam   of id * lambda
 [@@deriving sexp_of]
 
+type expr =
+  | Var   of id
+  | Const of id
+  | List  of expr list
+[@@deriving sexp_of]
+
 type cmd =
+  | Append of expr
+      (* Append `expr` to current expression. *)
   | Convert of converter * lambda
       (* convert lambda expression to combinators *)
   | Display of disp        (* set display mode *)
@@ -39,12 +47,6 @@ type cmd =
   | Norm                   (* normalize the current expression *)
   | MaxSteps of int        (* set the maximum number of reduction steps *)
   | Quit                   (* exit the interpreter *)
-[@@deriving sexp_of]
-
-type expr =
-  | Var   of id
-  | Const of id
-  | List  of expr list
 [@@deriving sexp_of]
 
 type form =

@@ -26,6 +26,7 @@ let parse_lambda_lam vars l =
 %token DEF
 
 (* Commands. *)
+%token APPEND
 %token CONVERT
 %token DISPLAY_NORMAL
 %token DISPLAY_RAW
@@ -116,6 +117,10 @@ lambda:
     }
 
 cmd:
+  | APPEND; e = expr {
+      Append e
+    }
+
   | CONVERT; c = CONVERTER; l = lambda {
       match c with
         | ":ski"   -> Convert (SKI, l)
