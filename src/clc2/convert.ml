@@ -31,6 +31,10 @@ let rec convert_ski lexpr =
         App (convert_ski l1, convert_ski l2)
     | A.LLam (x, LVar x') when x = x' ->
         Const "I"
+    | A.LLam (x, A.LApp (l, A.LVar x'))
+        when x = x' && not (occurs_free x l) ->
+        (* eta reduction rule *)
+        convert_ski l
     | A.LLam (x, l) when not (occurs_free x l) ->
         App (Const "K", convert_ski l)
     | A.LLam (x, A.LLam (y, l)) when occurs_free x l ->
