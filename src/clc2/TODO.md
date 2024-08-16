@@ -6,10 +6,28 @@ I need a definitive list of commands and syntax.
 
 ## lambda conversions
 
+TODO: SKIBC, BCKW
+
 Test case:
 
 ```
 #convert :ski \f . ((\x . (f (x x))) (\x . (f (x x))));
+```
+
+NOTE: The SKI algorithm I've implemented is not a good one.
+The resulting expression are correct, but excessively long.
+Example:
+
+```
+>> #convert :ski \f g x . ((f x) (g x));
+--> S (S (K S) (S (K K) (S (K S) (S (S (K S) (S (K K) I)) (K I))))) (K (S (S (K S) (S (K K) I)) (K I)))
+```
+
+when it should be just:
+
+```
+>> #convert :ski \f g x . ((f x) (g x));
+--> S
 ```
 
 ## Archive the old CLC, make clc2 the definitive one.

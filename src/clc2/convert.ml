@@ -1,8 +1,17 @@
 open Ir2
 module A = Ast
 
-let occurs_free id lexpr =
-  failwith "TODO"
+let rec occurs_free id lexpr =
+  match lexpr with
+    | A.LVar id' when id = id' -> true
+    | A.LApp (l1, l2) ->
+        occurs_free id l1 || occurs_free id l2
+    | A.LLam (id', l) ->
+        if id = id' then
+          false
+        else
+          occurs_free id l
+    | _ -> false
 
 let rec lambda_of_expr = function
   | Var id ->
