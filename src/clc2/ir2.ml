@@ -32,6 +32,8 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+let display_mode = ref Ast.Normal
+
 let print_expr expr = 
   sexp_of_expr expr |> print_sexp
 
@@ -71,7 +73,7 @@ let convert form =
     | I.Expr e -> Expr (convert_expr e)
     | I.Cmd c -> Cmd c
 
-let spprint_expr expr =
+let spprint_expr_normal expr =
   let rec left_flatten e =
     match e with
       | App (e1, e2) -> left_flatten e1 @ [e2]
@@ -93,15 +95,30 @@ let spprint_expr expr =
   in
     strip_parens (show expr)
 
-let pprint_expr ?(prefix = "--> ") expr =
-  Printf.printf "%s%s\n%!" prefix (spprint_expr expr)
-
-let pprint_expr2 expr =
+let spprint_expr_raw expr =
   let rec show e =
     match e with
       | Var id
       | Const id -> id
       | App (e1, e2) -> "(" ^ show e1 ^ " " ^ show e2 ^ ")"
   in
-    Printf.printf "%s\n%!" (show expr)
+    show expr
+
+let spprint_expr expr =
+  if !display_mode = Ast.Raw then
+    spprint_expr_raw expr
+  else
+    spprint_expr_normal expr
+
+let pprint_expr ?(prefix = "--> ") expr =
+  let expr_s =
+    if !display_mode = Ast.Raw then
+      spprint_expr_raw expr
+    else
+      spprint_expr_normal expr
+  in
+      Printf.printf "%s%s\n%!" prefix expr_s
+
+let pprint_expr2 ?(prefix = "--> ") expr =
+  Printf.printf "%s%s\n%!" prefix (spprint_expr_raw expr)
 

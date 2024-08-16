@@ -51,6 +51,9 @@ type form =
   | Cmd  of cmd
 [@@deriving sexp_of]
 
+(** Variable that indicates the display mode (raw or normal). *)
+val display_mode : Ast.disp ref
+
 (** Print an expression. *)
 val print_expr : expr -> unit
 
@@ -61,8 +64,9 @@ val spprint_expr : expr -> string
 val pprint_expr : ?prefix:string -> expr -> unit
 
 (** Pretty-print an expression, for REPL output.
-    This prints all applications explicitly. *)
-val pprint_expr2 : expr -> unit
+    This prints all applications explicitly.
+    Add an optional prefix. *)
+val pprint_expr2 : ?prefix:string -> expr -> unit
 
 (** Print a form. *)
 val print : form -> unit
