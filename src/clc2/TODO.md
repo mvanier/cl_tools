@@ -6,7 +6,16 @@ I need a definitive list of commands and syntax.
 
 ## lambda conversions
 
-TODO: BCKW, BCKWI
+Some converters are very inefficient.
+What would improve things a lot is if there was a table of equivalences!
+Examples:
+
+```
+S K K == I
+B x I == x
+```
+
+Doing these simplifications could be tricky, though.
 
 Test cases:
 
