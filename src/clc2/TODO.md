@@ -8,3 +8,5 @@ I need a definitive list of commands and syntax.
 
 TODO
 
+## Archive the old CLC, make clc2 the definitive one.
+
