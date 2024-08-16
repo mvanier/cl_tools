@@ -71,6 +71,9 @@ val pprint_expr2 : ?prefix:string -> expr -> unit
 (** Print a form. *)
 val print : form -> unit
 
+(** Convert an IR expr to an expr. *)
+val convert_expr : Ir.expr -> expr
+
 (** Convert an IR form to a form. *)
 val convert : Ir.form -> form
 

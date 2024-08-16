@@ -37,5 +37,7 @@ type form =
 
 val print : form -> unit
 
+val convert_expr : Ast.expr -> expr
+
 val convert : Ast.form -> form
 

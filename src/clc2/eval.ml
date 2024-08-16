@@ -256,7 +256,13 @@ let norm () =
         end
 
 let append_to_current e =
-  failwith "TODO"
+  let convert_from_ast e =
+    e |> Ir.convert_expr |> Ir2.convert_expr
+  in
+    match !current with
+      | None -> current := Some (convert_from_ast e)
+      | Some e' ->
+          failwith "TODO"
 
 let print_def cname vs =
   match get_env cname with
