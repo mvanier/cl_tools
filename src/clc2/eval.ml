@@ -409,7 +409,13 @@ let eval_cmd c =
   let open Ast in
     match c with
       | Display mode ->
-          display_mode := mode
+        begin
+          display_mode := mode;
+          if mode = Ast.Raw then
+            Printf.printf "Raw display mode enabled.\n%!"
+          else
+            Printf.printf "Normal display mode enabled.\n%!"
+        end
       | Literate s ->
           print_endline s
       | Newline ->
