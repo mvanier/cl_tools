@@ -9,5 +9,5 @@ def Q = K I;
 def S f g x = f x (g x);
 def W f x = f x x;
 def X x = x K S K;
-def Y x = x S K;
+def X* x = x S K;
 "

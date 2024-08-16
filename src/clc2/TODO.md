@@ -29,11 +29,11 @@ You could even specify _which_ simplifications to do,
 even unknown ones!
 
 ```
-#simplify :bcwki (B x I) x;
+#subst (B x I) x;
 ```
 
 First, it would check that (B x I) is equivalent to (x).
-Then it would apply the simplification.
+Then it would apply the substitution.
 
 Doing these simplifications could be tricky, though.
 

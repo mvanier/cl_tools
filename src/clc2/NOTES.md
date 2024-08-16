@@ -103,3 +103,19 @@ B M M (B M M) F;
 #append K x y;
 ```
 
+## Interesting factoids
+
+### Y combinator
+
+There are a number of very simple implementations of the Y combinator.
+These involve the Lark (L) combinator.
+
+```
+def Y = B M L;
+def Y = B (L I) L;
+def Y = S L L;
+```
+
+The Lark is not that easy to implement in terms of other combinators.
+The simplest defintion I've found is [L = C B M].
+
