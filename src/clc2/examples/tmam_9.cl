@@ -86,22 +86,11 @@ def F = M (B M M);
 #p F;
 #nl;
 
-// M F;
-// #c;
-// #s;
-// #nl;
-// F;
-// #c;
-// #sn 3;
-// #{= M F};
-// #{= F F};
-
 F F;
 #c;
 #sn 2;
-#{// TODO: Reduce starting from F to get:};
-#{// TODO: #sl 1;};
-#{// = B M M (B M M) (M (B M M))};
+#{// Reduce F:};
+#sl :1;
 
 #nl;
 
