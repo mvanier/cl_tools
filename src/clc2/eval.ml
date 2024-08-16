@@ -193,7 +193,23 @@ let step () =
 (* Take one step on a subexpression whose location is indicated
    by a list of dirs (L or R). *)
 let stepl dirs =
-  Printf.printf "TODO\n%!"
+  (* Find the subexpression and a continuation;
+     the reduced subexpression will combine with the continuation
+     to get the final reduced expression.
+     Return `None` if there is no subexpression at that location
+     or `Some (sub, cont)` if there is. *)
+  let rec find dirs e =
+    failwith "TODO"
+  in
+    match !current with
+      | None -> runtime_err "no current expression"
+      | Some e ->
+        begin
+          match find dirs e with
+            | None -> runtime_err "stepl: subexpression not found"
+            | Some (sub, cont) ->
+                failwith "TODO"
+        end
 
 (* Reduce to a normal form, if any. *)
 let norm () =
