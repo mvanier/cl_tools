@@ -51,32 +51,18 @@ S K K x ;
 #maxsteps 1000 ;   // maximum normalization steps before stopping.
 ```
 
-## Evaluation
-
-### Definitions
-
-1. Convert to AST
-2. Expand to IR
-3. Convert to number representation:
-   def S x y z = x z (y z);
-   -->
-   def S = [3, (0 2 (1 2))];
-
-### Top-level expressions
-
-1. Reduce outermost redex
-2. Continue until a normal form is reached
-3. Stop after N steps if no normal form is reached
-(N can be set).
-
 ## Commands
 
 ```
 // Set maximum number of reduction steps.
-#max-steps 1000 ;
+#max-steps 1000;
+
+// Set display mode.
+#display-raw;     // explicitly shows all applications
+#display-normal;  // uses usual display conventions
 
 // Set working expression.
-S K K x ;
+S K K x;
 
 // Print current expression.
 #c;
@@ -99,7 +85,7 @@ B M M (B M M) F;
 #n;
 
 // Make one evaluation step of working expression
-#s ;
+#s;
 --> K x (K x)
 
 // Make N steps.
@@ -110,7 +96,7 @@ B M M (B M M) F;
 #sl :101;  (* right, left, right *)
 
 // Convert lambda expressions to combinators.
-#convert ski : \fgx . f x (g x) ;
+#convert ski : \f g x . f x (g x) ;
 --> S
 ```
 
