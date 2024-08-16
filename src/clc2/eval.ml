@@ -198,7 +198,8 @@ let stepl dirs =
      to get the final reduced expression.
      Return `None` if there is no subexpression at that location
      or `Some (sub, cont)` if there is. *)
-  let rec find dirs e =
+  let rec find (dirs : Ast.dir list) (e : expr)
+            : (expr * (expr -> expr)) option =
     failwith "TODO"
   in
     match !current with
@@ -208,7 +209,16 @@ let stepl dirs =
           match find dirs e with
             | None -> runtime_err "stepl: subexpression not found"
             | Some (sub, cont) ->
-                failwith "TODO"
+              begin
+                match reduce sub with
+                  | None -> ()
+                  | Some e' ->
+                      let e'' = cont e' in
+                        begin
+                          pprint_expr e'';
+                          current := Some e''
+                        end
+              end
         end
 
 (* Reduce to a normal form, if any. *)
