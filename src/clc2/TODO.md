@@ -4,17 +4,20 @@
 
 ```
 S K K I;
-#c;
-// Output:
+
+>> S K K I;
+>> #n;
 S K K I
-#display-raw;
-#c;
-// Output:
+--> K I (K I)
+--> I
+>> #display-raw
+>> S K K I;
+>> #n;
 (((S K) K) I)
-#display-normal;
-#c;
-// Output:
-S K K I
+--> ((K I) (K I))
+--> I
+>> #display-normal
+```
 
 ## lambda conversions
 
