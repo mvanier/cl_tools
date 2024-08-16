@@ -96,7 +96,10 @@ B M M (B M M) F;
 #sl :101;  (* right, left, right *)
 
 // Convert lambda expressions to combinators.
-#convert ski [ \f g x . f x (g x) ];
+#convert :ski \f g x . f x (g x);
 --> S
+
+// Append one or more expressions to the current expression.
+#append K x y;
 ```
 

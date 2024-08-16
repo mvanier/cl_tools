@@ -117,8 +117,8 @@ lambda:
     }
 
 cmd:
-  | APPEND; e = expr {
-      Append e
+  | APPEND; es = nonempty_list(expr) {
+      Append es
     }
 
   | CONVERT; c = CONVERTER; l = lambda {

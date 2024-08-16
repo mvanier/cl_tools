@@ -30,7 +30,7 @@ type expr =
 [@@deriving sexp_of]
 
 type cmd =
-  | Append   of expr
+  | Append   of expr list
   | Convert  of converter * lambda
   | Display  of disp
   | Literate of string

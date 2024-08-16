@@ -30,8 +30,8 @@ type expr =
 [@@deriving sexp_of]
 
 type cmd =
-  | Append of expr
-      (* Append `expr` to current expression. *)
+  | Append of expr list
+      (* Append exprs to current expression. *)
   | Convert of converter * lambda
       (* convert lambda expression to combinators *)
   | Display of disp        (* set display mode *)

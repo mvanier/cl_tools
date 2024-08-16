@@ -255,14 +255,24 @@ let norm () =
           iter 0 e
         end
 
-let append_to_current e =
+let append_to_current es =
   let convert_from_ast e =
     e |> Ir.convert_expr |> Ir2.convert_expr
   in
+  let new_es = List.map convert_from_ast es in
+  let new_current =
     match !current with
-      | None -> current := Some (convert_from_ast e)
-      | Some e' ->
-          failwith "TODO"
+      | None ->
+        begin
+          match new_es with
+            | [] -> failwith "This won't happen"
+            | e :: es' ->
+                List.fold_left (fun acc e' -> App (acc, e')) e es'
+        end
+      | Some e ->
+          List.fold_left (fun acc e' -> App (acc, e')) e new_es
+  in
+    current := Some new_current
 
 let print_def cname vs =
   match get_env cname with
@@ -417,8 +427,8 @@ let eval_expr e =
 let eval_cmd c =
   let open Ast in
     match c with
-      | Append e ->
-          append_to_current e
+      | Append es ->
+          append_to_current es
       | Convert (converter, lambda) ->
           let e = Convert.convert converter lambda in
             begin
