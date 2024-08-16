@@ -4,6 +4,8 @@
 
 And rename it to just `clc`.
 
+## More TMAM exercises!
+
 ## Documentation
 
 I need a definitive list of commands and syntax.
