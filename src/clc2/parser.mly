@@ -126,6 +126,7 @@ cmd:
         | ":ski"   -> Convert (SKI, l)
         | ":skibc" -> Convert (SKIBC, l)
         | ":bckw"  -> Convert (BCKW, l)
+        | ":bckwi" -> Convert (BCKWI, l)
         | _ -> Utils.parse_err "invalid lambda converter name"
     }
 

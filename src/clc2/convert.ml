@@ -108,8 +108,12 @@ let rec convert_skibc lexpr =
 let convert_bckw lexpr =
   failwith "TODO"
 
+let convert_bckwi lexpr =
+  failwith "TODO"
+
 let convert converter lexpr =
   match converter with
     | A.SKI   -> convert_ski lexpr
     | A.SKIBC -> convert_skibc lexpr
     | A.BCKW  -> convert_bckw lexpr
+    | A.BCKWI -> convert_bckwi lexpr

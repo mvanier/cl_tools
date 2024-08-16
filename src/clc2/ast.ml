@@ -14,6 +14,7 @@ type converter =
   | SKI
   | SKIBC
   | BCKW
+  | BCKWI
 [@@deriving sexp_of]
 
 type lambda =

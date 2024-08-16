@@ -6,7 +6,7 @@ I need a definitive list of commands and syntax.
 
 ## lambda conversions
 
-TODO: BCKW
+TODO: BCKW, BCKWI
 
 Test cases:
 
