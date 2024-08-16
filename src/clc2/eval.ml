@@ -201,7 +201,20 @@ let stepl dirs =
   let find (dirs : Ast.dir list) (e : expr)
         : (expr * (expr -> expr)) option =
     let rec find_k dirs e cont =
-      failwith "TODO"
+      match (dirs, e) with
+        | ([], _) -> Some (e, cont)
+        | (_, Var _)
+        | (_, Const _) -> None  (* no subexpressions *)
+        | (d :: ds, App (e1, e2)) ->
+          begin
+            match d with
+              | Ast.L ->
+                  let cont' = failwith "TODO" in
+                    find_k ds e1 cont'
+              | Ast.R ->
+                  let cont' = failwith "TODO" in
+                    find_k ds e2 cont'
+          end
     in
       find_k dirs e (fun x -> x)
   in
