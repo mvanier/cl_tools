@@ -198,9 +198,12 @@ let stepl dirs =
      to get the final reduced expression.
      Return `None` if there is no subexpression at that location
      or `Some (sub, cont)` if there is. *)
-  let rec find (dirs : Ast.dir list) (e : expr)
-            : (expr * (expr -> expr)) option =
-    failwith "TODO"
+  let find (dirs : Ast.dir list) (e : expr)
+        : (expr * (expr -> expr)) option =
+    let rec find_k dirs e cont =
+      failwith "TODO"
+    in
+      find_k dirs e (fun x -> x)
   in
     match !current with
       | None -> runtime_err "no current expression"
