@@ -2,22 +2,15 @@
 
 open Ast
 
-let rec fold es =
+let rec parse_lambda_app es =
   match es with
     | []
-    | [_] -> Utils.parse_err "fold: too few expressions"
+    | [_] -> Utils.parse_err "parse_lambda_app: too few expressions"
     | [e1; e2] -> LApp (e1, e2)
-    | e1 :: e2 :: es' -> fold (LApp (e1, e2) :: es')
+    | e1 :: e2 :: es' -> parse_lambda_app (LApp (e1, e2) :: es')
 
-let rec parse_expr e =
-  match e with
-    | Var id -> LVar id
-    | Const id -> LVar id
-    | List es -> 
-        let es' = List.map parse_expr es in fold es'
-
-let parse_lambda vars e : lambda =
-  List.fold_right (fun v e -> LLam (v, e)) vars (parse_expr e)
+let parse_lambda_lam vars l =
+  List.fold_right (fun v e -> LLam (v, e)) vars l
 
 %}
 
@@ -69,6 +62,7 @@ let parse_lambda vars e : lambda =
 
 %type <Ast.expr> expr
 %type <Ast.cmd> cmd
+%type <Ast.lambda> lexpr
 
 %%
 
@@ -106,9 +100,19 @@ expr:
 
   | LPAREN; es = list(expr); RPAREN { List es }
 
+lexpr:
+  | id = VAR   { LVar id }
+  | id = CONST { LVar id }
+  | LPAREN; ls = list(lexpr); RPAREN { 
+      parse_lambda_app ls
+    }
+  | LPAREN; BS; vars = list(VAR); DOT; l = lexpr; RPAREN { 
+      parse_lambda_lam vars l
+    }
+
 lambda:
-  | BS; vars = list(VAR); DOT; e = expr {
-      parse_lambda vars e 
+  | BS; vars = list(VAR); DOT; l = lexpr {
+      parse_lambda_lam vars l 
     }
 
 cmd:
