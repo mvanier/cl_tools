@@ -53,7 +53,6 @@ x (F x);
 ----
 };
 
-
 #{
 *** PROBLEM 2 ***
 
@@ -104,7 +103,6 @@ F;
 // So [F F = F]. QED.
 ----
 };
-
 
 #{
 *** PROBLEM 3 ***
@@ -193,4 +191,41 @@ is trivially satisfied with [x = X].  QED.
 
 ----
 };
+
+#{
+*** PROBLEM 4 ***
+
+We use [X], [Y], and [Z] in place of [A], [B], [C] for obvious reasons.
+
+* Problem:
+
+  Let [Z = X o Y] i.e. [Z = B X Y].
+  Show that if [Z] is agreeable then [X] is also agreeable.
+  In other words, show:
+
+    forall Q . exists x . Z x = Q x
+    ->
+    forall Q . exists x . X x = Q x
+
+* Non-computational solution:
+
+  Pick an arbitrary [Q].  Then we have:
+
+    exists x . Z x = Q x
+    --> exists x . B X Y x = Q x
+    --> exists x . X (Y x) = Q x
+
+  Since [Z] is agreeable, then every bird is fond of another bird.
+  So there is an [x] such that [x = Y x].
+  Pick this [x] to get:
+
+    --> X (Y x) = X x = Q x
+
+  So [X] is agreeable as well.  QED.
+
+NOTE: There is no computational proof,
+since this proof doesn't involve non-trivial computations.
+
+};
+
 
