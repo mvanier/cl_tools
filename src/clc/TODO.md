@@ -10,7 +10,10 @@ I need a definitive list of commands and syntax.
 
 Add a :skibcw converter!
 
-## Define current expression.
+Make it so I don't need the outermost parentheses in a lambda body.
+This amounts to parsing a list of exprs instead of just one.
+
+## Define current expression
 
 Add this form:
 
