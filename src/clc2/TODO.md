@@ -14,28 +14,45 @@ I need a definitive list of commands and syntax.
 
 Add a :skibcw converter!
 
-Some converters (BCKW, BCKWI) are very inefficient.
-What would improve things a lot is if there was a table of equivalences!
-Examples:
+## Define current expression.
+
+Add this form:
 
 ```
-S K K == I
-B I = I
-B x I == x
+#def F x;
 ```
 
-Need a new command: #simplify :ski (:bcwki etc.)
-You could even specify _which_ simplifications to do,
-even unknown ones!
+which will define `[F x]` to be the current expression.
+
+## Substitutions
+
+We need a command to do user-specified substitutions e.g.
 
 ```
-#subst (B x I) x;
+#subst :01010 x;  // location, substitution
 ```
 
-First, it would check that (B x I) is equivalent to (x).
-Then it would apply the substitution.
+This is simple to implement.
+However, the onus is on the user to verify that the substitution is valid.
+For instance,
 
-Doing these simplifications could be tricky, though.
+```
+#subst :01010 x;
+```
+
+would be valid if the subexpression at location :01010 is [B x I], since:
+
+```
+>> B x I y;
+>> #n;
+B x I y
+--> x (I y)
+--> x y
+```
+
+So [B x I] is the same as [x].
+In general, proving equivalence of combinatory terms is IIRC undecidable,
+so this can't be fully automated.
 
 ## Converter test cases:
 
