@@ -98,6 +98,7 @@ F F;
 F;
 #c;
 #sn 5;
+#display-normal;
 
 #{
 // So [F F = F]. QED.
@@ -108,4 +109,88 @@ F;
 #{
 *** PROBLEM 3 ***
 
+* Problem:
+
+  Given the B combinator and a combinator A with the property:
+
+    forall X . exists x . (A x) = (X x)
+
+  (but no M combinator), then show that:
+
+    forall X . exists y . (X y) = y
+
+  i.e. that all birds are fond of at least one bird.
+
+* Non-computational solution:
+
+  Pick a combinator [X].
+  Find [y] such that [X y = y].
+
+  Consider [Z = B X A] (composition of X and A).
+  By the definition of [A], we have:
+
+    exists r . A r = Z r
+    Set r = r'
+    --> A r' = Z r'
+    --> A r' = B X A r' = X (A r')
+
+  Let [y = A r'].
+  Then [y = X y].  QED.
+
+* Bonus question:
+
+  Is it true that
+
+    forall X . exists x . M x = X x
+
+  ?
+
+  Answer:
+
+    M x = x x
+
+  so [x = X] and the answer is yes.
+
+  So if [M] exists, then [M] is the [A] combinator required for this problem.
+  Therefore, problem 1 is a special case of problem 3 with [A = M].
+  A Mockingbird is agreeable!
+
+* Computational solution:
+
+----
 };
+
+#{** Part 1.};
+#nl;
+
+def Z = B X A;
+#{By definition of [A], [exists r . A r = Z r].
+Pick [r = r'].
+So [A r' = Z r'].
+};
+Z r';
+#c;
+#sn 2;
+#{
+So [A r' = X (A r')], so [X] is fond of at least one bird ([A r']). QED.
+};
+
+#{** Part 2.};
+#nl;
+
+#{For arbitrary X:};
+#nl;
+
+M X;
+#n;
+
+#{
+so the question
+
+  For arbitrary X, is [exists x . M x = X x] true?
+
+is trivially satisfied with [x = X].  QED.
+
+----
+};
+
