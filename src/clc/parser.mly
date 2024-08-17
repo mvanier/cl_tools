@@ -112,8 +112,11 @@ lexpr:
     }
 
 lambda:
-  | BS; vars = list(VAR); DOT; l = lexpr {
-      parse_lambda_lam vars l 
+  | BS; vars = list(VAR); DOT; ls = nonempty_list(lexpr) {
+      match ls with
+        | [] -> failwith "this won't happen"
+        | [l] -> parse_lambda_lam vars l 
+        | _ -> parse_lambda_lam vars (parse_lambda_app ls)
     }
 
 cmd:
