@@ -1,8 +1,4 @@
-# TODO for clc2
-
-## Archive the old CLC, make clc2 the definitive one.
-
-And rename it to just `clc`.
+# TODO for clc
 
 ## More TMAM exercises!
 

@@ -1,7 +1,7 @@
 BUILD   = ./_build/default
-NAME    = clc2
+NAME    = clc
 INSTALL = ${HOME}/_/bin
-LIB		= clc2lib.cma
+LIB		= clclib.cma
 EXT		= exe
 
 default: lang

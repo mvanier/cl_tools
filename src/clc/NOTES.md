@@ -1,6 +1,4 @@
-# clc2 (THIS BRANCH)
-
-This is a complete refactor of clc.
+# clc
 
 ## Goals
 

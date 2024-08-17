@@ -1,5 +1,5 @@
 (library
-  (name clc2lib)
+  (name clclib)
   (modules
     pprint
     utils
@@ -25,7 +25,7 @@
 (executable
   (name main)
   (modules main)
-  (libraries clc2lib)
+  (libraries clclib)
   (modes byte) )
 
 ;; By default, dune treats warnings as errors.

@@ -1,9 +1,9 @@
 (* The interpreter: entry point. *)
 
-open Clc2lib
+open Clclib
 open Utils
 
-let progname = "clc2"
+let progname = "clc"
 
 let handle_lex_error lexbuf err =
   begin
