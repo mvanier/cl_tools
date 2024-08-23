@@ -1,5 +1,22 @@
 # TODO for clc
 
+## BUGS
+
+An error in a `.cl` file still reports the filename as `<repl>`!
+Example:
+
+```
+// File: `bug.cl`
+#convert :ski \f . \x . x x;
+```
+
+Error message:
+
+```
+Parser error: file: <repl>, line: 1, char: 20
+                    ^^^^^^
+```
+
 ## More TMAM exercises!
 
 ## Documentation
