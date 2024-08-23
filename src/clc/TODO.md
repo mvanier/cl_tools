@@ -2,6 +2,24 @@
 
 ## BUGS
 
+### Lambda syntax
+
+The lambda syntax rejects some reasonable forms:
+
+```
+#convert :ski \x . (\x . x x);
+```
+
+is rejected, but
+
+```
+#convert :ski \x . (\x . (x x));
+```
+
+is OK.  FIX!
+
+### Filenames in error messages
+
 An error in a `.cl` file still reports the filename as `<repl>`!
 Example:
 
