@@ -73,6 +73,8 @@ let convert form =
     | I.Expr e -> Expr (convert_expr e)
     | I.Cmd c -> Cmd c
 
+let print_prefix = "--> "
+
 let spprint_expr_normal expr =
   let rec left_flatten e =
     match e with
@@ -110,7 +112,7 @@ let spprint_expr expr =
   else
     spprint_expr_normal expr
 
-let pprint_expr ?(prefix = "--> ") expr =
+let pprint_expr ?(prefix = print_prefix) expr =
   let expr_s =
     if !display_mode = Ast.Raw then
       spprint_expr_raw expr
@@ -119,6 +121,6 @@ let pprint_expr ?(prefix = "--> ") expr =
   in
       Printf.printf "%s%s\n%!" prefix expr_s
 
-let pprint_expr2 ?(prefix = "--> ") expr =
+let pprint_expr2 ?(prefix = print_prefix) expr =
   Printf.printf "%s%s\n%!" prefix (spprint_expr_raw expr)
 

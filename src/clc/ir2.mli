@@ -54,6 +54,9 @@ type form =
 (** Variable that indicates the display mode (raw or normal). *)
 val display_mode : Ast.disp ref
 
+(** Prefix used to print expressions. *)
+val print_prefix : string
+
 (** Print an expression. *)
 val print_expr : expr -> unit
 

@@ -250,8 +250,11 @@ let norm () =
     match !current with
       | None -> runtime_err "no current expression"
       | Some e ->
+        let prefix =
+          String.make (String.length print_prefix - 1) '*' ^ " "
+        in
         begin
-          pprint_expr ~prefix:"" e;
+          pprint_expr ~prefix e;
           iter 0 e
         end
 
