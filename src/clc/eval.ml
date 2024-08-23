@@ -298,7 +298,7 @@ let curr () =
 let curr2 () =
   match !current with
     | None -> runtime_err "no current expression"
-    | Some e -> pprint_expr2 e
+    | Some e -> pprint_expr2 ~prefix:"" e
 
 let curr3 () =
   let analyze e : (int * int * int) list =
@@ -398,7 +398,7 @@ let curr3 () =
               |> List.rev
           in
             begin
-              pprint_expr2 e;
+              pprint_expr2 ~prefix:"" e;
               List.iter (fun s -> Printf.printf "%s\n%!" s) strings'
             end
 
