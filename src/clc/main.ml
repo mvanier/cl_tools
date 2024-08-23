@@ -14,7 +14,7 @@ let handle_lex_error lexbuf err =
 
 let handle_parser_error lexbuf =
   let pos = Lexing.lexeme_start_p lexbuf in
-  let pos = { pos with pos_fname = "<repl>" } in
+  (* let pos = { pos with pos_fname = "<repl>" } in *)
   let loc =
     Printf.sprintf "file: %s, line: %d, char: %d"
       pos.pos_fname pos.pos_lnum (pos.pos_cnum - pos.pos_bol + 1)
@@ -124,7 +124,16 @@ let load source lexbuf =
             Printf.printf "Runtime error: %s\n%!" msg
     end
   in
-    iter ()
+  let source_name =
+    if source = "<repl>" || source = "<basis>" then
+      source
+    else (* file name *)
+      "\"" ^ source ^ "\""
+  in
+    begin
+      Lexing.set_filename lexbuf source_name;
+      iter ()
+    end
 
 let load_basis () =
   let lexbuf = Lexing.from_string Basis.basis in
