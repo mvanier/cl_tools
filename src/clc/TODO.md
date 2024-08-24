@@ -1,25 +1,5 @@
 # TODO for clc
 
-## BUGS
-
-### Lambda syntax
-
-The lambda syntax rejects some reasonable forms:
-
-```
-#convert :ski \x . (\x . x x);
-```
-
-is rejected, but
-
-```
-#convert :ski \x . (\x . (x x));
-```
-
-is OK.  FIX!
-
-## More TMAM exercises!
-
 ## Documentation
 
 I need a definitive list of commands and syntax.

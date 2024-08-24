@@ -12,6 +12,12 @@ let rec parse_lambda_app es =
 let parse_lambda_lam vars l =
   List.fold_right (fun v e -> LLam (v, e)) vars l
 
+let parse_lambda_lam2 vars ls =
+  match ls with
+    | [] -> failwith "this won't happen"
+    | [l] -> parse_lambda_lam vars l 
+    | _ -> parse_lambda_lam vars (parse_lambda_app ls)
+
 %}
 
 (* Punctuation. *)
@@ -108,18 +114,12 @@ lexpr:
       parse_lambda_app ls
     }
   | LPAREN; BS; vars = list(VAR); DOT; ls = nonempty_list(lexpr); RPAREN { 
-      match ls with
-        | [] -> failwith "this won't happen"
-        | [l] -> parse_lambda_lam vars l 
-        | _ -> parse_lambda_lam vars (parse_lambda_app ls)
+      parse_lambda_lam2 vars ls
     }
 
 lambda:
   | BS; vars = list(VAR); DOT; ls = nonempty_list(lexpr) {
-      match ls with
-        | [] -> failwith "this won't happen"
-        | [l] -> parse_lambda_lam vars l 
-        | _ -> parse_lambda_lam vars (parse_lambda_app ls)
+      parse_lambda_lam2 vars ls
     }
 
 cmd:
