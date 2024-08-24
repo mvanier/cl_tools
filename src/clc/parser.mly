@@ -107,8 +107,11 @@ lexpr:
   | LPAREN; ls = list(lexpr); RPAREN { 
       parse_lambda_app ls
     }
-  | LPAREN; BS; vars = list(VAR); DOT; l = lexpr; RPAREN { 
-      parse_lambda_lam vars l
+  | LPAREN; BS; vars = list(VAR); DOT; ls = nonempty_list(lexpr); RPAREN { 
+      match ls with
+        | [] -> failwith "this won't happen"
+        | [l] -> parse_lambda_lam vars l 
+        | _ -> parse_lambda_lam vars (parse_lambda_app ls)
     }
 
 lambda:
