@@ -26,7 +26,7 @@ I need a definitive list of commands and syntax.
 
 ## lambda conversions
 
-Add a :skibcw converter!
+Add a :skibcw converter.
 
 ## Define current expression
 
@@ -36,7 +36,7 @@ Add this form:
 #def F x;
 ```
 
-which will define `[F x]` to be the current expression.
+which will define [F x] to be the current expression.
 
 ## Substitutions
 
@@ -67,13 +67,6 @@ B x I y
 So [B x I] is the same as [x].
 In general, proving equivalence of combinatory terms is IIRC undecidable,
 so this can't be fully automated.
-
-## Converter test cases:
-
-```
-#convert :ski \f . ((\x . (f (x x))) (\x . (f (x x))));
-#convert :skibc \f . ((\x . (f (x x))) (\x . (f (x x))));
-```
 
 ## Other optimizations?
 
