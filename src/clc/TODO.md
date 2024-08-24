@@ -1,5 +1,22 @@
 # TODO for clc
 
+## Improved lambda syntax?
+
+Currently, internal lambdas must be surrounded by parentheses.
+This prevents us from writing e.g.
+
+```
+\f . \x . f x
+```
+
+Instead, we have to write:
+
+```
+\f . (\x . f x)
+```
+
+Fix this if possible!
+
 ## Documentation
 
 I need a definitive list of commands and syntax.
